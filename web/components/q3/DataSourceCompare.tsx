@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ChromiumReplay from "./ChromiumReplay";
 
 export type Sample = {
   name: string;
@@ -77,27 +78,27 @@ export default function DataSourceCompare({ chromium, apify }: { chromium: Sampl
           })}
         </tbody>
       </table>
-      {rows.length > 0 && (
-        <details style={{ marginTop: 10 }}>
-          <summary style={{ cursor: "pointer", color: "var(--muted)", fontSize: "0.8rem" }}>
-            ดูตัวอย่างข้อมูลดิบ {Math.min(3, rows.length)} ร้าน (ย่านสยาม)
-          </summary>
-          <pre style={{ fontSize: "0.7rem", overflow: "auto", marginTop: 6, background: "var(--bg)", padding: 8, borderRadius: 6 }}>
-            {JSON.stringify(rows.slice(0, 3), null, 1)}
-          </pre>
-        </details>
-      )}
       {lite ? (
-        <p style={{ color: "var(--warn)", fontWeight: 600, fontSize: "0.85rem", marginTop: 12 }}>
-          → ขาดที่อยู่ / เวลาเปิด + บาง field ไม่ครบทุกร้าน — ไม่ reliable พอ จึงเลือก Apify
-        </p>
+        <ChromiumReplay rows={rows} />
       ) : (
-        <div style={{ marginTop: 12 }}>
-          <button className="btn ghost" onClick={rescrape} disabled={loading}>
-            {loading ? "⏳ กำลัง scrape สด… (Apify ~2-4 นาที)" : "🔄 re-scrape สด (ยิง Apify → อัปเดต DB)"}
-          </button>
-          {msg && <div className={`msg ${ok ? "ok" : "err"}`} style={{ marginTop: 8 }}>{ok ? "✓ " : "⚠ "}{msg}</div>}
-        </div>
+        <>
+          {rows.length > 0 && (
+            <details style={{ marginTop: 10 }}>
+              <summary style={{ cursor: "pointer", color: "var(--muted)", fontSize: "0.8rem" }}>
+                ดูตัวอย่างข้อมูลดิบ {Math.min(3, rows.length)} ร้าน (ย่านสยาม)
+              </summary>
+              <pre style={{ fontSize: "0.7rem", overflow: "auto", marginTop: 6, background: "var(--bg)", padding: 8, borderRadius: 6 }}>
+                {JSON.stringify(rows.slice(0, 3), null, 1)}
+              </pre>
+            </details>
+          )}
+          <div style={{ marginTop: 12 }}>
+            <button className="btn ghost" onClick={rescrape} disabled={loading}>
+              {loading ? "⏳ กำลัง scrape สด… (Apify ~2-4 นาที)" : "🔄 re-scrape สด (ยิง Apify → อัปเดต DB)"}
+            </button>
+            {msg && <div className={`msg ${ok ? "ok" : "err"}`} style={{ marginTop: 8 }}>{ok ? "✓ " : "⚠ "}{msg}</div>}
+          </div>
+        </>
       )}
     </div>
   );
