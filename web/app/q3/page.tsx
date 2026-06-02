@@ -1,5 +1,4 @@
-import raw from "@/data/scored.json";
-import type { Restaurant } from "@/lib/types";
+import { getScoredRestaurants } from "@/lib/restaurants";
 import { SCORING } from "@/lib/types";
 import Stats from "@/components/q3/Stats";
 import Top3Cards from "@/components/q3/Top3Cards";
@@ -9,6 +8,8 @@ import AIChat from "@/components/q3/AIChat";
 import DataSourceCompare from "@/components/q3/DataSourceCompare";
 import chromiumRaw from "@/data/sample_chromium.json";
 import mapsRaw from "@/data/raw_maps.json";
+
+export const dynamic = "force-dynamic"; // query Turso สดทุก request → sync กับ re-scrape
 
 export const metadata = {
   title: "Q3 · AI Food Assistant — ร้านมื้อทีม ย่านอโศก",
@@ -23,10 +24,8 @@ const METHOD: Record<string, string> = {
   uniqueness: "จุดเด่น/ความหลากหลายเมนู",
 };
 
-export default function Q3Page() {
-  const all = [...(raw as Restaurant[])]
-    .sort((a, b) => b.total - a.total)
-    .map((r, i) => ({ ...r, rank: i + 1 }));
+export default async function Q3Page() {
+  const all = await getScoredRestaurants();
   const top3 = all.slice(0, 3);
   const top10 = all.slice(0, 10);
 

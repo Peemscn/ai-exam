@@ -1,10 +1,9 @@
 name: re-scrape restaurants
 
-# trigger: ปุ่มบนเว็บ (/api/scrape → workflow_dispatch) หรือ schedule รายสัปดาห์
+# trigger: manual เท่านั้น (workflow_dispatch) — re-scrape Apify + reseed Turso
+#   ปุ่มบนเว็บใช้ Apify REST ตรง (ไม่ผ่าน CI) · ตัด schedule weekly กัน Apify quota
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 18 * * 0" # อาทิตย์ 18:00 UTC = จันทร์ 01:00 ไทย (refresh weekly)
 
 permissions:
   contents: write
@@ -18,13 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+      - uses: oven-sh/setup-bun@v2
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: npm ci
+      - run: bun install --frozen-lockfile
 
       # Apify (primary) ถ้ามี secret APIFY_TOKEN · ไม่งั้น chromium (fallback — lite)
       - name: scrape (Apify primary / chromium fallback)
@@ -32,10 +29,10 @@ jobs:
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
         run: |
           if [ -n "$APIFY_TOKEN" ]; then
-            node scripts/scrape-apify.mjs
+            bun scripts/scrape-apify.mjs
           else
-            npx playwright install --with-deps chromium
-            node scripts/scrape.mjs
+            bunx playwright install --with-deps chromium
+            bun scripts/scrape.mjs
           fi
 
       - run: python scripts/clean.py
@@ -45,7 +42,7 @@ jobs:
         env:
           TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
           TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
-        run: if [ -n "$TURSO_DATABASE_URL" ]; then node db/seed.mjs; fi
+        run: if [ -n "$TURSO_DATABASE_URL" ]; then bun db/seed.mjs; fi
 
       - name: commit refreshed data
         run: |
