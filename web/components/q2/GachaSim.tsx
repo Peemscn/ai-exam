@@ -157,7 +157,7 @@ export default function GachaSim() {
         )}
         {hist.length > 0 && (
           <div style={{ marginTop: 16 }}>
-            <div className="sub">History (10 ล่าสุด)</div>
+            <div className="flexbtw"><div className="sub">History (10 ล่าสุด)</div><button className="btn ghost" style={{ padding: "3px 12px", fontSize: ".78rem" }} onClick={() => setHist([])}>🗑 ล้างประวัติ</button></div>
             <div className="tablewrap"><table>
               <thead><tr><th>เวลา</th><th>โรล</th><th>SSR</th><th>SR</th><th>R</th><th>N</th><th>ค่าใช้จ่าย</th></tr></thead>
               <tbody>{hist.map((h, i) => <tr key={i}><td>{h.t}</td><td>{fmt(h.n)}</td><td>{fmt(h.SSR)}</td><td>{fmt(h.SR)}</td><td>{fmt(h.R)}</td><td>{fmt(h.N)}</td><td>{fmt(h.cost)}</td></tr>)}</tbody>

@@ -1,0 +1,470 @@
+[
+ {
+  "name": "Erawan Tea Room",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Gourmet Bar",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "จากึมซอง สยามสแควร์ วัน",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "BORNGA Siam Discovery",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "TAAN Bangkok - Thai Fine Dining Restaurant",
+  "rating": 4.6,
+  "reviews": 342,
+  "price": "฿2,000+",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "The Spice Market",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Kaokaobom",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "EASY! buddy Siam Center",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "พาสต้าอาม่า สยามเซ็นเตอร์",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Jim Thompson, A Thai Restaurant",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Miss Siam Restaurant (ห้องอาหารมิสสยาม)",
+  "rating": 4.7,
+  "reviews": 49,
+  "price": "฿1,000-1,200",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Tonkotsu Kazan Ramen (Siam Center)",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Shintaro",
+  "rating": 4.7,
+  "reviews": 289,
+  "price": "฿2,000+",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Piranya@Siam (ปิรันย่า@สยาม)",
+  "rating": 4.8,
+  "reviews": 1462,
+  "price": "฿1-200",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "ALATi",
+  "rating": 4.6,
+  "reviews": 198,
+  "price": "฿2,000+",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Metro Square SiamParagon",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Inter Restaurant since 1981",
+  "rating": 4.4,
+  "reviews": 3027,
+  "price": "฿200-400",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Siam Ceylon",
+  "rating": 4.3,
+  "reviews": 601,
+  "price": "฿1-200",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Mozza By Cocotte Siam Paragon",
+  "rating": 4.7,
+  "reviews": 1473,
+  "price": "฿600-1,600",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "ฮาร์ด ร็อก คาเฟ่",
+  "rating": null,
+  "reviews": null,
+  "price": null,
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "บ้านหญิง สยามเซ็นเตอร์",
+  "rating": 4.5,
+  "reviews": 1015,
+  "price": "฿200-400",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Peppery Thai Bistro (Siam Paragon)",
+  "rating": 4.5,
+  "reviews": 963,
+  "price": "฿200-1,200",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Tonchin Ramen - Siam Paragon",
+  "rating": 4.7,
+  "reviews": 1145,
+  "price": "฿200-400",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Hongdae",
+  "rating": 4.8,
+  "reviews": 5846,
+  "price": "฿400-600",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Jasmine Siam Kitchen จัสมิน สยาม คิทเช่น",
+  "rating": 4.7,
+  "reviews": 1151,
+  "price": "฿200-400",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Fam Time Steak and Pasta @Siam Square",
+  "rating": 4.5,
+  "reviews": 702,
+  "price": "฿200-400",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "KOFUKU (โคฟุกุ)-Centerpoint Siam Square ชั้น 4",
+  "rating": 4.8,
+  "reviews": 1334,
+  "price": "฿200-400",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "สระบัว บาย กิน กิน",
+  "rating": 4.7,
+  "reviews": 1071,
+  "price": "฿2,000+",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Song Fa Bak Kut Teh Siam Paragon",
+  "rating": 4.8,
+  "reviews": 758,
+  "price": "฿200-400",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "CO LIMITED Siam Paragon",
+  "rating": 4.1,
+  "reviews": 62,
+  "price": "฿800-1,000",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "HITORI SHABU",
+  "rating": 4.7,
+  "reviews": 2276,
+  "price": "฿400-600",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Lucky’s Hungry สาขา สยามพารากอน",
+  "rating": 4.8,
+  "reviews": 165,
+  "price": "฿200-400",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Nabezo Premium (Siam Paragon)",
+  "rating": 4.9,
+  "reviews": 457,
+  "price": "฿1,000+",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "นารา ไทยคูซีน สยามพารากอน",
+  "rating": 4.7,
+  "reviews": 2433,
+  "price": "฿400-1,600",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "อันเดอร์ฮาวด์",
+  "rating": 4.8,
+  "reviews": 68,
+  "price": "฿1,000+",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "บ้านไอซ์",
+  "rating": 4.9,
+  "reviews": 2886,
+  "price": "฿200-1,000",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "SUSHI SEKI (Siam Paragon)",
+  "rating": 4.8,
+  "reviews": 2270,
+  "price": "฿400-1,400",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Toro Fries, 2nd Floor, Siam Center,โทโร่ฟรายส์ สาขา สยามเซ็นเตอร์ ชั้น 2",
+  "rating": 5,
+  "reviews": 51,
+  "price": "฿1-200",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Gyukatsu Kyoto Katsugyu - Siam Center",
+  "rating": 4.5,
+  "reviews": 997,
+  "price": "฿400-600",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "JUMBO Seafood",
+  "rating": 4.7,
+  "reviews": 1359,
+  "price": "฿600-1,800",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Huajai ร้านหัวใจ (Pop-up) ต๊อกโมจิเส้นสด SQ1 ชั้น2",
+  "rating": 4.8,
+  "reviews": 213,
+  "price": "฿100-200",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Yuzu Suki ゆずすき (Lite)- Siam Square",
+  "rating": 4.6,
+  "reviews": 337,
+  "price": "฿400-600",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "ตาลาลักส์ สยามพารากอน",
+  "rating": 4.7,
+  "reviews": 173,
+  "price": "฿1-200",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Hasul (Siam Center 2nd Floor)",
+  "rating": 4.2,
+  "reviews": 276,
+  "price": "฿200-400",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Wisdom International Buffet Siam Paragon",
+  "rating": 4.3,
+  "reviews": 1244,
+  "price": "฿800-1,600",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "เพลินพุง Noodles & More สยามสแควร์วัน",
+  "rating": 4.4,
+  "reviews": 726,
+  "price": "฿1-200",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "ส้มตำนัว",
+  "rating": 4.3,
+  "reviews": 3458,
+  "price": "฿200-400",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "MAGURO (Siam Square One) Premium Japanese and Sushi Restaurant",
+  "rating": 4.7,
+  "reviews": 1208,
+  "price": "฿400-1,200",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "TenTen ชาบู 4 สี หมีออนเซน",
+  "rating": 4.8,
+  "reviews": 5605,
+  "price": "฿400-1,000",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "NAEKI SUSHI สาขา BTS SIAM",
+  "rating": 4.6,
+  "reviews": 134,
+  "price": "฿1-200",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "Paradise Lost Bangkok - Rooftop Bar",
+  "rating": 4.6,
+  "reviews": 368,
+  "price": "฿200-1,000",
+  "address": null,
+  "hours": null,
+  "website": null
+ },
+ {
+  "name": "ต้นโอ๊ก",
+  "rating": 4.5,
+  "reviews": 305,
+  "price": "฿1-200",
+  "address": null,
+  "hours": null,
+  "website": null
+ }
+]

@@ -6,7 +6,9 @@ import Top3Cards from "@/components/q3/Top3Cards";
 import Top10Table from "@/components/q3/Top10Table";
 import SearchTable from "@/components/q3/SearchTable";
 import AIChat from "@/components/q3/AIChat";
-import RescrapeButton from "@/components/q3/RescrapeButton";
+import DataSourceCompare from "@/components/q3/DataSourceCompare";
+import chromiumRaw from "@/data/sample_chromium.json";
+import mapsRaw from "@/data/raw_maps.json";
 
 export const metadata = {
   title: "Q3 · AI Food Assistant — ร้านมื้อทีม ย่านอโศก",
@@ -27,6 +29,12 @@ export default function Q3Page() {
     .map((r, i) => ({ ...r, rank: i + 1 }));
   const top3 = all.slice(0, 3);
   const top10 = all.slice(0, 10);
+
+  // ตัวอย่างเทียบ 2 แหล่ง scrape (ย่านสยาม) — chromium headless vs Apify
+  type Src = { name: string; rating?: number | null; reviews?: number | null; price?: string | null; address?: string | null; hours?: string | null; area?: string };
+  const toSample = (r: Src) => ({ name: r.name, rating: r.rating ?? null, reviews: r.reviews ?? null, price: r.price ?? null, address: r.address ?? null, hours: r.hours ?? null });
+  const chromiumSample = (chromiumRaw as Src[]).map(toSample);
+  const apifySample = (mapsRaw as Src[]).filter((r) => r.area === "สยาม").map(toSample);
 
   return (
     <main>
@@ -70,7 +78,7 @@ export default function Q3Page() {
         <section>
           <h2>🛠️ เครื่องมือที่ใช้</h2>
           <div className="pills">
-            {["Apify (Google Maps Scraper)", "OpenStreetMap Overpass", "Claude AI", "Next.js 15 + React 19", "Turso (libSQL)", "Python (clean/score)", "Vercel"].map((t) => (
+            {["Apify (Google Maps Scraper)", "OpenStreetMap Overpass", "Claude AI", "Next.js 16 + React 19", "Turso (libSQL)", "TypeScript / Python (clean·score)", "Vercel"].map((t) => (
               <span className="pill" key={t}>{t}</span>
             ))}
           </div>
@@ -136,9 +144,9 @@ export default function Q3Page() {
         </section>
 
         <section>
-          <h2>🔄 อัปเดตข้อมูลสด</h2>
-          <p className="sub">re-scrape Google Maps สดผ่าน CI pipeline</p>
-          <RescrapeButton />
+          <h2>🔬 แหล่งข้อมูล — chromium vs Apify (ทำไมเลือก Apify)</h2>
+          <p className="sub">เทียบ 2 วิธี scrape Google Maps · ตัวอย่างจริงย่านสยาม · default แสดงจาก DB — กด re-scrape เพื่อยิง Apify อัปเดตสด</p>
+          <DataSourceCompare chromium={chromiumSample} apify={apifySample} />
         </section>
 
         <section>
