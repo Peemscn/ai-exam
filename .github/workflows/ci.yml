@@ -1,0 +1,23 @@
+name: CI
+
+# quality gate — test + build ทุก push/PR (bun · ไม่มี Docker)
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+defaults:
+  run:
+    working-directory: web
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - name: Unit tests (vitest)
+        run: bun run test
+      - name: Build (Next.js 16)
+        run: bun run build

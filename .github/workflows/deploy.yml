@@ -1,0 +1,32 @@
+name: Deploy to Vercel
+
+# deploy production เมื่อ push main (ไม่มี Docker · ใช้ Vercel CLI)
+# ต้องตั้ง GitHub secrets: VERCEL_TOKEN · VERCEL_ORG_ID · VERCEL_PROJECT_ID
+# (ทางเลือกง่ายกว่า: เชื่อม Vercel GitHub integration → auto deploy โดยไม่ต้อง workflow นี้)
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Install Vercel CLI
+        run: bun install -g vercel
+      - name: Pull Vercel project settings
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy (prebuilt)
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
