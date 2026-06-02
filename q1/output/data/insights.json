@@ -1,0 +1,610 @@
+{
+  "total": 300,
+  "date_range": [
+    "2026-05-01",
+    "2026-05-23"
+  ],
+  "versions": {
+    "v1.9.0": 85,
+    "v1.9.1": 78,
+    "v1.8.0": 70,
+    "v1.8.1": 67
+  },
+  "sources": {
+    "App Store Review": 42,
+    "Play Store Review": 42,
+    "Discord": 39,
+    "Customer Support": 39,
+    "Community Post": 37,
+    "In-game Survey": 36,
+    "Facebook Comment": 33,
+    "Google Form": 32
+  },
+  "platforms": {
+    "PC Emulator": 119,
+    "Android": 93,
+    "iOS": 88
+  },
+  "segments": {
+    "F2P": 47,
+    "Guild Leader": 42,
+    "Whale": 41,
+    "Light Spender": 36,
+    "Casual Player": 34,
+    "Returning Player": 34,
+    "Mid Spender": 33,
+    "New Player": 33
+  },
+  "sentiment": {
+    "Negative": {
+      "n": 217,
+      "pct": 72.3
+    },
+    "Neutral": {
+      "n": 61,
+      "pct": 20.3
+    },
+    "Positive": {
+      "n": 22,
+      "pct": 7.3
+    }
+  },
+  "category": {
+    "Gameplay / Balance": {
+      "n": 63,
+      "pct": 21.0
+    },
+    "Content Request": {
+      "n": 50,
+      "pct": 16.7
+    },
+    "Reward / Economy": {
+      "n": 38,
+      "pct": 12.7
+    },
+    "UX / UI": {
+      "n": 38,
+      "pct": 12.7
+    },
+    "Bug / Technical Issue": {
+      "n": 33,
+      "pct": 11.0
+    },
+    "Event Feedback": {
+      "n": 27,
+      "pct": 9.0
+    },
+    "Gacha / Monetization": {
+      "n": 26,
+      "pct": 8.7
+    },
+    "Positive Feedback": {
+      "n": 22,
+      "pct": 7.3
+    },
+    "Account / Payment": {
+      "n": 3,
+      "pct": 1.0
+    }
+  },
+  "priority": {
+    "Medium": {
+      "n": 140,
+      "pct": 46.7
+    },
+    "Low": {
+      "n": 87,
+      "pct": 29.0
+    },
+    "High": {
+      "n": 73,
+      "pct": 24.3
+    }
+  },
+  "owner": {
+    "Game Design": 77,
+    "Product": 64,
+    "Game Economy": 38,
+    "Live Ops": 35,
+    "QA": 33,
+    "Monetization": 26,
+    "Community": 22,
+    "Customer Support": 5
+  },
+  "confidence": {
+    "High": 270,
+    "Medium": 18,
+    "Low": 12
+  },
+  "top_issues": [
+    {
+      "theme": "ยากเกินไปสำหรับคนที่เพิ่งเริ่มเล่น",
+      "count": 12,
+      "category": "Gameplay / Balance",
+      "summary": "ด่านยากเกินไปสำหรับผู้เล่นใหม่ที่เพิ่งเริ่มไม่ถึงเดือน",
+      "sentiment": "Negative"
+    },
+    {
+      "theme": "อันดับ event แข่งขันหนักมาก",
+      "count": 11,
+      "category": "Event Feedback",
+      "summary": "อันดับ event แข่งขันหนักมาก ผู้เล่นทั่วไปสู้ยาก",
+      "sentiment": "Negative"
+    },
+    {
+      "theme": "auto battle ใช้สกิลแปลก",
+      "count": 10,
+      "category": "Gameplay / Balance",
+      "summary": "auto battle ใช้สกิลแปลก ทำให้แพ้ทั้งที่ power ถึง",
+      "sentiment": "Negative"
+    },
+    {
+      "theme": "ชนะง่ายเกินไปจน meta แคบ",
+      "count": 10,
+      "category": "Gameplay / Balance",
+      "summary": "บางทีมใน PvP ชนะง่ายเกินไปจน meta แคบ",
+      "sentiment": "Negative"
+    },
+    {
+      "theme": "one shot บ่อยเกิน",
+      "count": 9,
+      "category": "Gameplay / Balance",
+      "summary": "บอสใหม่มีสกิล one shot บ่อยเกิน รู้สึกไม่แฟร์",
+      "sentiment": "Negative"
+    },
+    {
+      "theme": "เสียงเอฟเฟกต์หาย",
+      "count": 9,
+      "category": "Bug / Technical Issue",
+      "summary": "เสียงเอฟเฟกต์หายหลังจบการต่อสู้ ต้อง restart เกม",
+      "sentiment": "Negative"
+    },
+    {
+      "theme": "ปลุกพลังหายากเกินไป",
+      "count": 8,
+      "category": "Reward / Economy",
+      "summary": "ของปลุกพลังหายาก ฟาร์มทั้งวันยังไม่พอ",
+      "sentiment": "Negative"
+    },
+    {
+      "theme": "เกมแลคมากในด่านบอส",
+      "count": 8,
+      "category": "Bug / Technical Issue",
+      "summary": "เกมแลคมากในด่านบอสใหม่ เฟรมตกจนกดหลบไม่ทัน",
+      "sentiment": "Negative"
+    },
+    {
+      "theme": "ปรับ balance ของอาวุธ",
+      "count": 8,
+      "category": "Gameplay / Balance",
+      "summary": "อยากให้ปรับ balance อาวุธบางชิ้น แรงต่างกันเกิน",
+      "sentiment": "Negative"
+    },
+    {
+      "theme": "ตัวหนังสือในหน้ารายละเอียดสกิลเล็ก",
+      "count": 7,
+      "category": "UX / UI",
+      "summary": "ตัวหนังสือหน้ารายละเอียดสกิลเล็ก อ่านยากบนมือถือ",
+      "sentiment": "Negative"
+    },
+    {
+      "theme": "Tutorial ช่วงแรกเร็วไป",
+      "count": 7,
+      "category": "UX / UI",
+      "summary": "Tutorial ช่วงแรกเร็วไป อธิบายระบบเยอะจนจำไม่ทัน",
+      "sentiment": "Negative"
+    },
+    {
+      "theme": "เนื้อเรื่อง event สนุก",
+      "count": 7,
+      "category": "Content Request",
+      "summary": "ชมเนื้อเรื่อง event สนุก แต่อยากให้มีเสียงพากย์เพิ่ม",
+      "sentiment": "Neutral"
+    }
+  ],
+  "top_negative_issues": [
+    {
+      "theme": "ยากเกินไปสำหรับคนที่เพิ่งเริ่มเล่น",
+      "count": 12,
+      "category": "Gameplay / Balance",
+      "summary": "ด่านยากเกินไปสำหรับผู้เล่นใหม่ที่เพิ่งเริ่มไม่ถึงเดือน"
+    },
+    {
+      "theme": "อันดับ event แข่งขันหนักมาก",
+      "count": 11,
+      "category": "Event Feedback",
+      "summary": "อันดับ event แข่งขันหนักมาก ผู้เล่นทั่วไปสู้ยาก"
+    },
+    {
+      "theme": "auto battle ใช้สกิลแปลก",
+      "count": 10,
+      "category": "Gameplay / Balance",
+      "summary": "auto battle ใช้สกิลแปลก ทำให้แพ้ทั้งที่ power ถึง"
+    },
+    {
+      "theme": "ชนะง่ายเกินไปจน meta แคบ",
+      "count": 10,
+      "category": "Gameplay / Balance",
+      "summary": "บางทีมใน PvP ชนะง่ายเกินไปจน meta แคบ"
+    },
+    {
+      "theme": "one shot บ่อยเกิน",
+      "count": 9,
+      "category": "Gameplay / Balance",
+      "summary": "บอสใหม่มีสกิล one shot บ่อยเกิน รู้สึกไม่แฟร์"
+    },
+    {
+      "theme": "เสียงเอฟเฟกต์หาย",
+      "count": 9,
+      "category": "Bug / Technical Issue",
+      "summary": "เสียงเอฟเฟกต์หายหลังจบการต่อสู้ ต้อง restart เกม"
+    },
+    {
+      "theme": "ปลุกพลังหายากเกินไป",
+      "count": 8,
+      "category": "Reward / Economy",
+      "summary": "ของปลุกพลังหายาก ฟาร์มทั้งวันยังไม่พอ"
+    },
+    {
+      "theme": "เกมแลคมากในด่านบอส",
+      "count": 8,
+      "category": "Bug / Technical Issue",
+      "summary": "เกมแลคมากในด่านบอสใหม่ เฟรมตกจนกดหลบไม่ทัน"
+    }
+  ],
+  "high_priority_total": 73,
+  "high_priority_by_theme": [
+    {
+      "theme": "auto battle ใช้สกิลแปลก",
+      "count": 10,
+      "category": "Gameplay / Balance"
+    },
+    {
+      "theme": "one shot บ่อยเกิน",
+      "count": 9,
+      "category": "Gameplay / Balance"
+    },
+    {
+      "theme": "เกมแลคมากในด่านบอส",
+      "count": 8,
+      "category": "Bug / Technical Issue"
+    },
+    {
+      "theme": "ยังไม่ได้ตัว rate up",
+      "count": 5,
+      "category": "Gacha / Monetization"
+    },
+    {
+      "theme": "pay to win",
+      "count": 5,
+      "category": "Gacha / Monetization"
+    },
+    {
+      "theme": "แรงเกินไป เจอใน arena",
+      "count": 5,
+      "category": "Gameplay / Balance"
+    },
+    {
+      "theme": "ไม่เติมเงินแทบตามคนอื่นไม่ทัน",
+      "count": 4,
+      "category": "Reward / Economy"
+    },
+    {
+      "theme": "เควสต์รายสัปดาห์ให้แต้มไม่พอ",
+      "count": 4,
+      "category": "Reward / Economy"
+    }
+  ],
+  "high_priority_by_category": {
+    "Gameplay / Balance": 24,
+    "Gacha / Monetization": 17,
+    "Bug / Technical Issue": 14,
+    "Reward / Economy": 12,
+    "Account / Payment": 3,
+    "UX / UI": 3
+  },
+  "segment_sentiment": {
+    "Guild Leader": {
+      "total": 42,
+      "Negative": 33,
+      "Neutral": 7,
+      "Positive": 2,
+      "neg_pct": 78.6
+    },
+    "Mid Spender": {
+      "total": 33,
+      "Negative": 22,
+      "Neutral": 7,
+      "Positive": 4,
+      "neg_pct": 66.7
+    },
+    "Light Spender": {
+      "total": 36,
+      "Negative": 30,
+      "Neutral": 3,
+      "Positive": 3,
+      "neg_pct": 83.3
+    },
+    "New Player": {
+      "total": 33,
+      "Negative": 24,
+      "Neutral": 8,
+      "Positive": 1,
+      "neg_pct": 72.7
+    },
+    "F2P": {
+      "total": 47,
+      "Negative": 39,
+      "Neutral": 5,
+      "Positive": 3,
+      "neg_pct": 83.0
+    },
+    "Whale": {
+      "total": 41,
+      "Negative": 27,
+      "Neutral": 10,
+      "Positive": 4,
+      "neg_pct": 65.9
+    },
+    "Casual Player": {
+      "total": 34,
+      "Negative": 23,
+      "Neutral": 11,
+      "Positive": 0,
+      "neg_pct": 67.6
+    },
+    "Returning Player": {
+      "total": 34,
+      "Negative": 19,
+      "Neutral": 10,
+      "Positive": 5,
+      "neg_pct": 55.9
+    }
+  },
+  "segment_top_category": {
+    "Guild Leader": [
+      [
+        "Gameplay / Balance",
+        9
+      ],
+      [
+        "UX / UI",
+        8
+      ],
+      [
+        "Content Request",
+        7
+      ]
+    ],
+    "Mid Spender": [
+      [
+        "Gameplay / Balance",
+        10
+      ],
+      [
+        "Event Feedback",
+        4
+      ],
+      [
+        "Content Request",
+        4
+      ]
+    ],
+    "Light Spender": [
+      [
+        "Gameplay / Balance",
+        11
+      ],
+      [
+        "Bug / Technical Issue",
+        5
+      ],
+      [
+        "Gacha / Monetization",
+        5
+      ]
+    ],
+    "New Player": [
+      [
+        "UX / UI",
+        8
+      ],
+      [
+        "Gameplay / Balance",
+        7
+      ],
+      [
+        "Content Request",
+        6
+      ]
+    ],
+    "F2P": [
+      [
+        "Gameplay / Balance",
+        10
+      ],
+      [
+        "Bug / Technical Issue",
+        8
+      ],
+      [
+        "Event Feedback",
+        6
+      ]
+    ],
+    "Whale": [
+      [
+        "Content Request",
+        9
+      ],
+      [
+        "Gameplay / Balance",
+        7
+      ],
+      [
+        "UX / UI",
+        5
+      ]
+    ],
+    "Casual Player": [
+      [
+        "Content Request",
+        8
+      ],
+      [
+        "Reward / Economy",
+        6
+      ],
+      [
+        "Gameplay / Balance",
+        6
+      ]
+    ],
+    "Returning Player": [
+      [
+        "Content Request",
+        8
+      ],
+      [
+        "Reward / Economy",
+        6
+      ],
+      [
+        "Positive Feedback",
+        5
+      ]
+    ]
+  },
+  "category_sentiment": {
+    "Gacha / Monetization": {
+      "Negative": 26
+    },
+    "Event Feedback": {
+      "Neutral": 5,
+      "Negative": 22
+    },
+    "Gameplay / Balance": {
+      "Negative": 63
+    },
+    "Positive Feedback": {
+      "Positive": 22
+    },
+    "Content Request": {
+      "Neutral": 50
+    },
+    "Reward / Economy": {
+      "Negative": 38
+    },
+    "UX / UI": {
+      "Negative": 32,
+      "Neutral": 6
+    },
+    "Bug / Technical Issue": {
+      "Negative": 33
+    },
+    "Account / Payment": {
+      "Negative": 3
+    }
+  },
+  "platform_bug": {
+    "PC Emulator": 12,
+    "iOS": 13,
+    "Android": 8
+  },
+  "platform_total": {
+    "PC Emulator": 119,
+    "Android": 93,
+    "iOS": 88
+  },
+  "version_trend": {
+    "v1.8.0": {
+      "total": 70,
+      "neg_pct": 71.4,
+      "pos_pct": 7.1
+    },
+    "v1.8.1": {
+      "total": 67,
+      "neg_pct": 62.7,
+      "pos_pct": 11.9
+    },
+    "v1.9.0": {
+      "total": 85,
+      "neg_pct": 75.3,
+      "pos_pct": 4.7
+    },
+    "v1.9.1": {
+      "total": 78,
+      "neg_pct": 78.2,
+      "pos_pct": 6.4
+    }
+  },
+  "source_sentiment": {
+    "Discord": {
+      "total": 39,
+      "neg_pct": 82.1
+    },
+    "App Store Review": {
+      "total": 42,
+      "neg_pct": 59.5
+    },
+    "Customer Support": {
+      "total": 39,
+      "neg_pct": 71.8
+    },
+    "Google Form": {
+      "total": 32,
+      "neg_pct": 65.6
+    },
+    "Play Store Review": {
+      "total": 42,
+      "neg_pct": 76.2
+    },
+    "Facebook Comment": {
+      "total": 33,
+      "neg_pct": 75.8
+    },
+    "Community Post": {
+      "total": 37,
+      "neg_pct": 73.0
+    },
+    "In-game Survey": {
+      "total": 36,
+      "neg_pct": 75.0
+    }
+  },
+  "risk_revenue": {
+    "total_negative_monetization": 64,
+    "from_paying_segments": 32,
+    "whale_monetization_neg": 10
+  },
+  "risk_retention": {
+    "new_returning_negative": 43,
+    "new_returning_total": 67
+  },
+  "opportunity_positive": [
+    {
+      "theme": "UI ใหม่ดูสะอาดขึ้น",
+      "count": 5
+    },
+    {
+      "theme": "mini game ใน event นี้ เล่นง่าย",
+      "count": 5
+    },
+    {
+      "theme": "ภาพสวยขึ้นมาก",
+      "count": 4
+    },
+    {
+      "theme": "กลับมาเล่นทุกวันอีกครั้ง",
+      "count": 2
+    },
+    {
+      "theme": "ของแจกครบรอบดีเกินคาด",
+      "count": 2
+    },
+    {
+      "theme": "เพลงในแผนที่ใหม่ดีมาก",
+      "count": 2
+    }
+  ]
+}

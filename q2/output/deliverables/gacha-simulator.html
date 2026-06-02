@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gacha Drop Rate Simulator</title>
+<style>
+:root{
+ --bg:#eef1f6;--surface:#fff;--surface2:#f7f9fc;--text:#1f2733;--muted:#6b7685;--border:#e1e7ef;
+ --head:#1f2e52;--head2:#3056a8;--accent:#3056a8;--track:#e8edf4;--shadow:rgba(20,30,60,.08);
+ --ok:#1ca672;--okbg:#e3f7ee;--bad:#e23b4e;--badbg:#fdeaec;--warn:#e08a17;
+ --SSR:#f5a623;--SR:#a974f5;--R:#4d8df6;--N:#9aa6b5;}
+[data-theme=dark]{
+ --bg:#0d1320;--surface:#161e2e;--surface2:#1c2638;--text:#e6ecf5;--muted:#94a2b8;--border:#27324a;
+ --head:#0c1426;--head2:#4a74d8;--accent:#5b86e0;--track:#222d44;--shadow:rgba(0,0,0,.45);
+ --ok:#37d39a;--okbg:#11352a;--bad:#ff6b7d;--badbg:#3a1f25;--warn:#e8b85c;
+ --SSR:#ffbf47;--SR:#bd93f8;--R:#6ba6ff;--N:#8390a3;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Sarabun","Noto Sans Thai","Leelawadee UI","Segoe UI",Tahoma,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;transition:background .2s,color .2s}
+.topbar{position:sticky;top:0;z-index:50;background:linear-gradient(135deg,var(--head),var(--head2));color:#fff;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 2px 12px var(--shadow)}
+.topbar h1{font-size:19px;font-weight:700;display:flex;align-items:center;gap:8px}
+.topbar p{font-size:12px;opacity:.85;margin-top:2px}
+.ic{width:36px;height:36px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.14);color:#fff;border-radius:9px;cursor:pointer;font-size:16px;display:inline-flex;align-items:center;justify-content:center}
+.ic:hover{background:rgba(255,255,255,.24)}
+main{max-width:1060px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:0 1px 8px var(--shadow)}
+.card h2{font-size:16px;color:var(--head2);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.card .desc{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+label{font-size:12.5px;color:var(--muted);display:block;margin-bottom:4px;font-weight:600}
+input,select{padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;background:var(--surface);color:var(--text);width:100%}
+input:focus,select:focus{outline:none;border-color:var(--accent)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.row>div{flex:1;min-width:120px}
+.btn{padding:9px 16px;border:none;border-radius:9px;background:var(--accent);color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:filter .15s,transform .05s}
+.btn:hover{filter:brightness(1.08)}.btn:active{transform:translateY(1px)}
+.btn.sec{background:var(--track);color:var(--text)}
+.btn.sm{padding:5px 10px;font-size:12.5px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.rates{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.rate-box{border:2px solid var(--border);border-radius:10px;padding:10px;text-align:center}
+.rate-box.SSR{border-color:var(--SSR)}.rate-box.SR{border-color:var(--SR)}.rate-box.R{border-color:var(--R)}.rate-box.N{border-color:var(--N)}
+.rate-box .tag{font-weight:700;font-size:13px;margin-bottom:6px}
+.rate-box.SSR .tag{color:var(--SSR)}.rate-box.SR .tag{color:var(--SR)}.rate-box.R .tag{color:var(--R)}.rate-box.N .tag{color:var(--N)}
+.rate-box input{text-align:center;font-weight:600}
+.total-badge{margin-top:12px;padding:8px 12px;border-radius:9px;font-weight:700;font-size:14px;text-align:center}
+.total-badge.ok{background:var(--okbg);color:var(--ok)}
+.total-badge.bad{background:var(--badbg);color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+th{background:var(--surface2);color:var(--muted);padding:8px 10px;text-align:left;font-weight:600;border-bottom:2px solid var(--border)}
+td{padding:8px 10px;border-bottom:1px solid var(--border)}
+.chip{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:700;color:#3a2d10}
+[data-theme=dark] .chip{color:#11151c}
+.chip.SSR{background:var(--SSR)}.chip.SR{background:var(--SR)}.chip.R{background:var(--R)}.chip.N{background:var(--N)}
+.msg{font-size:12.5px;padding:8px 12px;border-radius:8px;margin-top:10px;display:none}
+.msg.show{display:block}
+.msg.err{background:var(--badbg);color:var(--bad)}
+.msg.ok{background:var(--okbg);color:var(--ok)}
+.empty{color:var(--muted);font-size:13px;font-style:italic;padding:14px;text-align:center}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:6px 0 14px}
+.stat{background:var(--surface2);border:1px solid var(--border);border-radius:11px;padding:13px;text-align:center}
+.stat .v{font-size:24px;font-weight:800;color:var(--head2)}
+.stat .l{font-size:11.5px;color:var(--muted);margin-top:2px}
+.bars{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+.bar-row{display:flex;align-items:center;gap:9px;font-size:12.5px}
+.bar-row .bl{flex:0 0 90px;font-weight:600}
+.bar-track{flex:1;background:var(--track);border-radius:5px;overflow:hidden;height:22px;position:relative}
+.bar-fill{height:100%;border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding:0 7px;color:#fff;font-size:11px;font-weight:700;min-width:2px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.insight{background:var(--surface2);border-left:4px solid var(--accent);border-radius:0 9px 9px 0;padding:12px 15px;font-size:13.5px;margin-top:12px}
+.insight b{color:var(--head2)}
+.subh{font-size:13px;font-weight:700;color:var(--muted);margin:16px 0 4px;text-transform:uppercase;letter-spacing:.3px}
+.toggle{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text)}
+.toggle input{display:none}
+.sw{width:40px;height:22px;background:var(--track);border-radius:20px;position:relative;transition:background .2s}
+.sw:after{content:"";position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:2px;left:2px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.toggle input:checked+.sw{background:var(--accent)}
+.toggle input:checked+.sw:after{left:20px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--head);color:#fff;padding:12px 20px;border-radius:10px;font-size:13.5px;box-shadow:0 6px 20px var(--shadow);opacity:0;transition:.3s;z-index:100;max-width:90%}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.flex-between{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.hint{font-size:11.5px;color:var(--muted);margin-top:4px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:10px 20px 30px}
+.fadein{animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(max-width:620px){.rates{grid-template-columns:repeat(2,1fr)}main{padding:14px}.card{padding:15px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+ <div><h1>🎰 Gacha Drop Rate Simulator</h1><p>จำลองอัตราดรอป · มุมมองระบบ + ผู้เล่น · Monte Carlo</p></div>
+ <button class="ic" id="theme" title="สลับธีม">🌙</button>
+</div>
+<main>
+ <!-- RATE SETTINGS -->
+ <section class="card">
+  <h2>① Rate Settings</h2>
+  <div class="desc">ตั้งอัตราดรอปแต่ละ rarity — ผลรวมต้องเท่ากับ 100% และห้ามติดลบ</div>
+  <div class="rates">
+   <div class="rate-box SSR"><div class="tag">SSR</div><input type="number" id="r-SSR" value="1" min="0" step="0.1"></div>
+   <div class="rate-box SR"><div class="tag">SR</div><input type="number" id="r-SR" value="9" min="0" step="0.1"></div>
+   <div class="rate-box R"><div class="tag">R</div><input type="number" id="r-R" value="30" min="0" step="0.1"></div>
+   <div class="rate-box N"><div class="tag">N</div><input type="number" id="r-N" value="60" min="0" step="0.1"></div>
+  </div>
+  <div class="total-badge" id="rate-total"></div>
+ </section>
+
+ <!-- ITEM POOL -->
+ <section class="card">
+  <h2>② Item Pool</h2>
+  <div class="desc">เพิ่ม item/ตัวละครในแต่ละ rarity — ทุก rarity ที่ rate &gt; 0 ต้องมีอย่างน้อย 1 item</div>
+  <div class="row">
+   <div style="flex:2"><label>ชื่อ Item</label><input id="it-name" placeholder="เช่น Aurora"></div>
+   <div><label>Rarity</label><select id="it-rar"><option>SSR</option><option>SR</option><option>R</option><option>N</option></select></div>
+   <div style="flex:0 0 auto"><button class="btn" id="add-item">+ Add Item</button></div>
+  </div>
+  <div id="pool-msg" class="msg"></div>
+  <table id="pool-table"><thead><tr><th>Item</th><th>Rarity</th><th style="text-align:right">จัดการ</th></tr></thead><tbody id="pool-body"></tbody></table>
+ </section>
+
+ <!-- SINGLE SIMULATION -->
+ <section class="card">
+  <h2>③ Single Simulation</h2>
+  <div class="desc">สุ่มตามอัตราจริง (Math.random) — ดูผลฝั่งระบบ</div>
+  <div class="row">
+   <div><label>จำนวนครั้งที่สุ่ม</label><input type="number" id="s-rolls" value="100" min="1"></div>
+   <div><label>ราคาต่อครั้ง</label><input type="number" id="s-price" value="10" min="0"></div>
+   <div style="flex:0 0 auto"><label>&nbsp;</label><button class="btn" id="run-sim">🎲 Start Simulation</button></div>
+  </div>
+  <div class="flex-between" style="margin-top:10px">
+   <label class="toggle"><input type="checkbox" id="pity-on" checked><span class="sw"></span>Pity System (Bonus)</label>
+   <div style="display:flex;align-items:center;gap:8px"><span class="hint">การันตี SSR ทุก</span><input type="number" id="pity-th" value="90" min="1" style="width:70px"><span class="hint">โรล · counter: <b id="pity-c">0</b></span></div>
+  </div>
+  <div id="sim-msg" class="msg"></div>
+  <div id="sim-result" style="display:none">
+   <div class="cards" id="sim-cards"></div>
+   <div class="subh">Rate ที่ตั้ง vs สัดส่วนจริง</div>
+   <table><thead><tr><th>Rarity</th><th>Rate ที่ตั้ง</th><th>ออกจริง</th><th>% จริง</th></tr></thead><tbody id="sim-rate-body"></tbody></table>
+   <div class="subh">Rarity Distribution (Chart)</div>
+   <div class="bars" id="sim-chart"></div>
+   <div class="subh">Item Result (นับต่อ item)</div>
+   <table><thead><tr><th>Item</th><th>Rarity</th><th>จำนวน</th></tr></thead><tbody id="sim-item-body"></tbody></table>
+   <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn sec sm" id="csv-latest">⬇ Export Latest Pull CSV</button></div>
+  </div>
+  <div class="flex-between" style="margin-top:18px"><div class="subh" style="margin:0">History (10 รอบล่าสุด)</div><button class="btn sec sm" id="reset-hist">ล้างประวัติ</button></div>
+  <table><thead><tr><th>เวลา</th><th>โรล</th><th>SSR</th><th>SR</th><th>R</th><th>N</th><th>ค่าใช้จ่าย</th></tr></thead><tbody id="hist-body"></tbody></table>
+ </section>
+
+ <!-- PLAYER POV -->
+ <section class="card">
+  <h2>④ Player POV Simulator <span class="chip" style="background:var(--accent);color:#fff">Monte Carlo</span></h2>
+  <div class="desc">จำลองว่า "ถ้าเติมเงินเท่านี้" มีโอกาสได้ SSR แค่ไหน — รันหลายพันรอบแล้วเฉลี่ย</div>
+  <div class="row">
+   <div><label>งบเติมเงิน (บาท)</label><input type="number" id="p-budget" value="3000" min="0"></div>
+   <div><label>ราคาต่อ roll</label><input type="number" id="p-price" value="30" min="1"></div>
+   <div><label>จำนวน simulation</label><input type="number" id="p-sims" value="2000" min="1" max="100000"></div>
+  </div>
+  <div class="flex-between" style="margin-top:12px">
+   <label class="toggle"><input type="checkbox" id="free-on" checked><span class="sw"></span>Free Roll Rule</label>
+   <div style="display:flex;align-items:center;gap:7px"><span class="hint">สุ่มครบ</span><input type="number" id="free-x" value="10" min="1" style="width:64px"><span class="hint">paid → ฟรี</span><input type="number" id="free-y" value="1" min="0" style="width:64px"><span class="hint">roll</span></div>
+  </div>
+  <div style="margin-top:12px"><button class="btn" id="run-mc">📊 Run Monte Carlo</button></div>
+  <div id="p-msg" class="msg"></div>
+  <div id="p-result" style="display:none">
+   <div class="cards" id="p-cards"></div>
+   <div class="insight" id="p-insight"></div>
+   <div class="subh">การกระจายจำนวน SSR ที่ได้ (จากทุกรอบจำลอง)</div>
+   <div class="bars" id="p-chart"></div>
+   <div style="margin-top:14px"><button class="btn sec sm" id="csv-player">⬇ Export Player POV Summary CSV</button></div>
+  </div>
+ </section>
+ <footer>Gacha Drop Rate Simulator · vanilla HTML/CSS/JS · เปิดได้ทันทีในเบราว์เซอร์</footer>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const RAR=["SSR","SR","R","N"];
+const RCOL={SSR:"var(--SSR)",SR:"var(--SR)",R:"var(--R)",N:"var(--N)"};
+const fmt=n=>n.toLocaleString("en-US",{maximumFractionDigits:2});
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2600);}
+function esc(s){return(""+s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+const SAMPLE=[
+ {name:"Aurora",rarity:"SSR"},{name:"Seraphine",rarity:"SSR"},
+ {name:"Kai",rarity:"SR"},{name:"Luna",rarity:"SR"},{name:"Rex",rarity:"SR"},
+ {name:"Mika",rarity:"R"},{name:"Astra",rarity:"R"},{name:"Bolt",rarity:"R"},{name:"Vera",rarity:"R"},
+ {name:"Recruit",rarity:"N"},{name:"Scout",rarity:"N"},{name:"Grunt",rarity:"N"},{name:"Cadet",rarity:"N"},{name:"Rookie",rarity:"N"}];
+let state={pool:[],history:[],lastPull:[],pity:{counter:0}};
+
+// ---------- persistence ----------
+function save(){try{localStorage.setItem("gacha",JSON.stringify({
+ rates:getRates(),pool:state.pool,history:state.history,
+ pityOn:$("#pity-on").checked,pityTh:+$("#pity-th").value,theme:document.documentElement.dataset.theme}));}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem("gacha")||"null");if(!d)return false;
+ if(d.rates)RAR.forEach(r=>$("#r-"+r).value=d.rates[r]);
+ state.pool=d.pool||[];state.history=d.history||[];
+ if(d.pityOn!=null)$("#pity-on").checked=d.pityOn; if(d.pityTh)$("#pity-th").value=d.pityTh;
+ if(d.theme)setTheme(d.theme); return true;}catch(e){return false;}}
+
+// ---------- theme ----------
+function setTheme(t){document.documentElement.dataset.theme=t;$("#theme").textContent=t==="dark"?"☀️":"🌙";}
+$("#theme").onclick=()=>{setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");save();};
+
+// ---------- rates ----------
+function getRates(){const o={};RAR.forEach(r=>o[r]=Math.max(0,+$("#r-"+r).value||0));return o;}
+function rateTotal(){const r=getRates();return RAR.reduce((s,k)=>s+r[k],0);}
+function renderRate(){const t=rateTotal();const b=$("#rate-total");
+ const ok=Math.abs(t-100)<0.001;b.className="total-badge "+(ok?"ok":"bad");
+ b.textContent=ok?`✓ รวม ${fmt(t)}% — ครบ 100%`:`✗ รวม ${fmt(t)}% — ต้องเท่ากับ 100% (ต่าง ${fmt(t-100)})`;save();}
+RAR.forEach(r=>$("#r-"+r).addEventListener("input",renderRate));
+
+// ---------- item pool ----------
+function renderPool(){const tb=$("#pool-body");
+ if(!state.pool.length){tb.innerHTML='<tr><td colspan="3" class="empty">ยังไม่มี item — เพิ่มด้านบน หรือกดใช้ sample</td></tr>';validatePool();return;}
+ tb.innerHTML=state.pool.map((it,i)=>`<tr><td>${esc(it.name)}</td><td><span class="chip ${it.rarity}">${it.rarity}</span></td>
+  <td style="text-align:right"><button class="btn sec sm" data-ed="${i}">แก้</button> <button class="btn sec sm" data-del="${i}">ลบ</button></td></tr>`).join("");
+ tb.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{state.pool.splice(+b.dataset.del,1);renderPool();save();});
+ tb.querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{const it=state.pool[+b.dataset.ed];
+  const nn=prompt("แก้ชื่อ item:",it.name);if(nn===null)return;const nv=nn.trim();if(!nv){toast("ชื่อว่างไม่ได้");return;}it.name=nv;renderPool();save();});
+ validatePool();}
+function addItem(){const n=$("#it-name").value.trim(),r=$("#it-rar").value;
+ if(!n){toast("กรอกชื่อ item ก่อน");return;}
+ if(state.pool.some(p=>p.name===n&&p.rarity===r)){toast("มี item นี้ใน rarity นี้แล้ว");return;}
+ state.pool.push({name:n,rarity:r});$("#it-name").value="";renderPool();save();toast("เพิ่ม "+n+" แล้ว");}
+$("#add-item").onclick=addItem;
+$("#it-name").addEventListener("keydown",e=>{if(e.key==="Enter")addItem();});
+function validatePool(){const r=getRates();const miss=RAR.filter(k=>r[k]>0&&!state.pool.some(p=>p.rarity===k));
+ const m=$("#pool-msg");
+ if(miss.length){m.className="msg err show";m.textContent="⚠ rarity ที่มี rate > 0 แต่ยังไม่มี item: "+miss.join(", ")+" (สุ่มแล้วจะไม่เจอ item)";return false;}
+ m.className="msg";return true;}
+
+// ---------- roll logic ----------
+function pickRarity(rates,ctx){
+ if(ctx&&ctx.on&&ctx.counter+1>=ctx.th){ctx.counter=0;return "SSR";}
+ const t=RAR.reduce((s,k)=>s+rates[k],0);let x=Math.random()*t,acc=0,out="N";
+ for(const k of RAR){acc+=rates[k];if(x<acc){out=k;break;}}
+ if(ctx){if(out==="SSR")ctx.counter=0;else ctx.counter++;}
+ return out;}
+function poolBy(rar){return state.pool.filter(p=>p.rarity===rar);}
+function rollOnce(rates,ctx){const rar=pickRarity(rates,ctx);const items=poolBy(rar);
+ const item=items.length?items[Math.floor(Math.random()*items.length)].name:"(ไม่มี item ใน pool)";return {rar,item};}
+
+// ---------- single simulation ----------
+function runSim(){
+ if(Math.abs(rateTotal()-100)>0.001){toast("rate รวมต้อง = 100% ก่อน");$("#sim-msg").className="msg err show";$("#sim-msg").textContent="แก้ rate ให้ครบ 100% ก่อนสุ่ม";return;}
+ if(!validatePool()){toast("เพิ่ม item ให้ครบทุก rarity ที่ rate>0");return;}
+ const n=Math.floor(+$("#s-rolls").value),price=+$("#s-price").value;
+ if(!(n>0)){toast("จำนวนครั้งต้อง > 0");return;} if(price<0){toast("ราคาต้อง ≥ 0");return;}
+ if(n>500000){toast("จำกัด ≤ 500,000 ครั้ง");return;}
+ $("#sim-msg").className="msg";
+ const rates=getRates();const ctx={on:$("#pity-on").checked,th:Math.max(1,Math.floor(+$("#pity-th").value||90)),counter:state.pity.counter};
+ const cnt={SSR:0,SR:0,R:0,N:0},items={},pull=[];
+ for(let i=1;i<=n;i++){const{rar,item}=rollOnce(rates,ctx);cnt[rar]++;items[item]=(items[item]||0)+1;
+  pull.push({roll:i,rarity:rar,item,cost:price});}
+ state.pity.counter=ctx.counter;$("#pity-c").textContent=ctx.counter;
+ state.lastPull=pull;
+ const totalCost=n*price;const top=RAR.reduce((a,b)=>cnt[a]>=cnt[b]?a:b);
+ $("#sim-cards").innerHTML=[["จำนวน Roll",fmt(n)],["ค่าใช้จ่ายรวม",fmt(totalCost)],["SSR ที่ได้",fmt(cnt.SSR)],["Rarity ที่ออกมากสุด",top]]
+  .map(c=>`<div class="stat"><div class="v">${c[1]}</div><div class="l">${c[0]}</div></div>`).join("");
+ const rates2=getRates();
+ $("#sim-rate-body").innerHTML=RAR.map(k=>`<tr><td><span class="chip ${k}">${k}</span></td><td>${fmt(rates2[k])}%</td><td>${fmt(cnt[k])}</td><td><b>${fmt(cnt[k]/n*100)}%</b></td></tr>`).join("");
+ $("#sim-chart").innerHTML=RAR.map(k=>{const pc=cnt[k]/n*100;return `<div class="bar-row"><span class="bl"><span class="chip ${k}">${k}</span></span><div class="bar-track"><div class="bar-fill" style="width:0%;background:${RCOL[k]}" data-w="${pc.toFixed(1)}">${fmt(pc)}%</div></div></div>`;}).join("");
+ const items2=Object.entries(items).sort((a,b)=>b[1]-a[1]);
+ const rarOf={};state.pool.forEach(p=>rarOf[p.name]=p.rarity);
+ $("#sim-item-body").innerHTML=items2.map(([nm,c])=>`<tr><td>${esc(nm)}</td><td>${rarOf[nm]?`<span class="chip ${rarOf[nm]}">${rarOf[nm]}</span>`:"-"}</td><td>${fmt(c)}</td></tr>`).join("");
+ const res=$("#sim-result");res.style.display="block";res.classList.remove("fadein");void res.offsetWidth;res.classList.add("fadein");
+ requestAnimationFrame(()=>$$("#sim-chart .bar-fill").forEach(f=>f.style.width=f.dataset.w+"%"));
+ state.history.unshift({t:new Date().toLocaleTimeString("th-TH"),n,...cnt,cost:totalCost});state.history=state.history.slice(0,10);
+ renderHist();save();}
+$("#run-sim").onclick=runSim;
+function renderHist(){const tb=$("#hist-body");
+ if(!state.history.length){tb.innerHTML='<tr><td colspan="7" class="empty">ยังไม่มีประวัติ</td></tr>';return;}
+ tb.innerHTML=state.history.map(h=>`<tr><td>${h.t}</td><td>${fmt(h.n)}</td><td>${fmt(h.SSR)}</td><td>${fmt(h.SR)}</td><td>${fmt(h.R)}</td><td>${fmt(h.N)}</td><td>${fmt(h.cost)}</td></tr>`).join("");}
+$("#reset-hist").onclick=()=>{state.history=[];renderHist();save();toast("ล้างประวัติแล้ว");};
+
+// ---------- CSV ----------
+function downloadCSV(name,rows){const csv=rows.map(r=>r.map(c=>{c=(c==null?"":""+c);return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c;}).join(",")).join("\n");
+ const blob=new Blob(["﻿"+csv],{type:"text/csv;charset=utf-8"});const a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href);toast("ดาวน์โหลด "+name);}
+$("#csv-latest").onclick=()=>{if(!state.lastPull.length){toast("ยังไม่มีผลสุ่ม");return;}
+ downloadCSV("latest_pull_result.csv",[["roll_no","rarity","item","cost_each"],...state.lastPull.map(p=>[p.roll,p.rarity,p.item,p.cost])]);};
+
+// ---------- Player POV Monte Carlo ----------
+function computeRolls(){const budget=+$("#p-budget").value,price=+$("#p-price").value;
+ const paid=price>0?Math.floor(budget/price):0;
+ const on=$("#free-on").checked,x=Math.max(1,Math.floor(+$("#free-x").value||1)),y=Math.max(0,Math.floor(+$("#free-y").value||0));
+ const free=on?Math.floor(paid/x)*y:0;return {budget,price,paid,free,total:paid+free};}
+function runMC(){
+ if(Math.abs(rateTotal()-100)>0.001){toast("rate รวมต้อง = 100% ก่อน");return;}
+ if(!validatePool()){toast("item pool ยังไม่ครบ");return;}
+ const sims=Math.floor(+$("#p-sims").value);const{budget,price,paid,free,total}=computeRolls();
+ const m=$("#p-msg");
+ if(!(price>0)){m.className="msg err show";m.textContent="ราคาต่อ roll ต้อง > 0";return;}
+ if(budget<0){m.className="msg err show";m.textContent="งบต้อง ≥ 0";return;}
+ if(!(sims>0)||sims>100000){m.className="msg err show";m.textContent="จำนวน simulation 1–100,000";return;}
+ if(!(total>0)){m.className="msg err show";m.textContent="งบไม่พอสุ่มเลย (paid rolls = 0)";return;}
+ m.className="msg";
+ const rates=getRates(),pityOn=$("#pity-on").checked,pityTh=Math.max(1,Math.floor(+$("#pity-th").value||90));
+ const ssrCounts=[];let sum=0,atLeast1=0,best=0,worst=Infinity;const hist={};
+ for(let s=0;s<sims;s++){const ctx={on:pityOn,th:pityTh,counter:0};let c=0;
+  for(let i=0;i<total;i++){if(pickRarity(rates,ctx)==="SSR")c++;}
+  ssrCounts.push(c);sum+=c;if(c>=1)atLeast1++;if(c>best)best=c;if(c<worst)worst=c;
+  const key=c>=4?"4+":""+c;hist[key]=(hist[key]||0)+1;}
+ const chance1=atLeast1/sims*100,chance0=100-chance1,avg=sum/sims;
+ $("#p-cards").innerHTML=[["Paid Rolls",fmt(paid)],["Free Rolls",fmt(free)],["Total Rolls",fmt(total)],
+  ["โอกาสได้ SSR ≥ 1",fmt(chance1)+"%"],["โอกาสได้ 0 SSR",fmt(chance0)+"%"],["เฉลี่ย SSR/รอบ",fmt(avg)]]
+  .map(c=>`<div class="stat"><div class="v">${c[1]}</div><div class="l">${c[0]}</div></div>`).join("");
+ $("#p-insight").innerHTML=`เติม <b>${fmt(budget)} บาท</b> (ราคา ${fmt(price)}/roll) ได้ <b>${fmt(total)} rolls</b> (${fmt(paid)} paid + ${fmt(free)} free).<br>
+  จากการจำลอง <b>${fmt(sims)} รอบ</b>: มีโอกาส <b>${fmt(chance1)}%</b> ที่จะได้ SSR อย่างน้อย 1 ตัว · เฉลี่ย <b>${fmt(avg)}</b> SSR ต่อรอบ · ดีสุดได้ <b>${best}</b> · แย่สุดได้ <b>${worst===Infinity?0:worst}</b>`;
+ const keys=["0","1","2","3","4+"],mx=Math.max(...keys.map(k=>hist[k]||0));
+ $("#p-chart").innerHTML=keys.map(k=>{const v=hist[k]||0,pc=v/sims*100;return `<div class="bar-row"><span class="bl">${k} SSR</span><div class="bar-track"><div class="bar-fill" style="width:0%;background:${k==="0"?"var(--N)":"var(--SSR)"}" data-w="${mx?(v/mx*100).toFixed(1):0}">${fmt(pc)}%</div></div></div>`;}).join("");
+ state.playerResult={budget,price,paid,free,total,sims,chance1,chance0,avg,best,worst:worst===Infinity?0:worst};
+ const res=$("#p-result");res.style.display="block";res.classList.remove("fadein");void res.offsetWidth;res.classList.add("fadein");
+ requestAnimationFrame(()=>$$("#p-chart .bar-fill").forEach(f=>f.style.width=f.dataset.w+"%"));}
+$("#run-mc").onclick=runMC;
+$("#csv-player").onclick=()=>{const r=state.playerResult;if(!r){toast("ยังไม่ได้รัน Monte Carlo");return;}
+ downloadCSV("player_pov_summary.csv",[["metric","value"],["budget",r.budget],["price_per_roll",r.price],["paid_rolls",r.paid],["free_rolls",r.free],["total_rolls",r.total],["simulations",r.sims],["chance_at_least_1_ssr_%",r.chance1.toFixed(2)],["chance_0_ssr_%",r.chance0.toFixed(2)],["avg_ssr",r.avg.toFixed(3)],["best_ssr",r.best],["worst_ssr",r.worst]]);};
+
+// ---------- init ----------
+function useSample(){state.pool=SAMPLE.map(x=>({...x}));renderPool();save();}
+(function init(){
+ const had=load();
+ if(!had||!state.pool.length){state.pool=SAMPLE.map(x=>({...x}));}
+ if(!document.documentElement.dataset.theme)setTheme(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+ renderRate();renderPool();renderHist();$("#pity-c").textContent=state.pity.counter;
+})();
+</script>
+</body>
+</html>

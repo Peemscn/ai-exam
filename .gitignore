@@ -1,0 +1,15 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# tooling / temp
+.playwright-mcp/
+node_modules/
+*_sample_ids.json
+
+# OS
+.DS_Store
+
+# env
+*.env
