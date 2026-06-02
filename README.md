@@ -75,8 +75,11 @@ python q3/output/src/gen_report.py && python q3/output/src/build_xlsx.py
 node q3/output/src/server.mjs   # (option, static version) http://localhost:8090 + ปุ่ม "re-scrape สด"
 
 # web — รวม 3 โจทย์ (Next.js + Turso → Vercel)
-cd web && npm install && npm run dev   # http://localhost:3000 · /q1 /q2 /q3
-# (option) seed Turso DB: cd web && node --env-file=.env.local db/seed.mjs
+cd web && bun install && bun run dev   # http://localhost:3000 · /q1 /q2 /q3 /api-docs
+# scrape (Apify): cd web && bun --env-file=.env scripts/scrape-apify.mjs && python3 scripts/clean.py && python3 scripts/score.py
+# seed Turso:  cd web && bun --env-file=.env db/seed.mjs
+# tests:       cd web && bun run test          # vitest 32
+# CI/CD:       .github/workflows/ (ci · deploy · scrape)
 
 # tests
 python q1/output/tests/test_classify.py        # 24
