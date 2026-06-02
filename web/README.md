@@ -54,11 +54,10 @@ bun run test     # vitest — 32 unit tests (lib/gacha · lib/format)
 
 ## Deploy
 
-- **Vercel:** import repo → **Root Directory = `web`** → env (`ANTHROPIC_API_KEY` · `TURSO_DATABASE_URL` · `TURSO_AUTH_TOKEN` · `APIFY_TOKEN`) → Deploy
-- **CI/CD** (root `.github/workflows/`):
-  - `ci.yml` — bun install + vitest + build (ทุก push/PR)
-  - `deploy.yml` — Vercel CLI deploy (push main · ต้อง secret `VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID`)
-  - `scrape.yml` — re-scrape (weekly + manual · secret `APIFY_TOKEN`)
+- **Vercel (auto-connect):** เชื่อม GitHub repo → **Root Directory = `web`** → env (`ANTHROPIC_API_KEY` · `TURSO_DATABASE_URL` · `TURSO_AUTH_TOKEN` · `APIFY_TOKEN`) → **auto deploy ทุก push** (+ preview ทุก PR · ไม่ต้อง token)
+- **CI** (root `.github/workflows/`):
+  - `ci.yml` — bun install + vitest + build (quality gate ทุก push/PR)
+  - `scrape.yml` — re-scrape (weekly + manual · secret `APIFY_TOKEN` + `TURSO_*`)
 
 ## Stack
 

@@ -79,7 +79,7 @@ cd web && bun install && bun run dev   # http://localhost:3000 · /q1 /q2 /q3 /a
 # scrape (Apify): cd web && bun --env-file=.env scripts/scrape-apify.mjs && python3 scripts/clean.py && python3 scripts/score.py
 # seed Turso:  cd web && bun --env-file=.env db/seed.mjs
 # tests:       cd web && bun run test          # vitest 32
-# CI/CD:       .github/workflows/ (ci · deploy · scrape)
+# CI:          .github/workflows/ (ci=test+build · scrape=re-scrape) · deploy = Vercel auto-connect
 
 # tests
 python q1/output/tests/test_classify.py        # 24
