@@ -57,21 +57,19 @@ export default function FeedbackTable() {
     return () => clearTimeout(t);
   }, [load]);
 
-  useEffect(() => { setPage(1); }, [q, cat, sent, prio]);
-
   return (
     <div>
       <div className="controls">
-        <input aria-label="ค้นหา feedback" placeholder="🔍 ค้นหา summary / theme / ID…" value={q} onChange={(e) => setQ(e.target.value)} />
-        <select aria-label="กรองหมวด" value={cat} onChange={(e) => setCat(e.target.value)}>
+        <input aria-label="ค้นหา feedback" placeholder="🔍 ค้นหา summary / theme / ID…" value={q} onChange={(e) => { setQ(e.target.value); setPage(1); }} />
+        <select aria-label="กรองหมวด" value={cat} onChange={(e) => { setCat(e.target.value); setPage(1); }}>
           <option value="">ทุกหมวด</option>
           {cats.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
-        <select aria-label="กรอง sentiment" value={sent} onChange={(e) => setSent(e.target.value)}>
+        <select aria-label="กรอง sentiment" value={sent} onChange={(e) => { setSent(e.target.value); setPage(1); }}>
           <option value="">ทุก sentiment</option>
           <option>Negative</option><option>Neutral</option><option>Positive</option>
         </select>
-        <select aria-label="กรอง priority" value={prio} onChange={(e) => setPrio(e.target.value)}>
+        <select aria-label="กรอง priority" value={prio} onChange={(e) => { setPrio(e.target.value); setPage(1); }}>
           <option value="">ทุก priority</option>
           <option>High</option><option>Medium</option><option>Low</option>
         </select>

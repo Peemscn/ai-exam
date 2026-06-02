@@ -7,8 +7,9 @@ export default function ThemeToggle() {
 
   // sync state กับ theme ที่ inline script (ใน layout) ตั้งไว้ก่อน paint
   useEffect(() => {
-    const t = (document.documentElement.dataset.theme as "dark" | "light") || "dark";
-    setTheme(t);
+    // sync state กับ dataset ที่ no-flash script ตั้งก่อน paint (client-only) — เลี่ยง hydration mismatch
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setTheme((document.documentElement.dataset.theme as "dark" | "light") || "dark");
   }, []);
 
   function toggle() {

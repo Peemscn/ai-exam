@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "scrape": "node scripts/scrape.mjs",
+    "lint": "eslint .",
+    "scrape": "bun scripts/scrape.mjs",
     "test": "vitest run"
   },
   "dependencies": {
@@ -21,6 +21,8 @@
     "@types/node": "^22",
     "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
+    "eslint": "^9",
+    "eslint-config-next": "^16.2.7",
     "playwright": "^1.49.0",
     "typescript": "^5",
     "vitest": "^4.1.8"

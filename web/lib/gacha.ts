@@ -14,8 +14,8 @@ export function pickRarity(rates: Rates, ctx: PityCtx | null, rnd: () => number 
     return "SSR";
   }
   const t = RAR.reduce((s, k) => s + rates[k], 0);
-  let x = rnd() * t,
-    acc = 0;
+  const x = rnd() * t;
+  let acc = 0;
   let out: Rarity = "N";
   for (const k of RAR) {
     acc += rates[k];

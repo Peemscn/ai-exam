@@ -24,29 +24,16 @@ const FIELDS: { k: keyof Sample; label: string }[] = [
 const coverage = (rows: Sample[], k: keyof Sample) =>
   rows.filter((r) => r[k] != null && r[k] !== "").length;
 
-export default function DataSourceCompare({ chromium, apify }: { chromium: Sample[]; apify: Sample[] }) {
-  const [msg, setMsg] = useState("");
-  const [ok, setOk] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  async function rescrape() {
-    if (loading) return;
-    setLoading(true);
-    setMsg("");
-    try {
-      const r = await fetch("/api/scrape", { method: "POST" });
-      const j = await r.json();
-      if (j.data?.msg) { setOk(true); setMsg(j.data.msg); }
-      else { setOk(false); setMsg(j.error?.message || "เกิดข้อผิดพลาด"); }
-    } catch (e) {
-      setOk(false);
-      setMsg((e as Error).message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  const Column = ({ rows, lite }: { rows: Sample[]; lite: boolean }) => (
+// top-level component (ไม่สร้างใน render — react-hooks/static-components)
+function SourceColumn({ rows, lite, rescrape, loading, msg, ok }: {
+  rows: Sample[];
+  lite: boolean;
+  rescrape: () => void;
+  loading: boolean;
+  msg: string;
+  ok: boolean;
+}) {
+  return (
     <div className="card" style={{ borderColor: lite ? "var(--warn)" : "var(--good)", borderWidth: 1, borderStyle: "solid" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
         <span className="pill" style={{ background: lite ? "var(--warn)" : "var(--good)", color: "#fff", border: "none" }}>
@@ -102,12 +89,35 @@ export default function DataSourceCompare({ chromium, apify }: { chromium: Sampl
       )}
     </div>
   );
+}
+
+export default function DataSourceCompare({ chromium, apify }: { chromium: Sample[]; apify: Sample[] }) {
+  const [msg, setMsg] = useState("");
+  const [ok, setOk] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function rescrape() {
+    if (loading) return;
+    setLoading(true);
+    setMsg("");
+    try {
+      const r = await fetch("/api/scrape", { method: "POST" });
+      const j = await r.json();
+      if (j.data?.msg) { setOk(true); setMsg(j.data.msg); }
+      else { setOk(false); setMsg(j.error?.message || "เกิดข้อผิดพลาด"); }
+    } catch (e) {
+      setOk(false);
+      setMsg((e as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <>
       <div className="cardgrid">
-        <Column rows={chromium} lite={true} />
-        <Column rows={apify} lite={false} />
+        <SourceColumn rows={chromium} lite={true} rescrape={rescrape} loading={loading} msg={msg} ok={ok} />
+        <SourceColumn rows={apify} lite={false} rescrape={rescrape} loading={loading} msg={msg} ok={ok} />
       </div>
       <p style={{ color: "var(--muted)", fontSize: "0.82rem", marginTop: 14 }}>
         💾 หน้านี้แสดงข้อมูลจาก <strong>DB (Turso)</strong> ที่ scrape ไว้แล้ว — ไม่กดปุ่มก็มีข้อมูลครบ ไม่เปลือง Apify quota ·

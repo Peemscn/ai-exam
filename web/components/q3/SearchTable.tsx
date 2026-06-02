@@ -46,17 +46,15 @@ export default function SearchTable() {
     return () => clearTimeout(t);
   }, [load]);
 
-  useEffect(() => { setPage(1); }, [q, area, sort]);
-
   return (
     <div>
       <div className="controls">
-        <input aria-label="ค้นหาร้าน" placeholder="🔍 ค้นหาชื่อร้าน / ประเภท / ที่อยู่…" value={q} onChange={(e) => setQ(e.target.value)} />
-        <select aria-label="กรองพื้นที่" value={area} onChange={(e) => setArea(e.target.value)}>
+        <input aria-label="ค้นหาร้าน" placeholder="🔍 ค้นหาชื่อร้าน / ประเภท / ที่อยู่…" value={q} onChange={(e) => { setQ(e.target.value); setPage(1); }} />
+        <select aria-label="กรองพื้นที่" value={area} onChange={(e) => { setArea(e.target.value); setPage(1); }}>
           <option value="">ทุกพื้นที่</option>
           {AREAS.map((a) => <option key={a} value={a}>{a}</option>)}
         </select>
-        <select aria-label="จัดเรียง" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)}>
+        <select aria-label="จัดเรียง" value={sort} onChange={(e) => { setSort(e.target.value as typeof sort); setPage(1); }}>
           <option value="total">เรียงตามคะแนน</option>
           <option value="rating">เรียงตามเรตติ้ง</option>
           <option value="dist">เรียงตามระยะ</option>

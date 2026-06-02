@@ -28,6 +28,21 @@ export type RawPlace = {
   address: string | null; hours: string | null; website: string | null; url: string;
 };
 
+// Apify actor output (compass/crawler-google-places) — เฉพาะ field ที่ใช้
+type ApifyItem = {
+  title?: string;
+  totalScore?: number;
+  reviewsCount?: number;
+  price?: string;
+  categoryName?: string;
+  location?: { lat?: number; lng?: number };
+  address?: string;
+  openingHours?: (string | { day?: string; hours?: string })[];
+  website?: string;
+  url?: string;
+  placeId?: string;
+};
+
 // ---- 1) scrape ผ่าน Apify Google Maps Scraper (REST API) ----
 //   actor compass/crawler-google-places · run-sync = block จนเสร็จ → คืน dataset items
 export async function scrapeApify(token: string): Promise<RawPlace[]> {
@@ -42,28 +57,28 @@ export async function scrapeApify(token: string): Promise<RawPlace[]> {
     { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(input) }
   );
   if (!res.ok) throw new Error(`Apify ${res.status}: ${(await res.text()).slice(0, 160)}`);
-  const items = (await res.json()) as Record<string, any>[];
+  const items = (await res.json()) as ApifyItem[];
   return items
     .filter((it) => it.title && it.totalScore)
     .map((it) => {
       const lat = it.location?.lat ?? null;
       const lon = it.location?.lng ?? null;
       return {
-        name: it.title,
+        name: it.title ?? "",
         rating: it.totalScore ?? null,
         reviews: it.reviewsCount ?? null,
         price: it.price ?? null,
         category: it.categoryName || "",
-        area: lat != null ? nearest(lat, lon) : "อโศก",
+        area: lat != null && lon != null ? nearest(lat, lon) : "อโศก",
         lat, lon,
         address: it.address ?? null,
         hours:
           (it.openingHours || [])
-            .map((h: any) => (typeof h === "string" ? h : `${h.day || ""} ${h.hours || ""}`.trim()))
+            .map((h) => (typeof h === "string" ? h : `${h.day || ""} ${h.hours || ""}`.trim()))
             .filter(Boolean)
             .join(" · ") || null,
         website: it.website ?? null,
-        url: it.url ?? it.placeId ?? it.title,
+        url: it.url ?? it.placeId ?? it.title ?? "",
       };
     });
 }

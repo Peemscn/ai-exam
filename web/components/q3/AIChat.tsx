@@ -17,6 +17,8 @@ export default function AIChat() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // โหลด key จาก localStorage หลัง mount (client-only) — เลี่ยง hydration mismatch
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setKey(localStorage.getItem("anthropic_key") || "");
   }, []);
 
