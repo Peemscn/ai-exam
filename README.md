@@ -3,6 +3,13 @@
 **ผู้ทำ:** DEV : PEEM · มิถุนายน 2026
 **แนวทาง:** ทำด้วย Claude (Claude Code) + code-based stack เน้น**ผลลัพธ์ตาม requirement**
 
+## 🌐 Live Demo — รวม 3 โจทย์เป็น Next.js app เดียว (+ Turso DB, deploy Vercel)
+
+### → **https://web-six-theta-78.vercel.app**
+
+`/q1` Player Feedback · `/q2` Gacha Simulator · `/q3` AI Food Assistant · `/api-docs` Swagger UI
+Source: https://github.com/Peemscn/ai-exam
+
 ---
 
 ## โครงสร้างโปรเจกต์
@@ -48,11 +55,11 @@ HTML ไฟล์เดียว: rate setting / item pool / single sim / **Mont
 | `/` | landing รวม 3 โจทย์ | — |
 | `/q1` | Player Feedback (insight charts + 300-row table + aggregate) | `q1/output/` |
 | `/q2` | Gacha Simulator (sim / Monte Carlo / pity + DB session) | `q2/output/` |
-| `/q3` | AI Food Assistant (90 ร้าน + AI Q&A + re-scrape สด) | `q3/output/` |
+| `/q3` | AI Food Assistant (103 ร้าน 5 ย่าน + AI Q&A + re-scrape Apify สด) | `q3/output/` |
 
 - **API:** `/api/ask` (Claude) · `/api/feedback` (aggregate SQL) · `/api/gacha` (session R/W) · `/api/restaurants` · `/api/scrape`
-- **DB (Turso):** `web/db/schema.sql` + `seed.mjs` (restaurants 90 + feedback 300) · fallback JSON ถ้าไม่ตั้ง env
-- **Deploy:** Vercel (Root Directory = `web`) — รายละเอียด + ตาราง map ใน `web/README.md`
+- **DB (Turso):** `web/db/schema.sql` + `seed.mjs` (restaurants 103 + feedback 300) · fallback JSON ถ้าไม่ตั้ง env
+- **Deploy:** **live → https://web-six-theta-78.vercel.app** · Vercel **git auto-deploy** (push → deploy เอง, Root Directory = `web`) · รายละเอียดใน `web/README.md`
 
 > static เดิม (`qN/output/deliverables/`) ยังเก็บไว้ส่ง exam แยกข้อ
 
