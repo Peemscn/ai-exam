@@ -13,3 +13,6 @@ node_modules/
 
 # env
 *.env
+# submission staging
+submit/
+submit.zip
