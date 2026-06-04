@@ -1,97 +1,1057 @@
-<!DOCTYPE html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Food Assistant — อโศก (Asok / Sukhumvit)</title><style>
-:root{--bg:#eef1f6;--surface:#fff;--surface2:#f7f9fc;--text:#1f2733;--muted:#6b7685;--border:#e1e7ef;--head:#15324e;--head2:#1f6f78;--accent:#1f6f78;--track:#e8edf4;--shadow:rgba(20,30,60,.08);--gold:#f5a623;--chip:#eef3f4}
-[data-theme=dark]{--bg:#0c1420;--surface:#15202e;--surface2:#1b2838;--text:#e6ecf5;--muted:#93a3b8;--border:#26354a;--head:#0a1a2c;--head2:#2c9aa5;--accent:#2c9aa5;--track:#202d40;--shadow:rgba(0,0,0,.45);--gold:#ffbf47;--chip:#22303f}
-*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
-body{font-family:"Sarabun","Noto Sans Thai","Segoe UI",Tahoma,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:.2s}
-.topbar{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 18px;box-shadow:0 2px 10px var(--shadow);overflow-x:auto}
-.topbar .nav{display:flex;gap:4px}.topbar a{font-size:12px;color:var(--muted);text-decoration:none;padding:5px 9px;border-radius:7px;white-space:nowrap}.topbar a:hover{background:var(--track);color:var(--text)}
-.ic{flex:0 0 auto;width:34px;height:34px;border:1px solid var(--border);background:var(--track);color:var(--text);border-radius:8px;cursor:pointer;font-size:15px}
-.page{max-width:1080px;margin:0 auto;background:var(--surface);box-shadow:0 0 30px var(--shadow)}
-header.hero{background:linear-gradient(135deg,var(--head),var(--head2));color:#fff;padding:34px 40px}
-header.hero h1{font-size:27px;margin-bottom:8px}header.hero .meta{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;opacity:.9;margin-top:12px}
-section{padding:24px 40px;border-bottom:1px solid var(--border);scroll-margin-top:52px}
-h2{font-size:19px;color:var(--head2);margin-bottom:12px;display:flex;gap:9px;align-items:center}
-h2 .n{background:var(--head2);color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:0 0 26px}
-p.lead{font-size:14px}.muted{color:var(--muted);font-size:13px}code{background:var(--chip);padding:1px 6px;border-radius:5px;font-size:12px}
-.wf{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0}.wf .s{background:var(--chip);border:1px solid var(--border);border-radius:8px;padding:7px 13px;font-size:13px;font-weight:600;color:var(--head2)}.wf .a{color:var(--muted);font-weight:700}
-.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-.tool{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px}.tool b{color:var(--head2);font-size:13.5px}.tool span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
-th{background:var(--head);color:#fff;padding:8px 9px;text-align:left;font-weight:600}
-td{padding:8px 9px;border-bottom:1px solid var(--border);vertical-align:middle}tr:nth-child(even) td{background:var(--surface2)}
-.rank{font-weight:800;color:var(--head2)}.star{color:var(--gold);font-weight:700;white-space:nowrap}
-.bar{height:7px;background:var(--track);border-radius:4px;overflow:hidden;min-width:60px}.bar>i{display:block;height:100%;background:var(--head2);border-radius:4px}
-.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.rcard{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface2);display:flex;flex-direction:column}
-.rcard .top{background:linear-gradient(135deg,var(--head),var(--head2));color:#fff;padding:14px}.rcard .medal{font-size:22px}.rcard h3{font-size:16px;margin:4px 0}
-.rcard .body{padding:14px;font-size:13px;flex:1}.rcard .facts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
-.fact{background:var(--chip);border-radius:6px;padding:2px 8px;font-size:11.5px;color:var(--muted)}.rcard ul{margin:0 0 0 16px}.rcard li{margin:3px 0}
-.watch{background:var(--surface);border-left:3px solid var(--gold);padding:7px 11px;border-radius:0 7px 7px 0;font-size:12.5px;margin-top:10px}
-.crit{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dashed var(--border);font-size:13px}.crit .w{flex:0 0 46px;font-weight:800;color:var(--head2);text-align:right}.crit .lab{flex:0 0 210px;font-weight:600}
-a.ev{color:var(--accent);font-size:12px;text-decoration:none}a.ev:hover{text-decoration:underline}
-footer{padding:18px 40px;font-size:12px;color:var(--muted);background:var(--surface2)}
-.ai-wrap{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px}
-.ai-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.ai-wrap input,.ai-wrap textarea{padding:9px 11px;border:1px solid var(--border);border-radius:8px;font-size:13.5px;font-family:inherit;background:var(--surface);color:var(--text);width:100%}
-.ai-wrap textarea{min-height:46px;resize:vertical}.ai-key{flex:1;min-width:200px}
-.ai-btn{padding:9px 18px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-weight:600;cursor:pointer;font-size:14px;white-space:nowrap}.ai-btn:disabled{opacity:.5;cursor:not-allowed}
-.chips{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0}.qchip{background:var(--chip);border:1px solid var(--border);border-radius:20px;padding:4px 11px;font-size:12px;cursor:pointer;color:var(--head2)}.qchip:hover{background:var(--track)}
-.ai-ans{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:13px;font-size:13.5px;margin-top:10px;white-space:pre-wrap;min-height:20px}
-.ai-hint{font-size:11.5px;color:var(--muted);margin-top:6px}
-.sc{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
-.sc input,.sc select{padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;background:var(--surface);color:var(--text)}
-#q{flex:1;min-width:170px}#scount{font-size:13px;color:var(--muted);font-weight:600;margin-left:auto}
-th.sortable{cursor:pointer;user-select:none;white-space:nowrap}th.sortable:hover{background:var(--head2)}th .ar{opacity:.45;font-size:10px}th.on .ar{opacity:1}
-.pager{display:flex;gap:9px;align-items:center;justify-content:center;padding:14px;flex-wrap:wrap}.pager .muted{font-size:13px}
-.sbtn{padding:7px 12px;border:1px solid var(--border);background:var(--track);color:var(--text);border-radius:8px;cursor:pointer;font-size:13px}.sbtn:disabled{opacity:.5;cursor:not-allowed}
-@media(max-width:760px){header.hero{padding:24px 18px}section{padding:18px}.cards3{grid-template-columns:1fr}.crit .lab{flex-basis:130px}#scount{margin-left:0;width:100%}}
-</style></head><body><div class="page"><div class="topbar"><div class="nav"><a href="#s1">เป้าหมาย</a><a href="#s2">Workflow</a><a href="#s3">Tools</a><a href="#s4">แหล่งข้อมูล</a><a href="#s5">เกณฑ์</a><a href="#s6">Top 3</a><a href="#sai">🤖 ถาม AI</a><a href="#s7">Top 10</a><a href="#ssearch">🔍 ค้นหา</a><a href="#s8">เปรียบเทียบ</a></div><button class="ic" id="theme" title="สลับธีม">🌙</button></div><header class="hero"><h1>🍽️ AI Food Assistant — หาร้านมื้อทีมย่านอโศก (Asok / Sukhumvit)</h1><div class="muted" style="color:#dfeaf0">ทีม 8–12 คน · ข้อมูลจริง + AI scoring · ค้นหา / ถาม AI / re-scrape สดได้</div><div class="meta"><span>📍 อโศก (Asok / Sukhumvit)</span><span>📅 2026-06-01</span><span>👤 DEV : PEEM</span><span>🤖 Claude</span></div></header><section id="s1"><h2><span class="n">1</span>เป้าหมาย (Objective)</h2><p class="lead">ทีม 8–12 คนต้องเลือกร้านมื้อเย็นย่านอโศก โดยตัดสินจาก<b>ข้อมูลจริง</b>.<br><b>คำถาม:</b> จาก 90 ร้าน ร้านไหน <b>Top 3</b> เหมาะที่สุด เพราะอะไร (+ ค้นหา/ถาม AI/ดึงข้อมูลสดเองได้)</p></section><section id="s2"><h2><span class="n">2</span>Workflow</h2><div class="wf"><span class="s">Scrape Google Maps</span><span class="a">→</span><span class="s">Fetch OSM</span><span class="a">→</span><span class="s">Clean</span><span class="a">→</span><span class="s">Scoring 100</span><span class="a">→</span><span class="s">AI Insight + Q&A</span><span class="a">→</span><span class="s">HTML + re-scrape API</span></div></section><section id="s3"><h2><span class="n">3</span>Tools</h2><div class="tools"><div class="tool"><b>Playwright</b><span>scrape Maps + OSM (CLI + backend API)</span></div><div class="tool"><b>OSM Overpass</b><span>cuisine/พิกัด (แหล่งที่ 2)</span></div><div class="tool"><b>Claude</b><span>scoring + insight + Q&A สด</span></div><div class="tool"><b>Python</b><span>clean + score 100</span></div><div class="tool"><b>Node server.mjs</b><span>API /api/scrape (re-scrape สด)</span></div></div></section><section id="s4"><h2><span class="n">4</span>แหล่งข้อมูล</h2><p class="lead">จริง <b>2 แหล่ง</b> รวม <b>90 ร้าน</b>:</p><ul style="margin:8px 0 0 20px;font-size:13.5px"><li><b>Google Maps</b> · <a class="ev" href="https://www.google.com/maps/search/restaurants+near+Asok+Bangkok" target="_blank">↗</a></li><li><b>OSM Overpass</b> · <a class="ev" href="https://overpass-api.de/" target="_blank">↗</a></li></ul></section><section id="s5"><h2><span class="n">5</span>เกณฑ์ให้คะแนน (100)</h2><div class="crit"><span class="w">25</span><span class="lab">Rating &amp; Review Quality</span></div><div class="crit"><span class="w">20</span><span class="lab">Group Suitability</span></div><div class="crit"><span class="w">15</span><span class="lab">Price Suitability</span></div><div class="crit"><span class="w">15</span><span class="lab">Travel Convenience</span></div><div class="crit"><span class="w">15</span><span class="lab">Data Completeness</span></div><div class="crit"><span class="w">10</span><span class="lab">Uniqueness / Experience</span></div><p class="muted" style="margin-top:8px">สูตรโปร่งใส (src/score.py)</p></section><section id="s6"><h2><span class="n">6</span>🏆 แนะนำ Top 3</h2><div class="cards3"><div class="rcard"><div class="top"><div class="medal">🥇</div><h3>Sunrise Tacos MEXICAN GRILL</h3><div style="font-size:12px;opacity:.9">88 ซอย สุขุมวิท 19</div></div><div class="body"><div class="facts"><span class="fact">เม็กซิกัน</span><span class="fact">⭐ 4.7 (4,999)</span><span class="fact">฿200-400</span><span class="fact">📍 80m</span><span class="fact">คะแนน 93.4</span></div><ul><li>ใกล้สถานีที่สุดใน Top 10 (~80m เดิน 1–2 นาที) ทุกคนมาเจอง่าย</li><li>งบเป็นมิตร ฿200–400/คน เหมาะทีมหลายระดับ</li><li>เมนูเม็กซิกัน (tacos/nachos/quesadilla) สั่งแชร์กลางโต๊ะได้ดี</li><li>รีวิวเกือบ 5,000 · 4.7★ = นิยมและรองรับลูกค้าจำนวนมาก</li></ul><div class="watch">⚠ อยู่โซนการค้า โต๊ะกลุ่มใหญ่ควรจองล่วงหน้า และรสเม็กซิกันอาจไม่ถูกปากทุกคน</div></div></div><div class="rcard"><div class="top"><div class="medal">🥈</div><h3>อะแบนดอน แมนชัน</h3><div style="font-size:12px;opacity:.9">41 Soi Sukhumvit 14</div></div><div class="body"><div class="facts"><span class="fact">บาร์ดนตรีสด</span><span class="fact">⭐ 4.8 (6,768)</span><span class="fact">฿400-1,600</span><span class="fact">📍 227m</span><span class="fact">คะแนน 87.4</span></div><ul><li>บาร์ + ดนตรีสด เหมาะสังสรรค์ทีมหลังเลิกงาน</li><li>เปิดถึงตี 2 นั่งยาวได้ไม่ต้องรีบ</li><li>4.8★ รีวิวกว่า 6,700 การันตีความนิยม</li><li>งบ ฿400–1,600 ยืดหยุ่นตามการสั่ง</li></ul><div class="watch">⚠ เน้นเครื่องดื่ม/บรรยากาศ เสียงดนตรีอาจดังเกินไปถ้าต้องคุยงานจริงจัง</div></div></div><div class="rcard"><div class="top"><div class="medal">🥉</div><h3>Amritsr Indian Restaurant</h3><div style="font-size:12px;opacity:.9">ซ. สุขุมวิท 22</div></div><div class="body"><div class="facts"><span class="fact">อินเดีย</span><span class="fact">⭐ 4.8 (11,656)</span><span class="fact">฿200-1,000</span><span class="fact">📍 733m</span><span class="fact">คะแนน 86.2</span></div><ul><li>รีวิวเยอะสุดใน Top 10 (กว่า 11,600) · 4.8★ = น่าเชื่อถือสูงสุด</li><li>อาหารอินเดีย (curry/naan/biryani) เป็นสำรับแชร์กลุ่มได้ดีมาก</li><li>เปิดถึงตี 4 รองรับมื้อค่ำยาว ๆ</li><li>งบ ฿200–1,000 ครอบหลายระดับ</li></ul><div class="watch">⚠ ไกลสุดใน Top 3 (~730m เดิน ~9 นาที) และอาหารอินเดีย/เผ็ดอาจไม่ถูกปากบางคน</div></div></div></div></section><section id="sai"><h2><span class="n">7</span>🤖 ถาม AI (Interactive)</h2><p class="muted" style="margin-bottom:10px">ถาม AI ให้แนะนำร้านจาก data จริง 90 ร้าน</p><div class="ai-wrap"><div class="ai-row"><input class="ai-key" id="aikey" type="password" placeholder="วาง Anthropic API key (sk-ant-...) — เก็บใน browser นี้เท่านั้น"></div><div class="ai-row"><textarea id="aiq" placeholder="เช่น: ร้านไหนเหมาะกลุ่ม 10 คน งบ 500 คุยงานได้"></textarea></div><div class="chips" id="qchips"></div><button class="ai-btn" id="aibtn">ถาม AI 🚀</button><div class="ai-ans" id="aians">— คำตอบจะแสดงที่นี่ —</div><div class="ai-hint">Claude Haiku 4.5 · key อยู่ใน localStorage เครื่องนี้</div></div></section><section id="s7"><h2><span class="n">8</span>📊 Top 10 Ranking</h2><div style="margin-bottom:10px"><button class="ai-btn" id="rescrape">🔄 re-scrape สด (Google Maps)</button> <span id="rsmsg" class="muted"></span></div><div style="overflow-x:auto"><table><thead><tr><th>อันดับ</th><th>ร้าน</th><th>เรตติ้ง</th><th>ราคา</th><th>ระยะ</th><th>R&R</th><th>Group</th><th>Price</th><th>Travel</th><th>Data</th><th>Uniq</th><th>รวม/100</th><th>หลักฐาน</th></tr></thead><tbody id="top10body"><tr><td class="rank">#1</td><td>Sunrise Tacos MEXICAN GRILL<br><span class="muted">เม็กซิกัน · 88 ซอย สุขุมวิท 19</span></td><td class="star">⭐4.7<br><span class="muted">4,999</span></td><td>฿200-400</td><td>80m</td><td>20.4</td><td>18.0</td><td>15</td><td>15</td><td>15.0</td><td>10</td><td><b>93.4</b><br><div class="bar"><i style="width:93%"></i></div></td><td><a class="ev" href="https://www.google.com/maps/place/Sunrise+Tacos+MEXICAN+GRILL/data=!4m7!3m6!1s0x30e29ee3a1b5aac5:0xe40b4f7a8a87fc3a!8m2!3d13.737971!4d100.5603725!16s%2Fg%2F1pw3yr2gj!19sChIJxaq1oeOe4jAROvyHinpPC-Q?authuser=0&amp;hl=th&amp;rclk=1" target="_blank">Maps ↗</a></td></tr><tr><td class="rank">#2</td><td>อะแบนดอน แมนชัน<br><span class="muted">บาร์ดนตรีสด · 41 Soi Sukhumvit 14</span></td><td class="star">⭐4.8<br><span class="muted">6,768</span></td><td>฿400-1,600</td><td>227m</td><td>21.7</td><td>18.7</td><td>12</td><td>15</td><td>10.0</td><td>10</td><td><b>87.4</b><br><div class="bar"><i style="width:87%"></i></div></td><td><a class="ev" href="https://www.google.com/maps/place/%E0%B8%AD%E0%B8%B0%E0%B9%81%E0%B8%9A%E0%B8%99%E0%B8%94%E0%B8%AD%E0%B8%99+%E0%B9%81%E0%B8%A1%E0%B8%99%E0%B8%8A%E0%B8%B1%E0%B8%99/data=!4m7!3m6!1s0x30e29f66016968f3:0xdc3e00a1dc1cf220!8m2!3d13.735257!4d100.5600491!16s%2Fg%2F11rvc08sqj!19sChIJ82hpAWaf4jARIPIc3KEAPtw?authuser=0&amp;hl=th&amp;rclk=1" target="_blank">Maps ↗</a></td></tr><tr><td class="rank">#3</td><td>Amritsr Indian Restaurant<br><span class="muted">อินเดีย · ซ. สุขุมวิท 22</span></td><td class="star">⭐4.8<br><span class="muted">11,656</span></td><td>฿200-1,000</td><td>733m</td><td>22.2</td><td>20</td><td>15</td><td>9</td><td>10.0</td><td>10</td><td><b>86.2</b><br><div class="bar"><i style="width:86%"></i></div></td><td><a class="ev" href="https://www.google.com/maps/place/Amritsr+Indian+Restaurant/data=!4m7!3m6!1s0x30e29f02825c8b1d:0x832026f6f68e9c71!8m2!3d13.7328252!4d100.565086!16s%2Fg%2F11hbntg1x4!19sChIJHYtcggKf4jARcZyO9vYmIIM?authuser=0&amp;hl=th&amp;rclk=1" target="_blank">Maps ↗</a></td></tr><tr><td class="rank">#4</td><td>Axis &amp; Spin (Sky Lounge &amp; Bar)<br><span class="muted">บาร์ · 38th Floor 413 ถ. สุขุมวิท</span></td><td class="star">⭐4.8<br><span class="muted">1,723</span></td><td>฿200-1,400</td><td>242m</td><td>20.4</td><td>16.7</td><td>12</td><td>15</td><td>10.0</td><td>10</td><td><b>84.1</b><br><div class="bar"><i style="width:84%"></i></div></td><td><a class="ev" href="https://www.google.com/maps/place/Axis+%26+Spin+%28Sky+Lounge+%26+Bar%29/data=!4m7!3m6!1s0x30e29ee3205c0915:0x29e12b9a7c9fb8c!8m2!3d13.7361149!4d100.5619832!16s%2Fg%2F11b8c3tfdl!19sChIJFQlcIOOe4jARjPvJp7kSngI?authuser=0&amp;hl=th&amp;rclk=1" target="_blank">Maps ↗</a></td></tr><tr><td class="rank">#5</td><td>Elbasha Turkish &amp; Lebanese Restaurant in Bangkok<br><span class="muted">เลบานอน · 25, 4 ซ. สุขุมวิท 16</span></td><td class="star">⭐4.7<br><span class="muted">2,356</span></td><td>฿200-600</td><td>551m</td><td>19.7</td><td>16.9</td><td>15</td><td>12</td><td>10.0</td><td>10</td><td><b>83.6</b><br><div class="bar"><i style="width:84%"></i></div></td><td><a class="ev" href="https://www.google.com/maps/place/Elbasha+Turkish+%26+Lebanese+Restaurant+in+Bangkok/data=!4m7!3m6!1s0x30e29f33d335e2d3:0x5c46912c3091c457!8m2!3d13.7324393!4d100.5610964!16s%2Fg%2F11l2kzk91v!19sChIJ0-I10zOf4jARV8SRMCyRRlw?authuser=0&amp;hl=th&amp;rclk=1" target="_blank">Maps ↗</a></td></tr><tr><td class="rank">#6</td><td>เสวย เทอร์มินอล 21 อโศก<br><span class="muted">อาหารทะเล · ห้องเลขที่ SH-5 ศูนย์การค้าเทอร์มิ</span></td><td class="star">⭐4.6<br><span class="muted">3,616</span></td><td>฿200-1,200</td><td>81m</td><td>19.1</td><td>17.4</td><td>15</td><td>15</td><td>10.0</td><td>7</td><td><b>83.5</b><br><div class="bar"><i style="width:84%"></i></div></td><td><a class="ev" href="https://www.google.com/maps/place/%E0%B9%80%E0%B8%AA%E0%B8%A7%E0%B8%A2+%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A1%E0%B8%B4%E0%B8%99%E0%B8%AD%E0%B8%A5+21+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29f88fad3a7d5:0xd4c98e6dab855fbe!8m2!3d13.7379635!4d100.5604058!16s%2Fg%2F11j1f9kyrp!19sChIJ1afT-oif4jARvl-Fq22OydQ?authuser=0&amp;hl=th&amp;rclk=1" target="_blank">Maps ↗</a></td></tr><tr><td class="rank">#7</td><td>Breakfast Story Asok<br><span class="muted">ร้านอาหาร · 392 9 ถ. สุขุมวิท</span></td><td class="star">⭐4.7<br><span class="muted">2,189</span></td><td>฿200-400</td><td>502m</td><td>19.6</td><td>16.9</td><td>15</td><td>12</td><td>12.5</td><td>7</td><td><b>83.0</b><br><div class="bar"><i style="width:83%"></i></div></td><td><a class="ev" href="https://www.google.com/maps/place/Breakfast+Story+Asok/data=!4m7!3m6!1s0x30e29fd866010d33:0x9cb6eef5eb436846!8m2!3d13.7344789!4d100.563729!16s%2Fg%2F11mtfj6rj0!19sChIJMw0BZtif4jARRmhD6_Xutpw?authuser=0&amp;hl=th&amp;rclk=1" target="_blank">Maps ↗</a></td></tr><tr><td class="rank">#8</td><td>เคบีบีคิว สุขุมวิท<br><span class="muted">บาร์บีคิว · เรสซิเดนเซส ชั้น 2 ถ. 12/497 อาคาร</span></td><td class="star">⭐4.7<br><span class="muted">1,665</span></td><td>฿400-600</td><td>562m</td><td>19.3</td><td>16.7</td><td>15</td><td>12</td><td>10.0</td><td>10</td><td><b>83.0</b><br><div class="bar"><i style="width:83%"></i></div></td><td><a class="ev" href="https://www.google.com/maps/place/%E0%B9%80%E0%B8%84%E0%B8%9A%E0%B8%B5%E0%B8%9A%E0%B8%B5%E0%B8%84%E0%B8%B4%E0%B8%A7+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97/data=!4m7!3m6!1s0x30e29ff44507296f:0x5374596e2a58629f!8m2!3d13.7420055!4d100.5581905!16s%2Fg%2F11gy453s3f!19sChIJbykHRfSf4jARn2JYKm5ZdFM?authuser=0&amp;hl=th&amp;rclk=1" target="_blank">Maps ↗</a></td></tr><tr><td class="rank">#9</td><td>Gigi Eatery Asoke<br><span class="muted">อิตาลี · 28 ซอย สุขุมวิท 19</span></td><td class="star">⭐4.8<br><span class="muted">3,330</span></td><td>฿400-1,400</td><td>241m</td><td>21.0</td><td>17.3</td><td>12</td><td>15</td><td>10.0</td><td>7</td><td><b>82.3</b><br><div class="bar"><i style="width:82%"></i></div></td><td><a class="ev" href="https://www.google.com/maps/place/Gigi+Eatery+Asoke/data=!4m7!3m6!1s0x30e29f8a268495c3:0x370b453b880f2e14!8m2!3d13.73947!4d100.5601766!16s%2Fg%2F11rq7sdzqs!19sChIJw5WEJoqf4jARFC4PiDtFCzc?authuser=0&amp;hl=th&amp;rclk=1" target="_blank">Maps ↗</a></td></tr><tr><td class="rank">#10</td><td>Bangkok Heightz Rooftop (Restaurant &amp; Bar 39th floor)<br><span class="muted">ร้านอาหาร · 413 ชั้น 39 โรงแรม เดอะ คอนทิเนนท์</span></td><td class="star">⭐4.8<br><span class="muted">2,889</span></td><td>฿1,000+</td><td>250m</td><td>20.9</td><td>17.2</td><td>12</td><td>15</td><td>10.0</td><td>7</td><td><b>82.1</b><br><div class="bar"><i style="width:82%"></i></div></td><td><a class="ev" href="https://www.google.com/maps/place/Bangkok+Heightz+Rooftop+%28Restaurant+%26+Bar+39th+floor%29/data=!4m7!3m6!1s0x30e29ee3200006fd:0xeee25794ba4b1bc4!8m2!3d13.736264!4d100.5621587!16s%2Fg%2F11c61txdkf!19sChIJ_QYAIOOe4jARxBtLupRX4u4?authuser=0&amp;hl=th&amp;rclk=1" target="_blank">Maps ↗</a></td></tr></tbody></table></div><p class="muted" style="margin-top:8px">R&R(25)·Group(20)·Price(15)·Travel(15)·Data(15)·Uniq(10) · ปุ่ม re-scrape ใช้ได้เมื่อเปิดผ่าน <code>node q3/output/src/server.mjs</code></p></section><section id="ssearch"><h2><span class="n">9</span>🔍 ค้นหาร้าน (ทั้ง 90 ร้าน)</h2><p class="muted" style="margin-bottom:10px">หาร้านที่สนใจเอง — พิมพ์ชื่อ/ประเภท หรือกรอง แล้วคลิกหัวคอลัมน์เพื่อ sort</p><div class="sc"><input id="q" placeholder="🔎 ค้นหาชื่อร้าน / ประเภท"><select id="fcat"><option value="">ทุกประเภท</option></select><select id="fprice"><option value="">ทุกราคา</option><option value="lo">≤ ฿400</option><option value="mid">฿400–1,000</option><option value="hi">฿1,000+</option></select><select id="fdist"><option value="">ทุกระยะ</option><option value="300">≤ 300m</option><option value="600">≤ 600m</option><option value="1000">≤ 1km</option></select><button class="sbtn" id="sreset">ล้าง</button><span id="scount"></span></div><div style="overflow-x:auto"><table><thead><tr id="shead"></tr></thead><tbody id="sbody"></tbody></table></div><div class="pager"><button class="sbtn" id="sprev">‹ ก่อนหน้า</button><span class="muted" id="spage"></span><button class="sbtn" id="snext">ถัดไป ›</button></div></section><section id="s8"><h2><span class="n">10</span>เปรียบเทียบ &amp; Insight</h2><p class="lead">ย่านอโศกมีร้านอาหารหนาแน่นมาก (เก็บได้ 90 ร้านในรัศมี ~800m จาก BTS) เรตติ้งสูงเกือบทั้งหมด (4.5★ ขึ้นไป) และหลากหลาย — ไทย / อินเดีย / ญี่ปุ่น / เม็กซิกัน / rooftop bar. สำหรับมื้อเย็นทีม 8–12 คน จุดตัดสินอยู่ที่ (1) ร้านรับกลุ่มใหญ่ได้จริง ดูจากจำนวนรีวิวที่มาก (2) เมนูแชร์กลางโต๊ะได้ (3) เดินจากสถานีไม่ไกล. Top 3 จึงเน้นร้านรีวิวหลักพัน–หมื่น เดินจากอโศกไม่เกิน ~10 นาที และเมนูเหมาะแชร์กลุ่ม</p><table style="margin-top:12px"><tr><th>ร้าน</th><th>จุดเด่น</th><th>ข้อควรระวัง</th></tr><tr><td><b>🥇 Sunrise Tacos MEXICAN GRILL</b></td><td>ใกล้สถานีที่สุดใน Top 10 (~80m เดิน 1–2 นาที) ทุกคนมาเจอง่าย</td><td>อยู่โซนการค้า โต๊ะกลุ่มใหญ่ควรจองล่วงหน้า และรสเม็กซิกันอาจไม่ถูกปากทุกคน</td></tr><tr><td><b>🥈 อะแบนดอน แมนชัน</b></td><td>บาร์ + ดนตรีสด เหมาะสังสรรค์ทีมหลังเลิกงาน</td><td>เน้นเครื่องดื่ม/บรรยากาศ เสียงดนตรีอาจดังเกินไปถ้าต้องคุยงานจริงจัง</td></tr><tr><td><b>🥉 Amritsr Indian Restaurant</b></td><td>รีวิวเยอะสุดใน Top 10 (กว่า 11,600) · 4.8★ = น่าเชื่อถือสูงสุด</td><td>ไกลสุดใน Top 3 (~730m เดิน ~9 นาที) และอาหารอินเดีย/เผ็ดอาจไม่ถูกปากบางคน</td></tr></table></section><footer>AI Food Assistant · ย่านอโศก (Asok / Sukhumvit) · 90 ร้าน (Google Maps + OSM) · Claude · 2026-06-01 · DEV : PEEM</footer></div><script>const root=document.documentElement,tb=document.getElementById('theme');
-function setT(t){root.dataset.theme=t;tb.textContent=t==='dark'?'☀️':'🌙';try{localStorage.setItem('q3theme',t)}catch(e){}}
-tb.onclick=()=>setT(root.dataset.theme==='dark'?'light':'dark');
-(function(){let t;try{t=localStorage.getItem('q3theme')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';setT(t);})();
-let DATA=[{"rank": 1, "name": "Sunrise Tacos MEXICAN GRILL", "cat": "เม็กซิกัน", "rating": 4.7, "reviews": 4999, "price": "฿200-400", "dist": 80, "total": 93.4, "url": "https://www.google.com/maps/place/Sunrise+Tacos+MEXICAN+GRILL/data=!4m7!3m6!1s0x30e29ee3a1b5aac5:0xe40b4f7a8a87fc3a!8m2!3d13.737971!4d100.5603725!16s%2Fg%2F1pw3yr2gj!19sChIJxaq1oeOe4jAROvyHinpPC-Q?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 20.4, "group_suitability": 18.0, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 15.0, "uniqueness": 10}}, {"rank": 2, "name": "อะแบนดอน แมนชัน", "cat": "บาร์ดนตรีสด", "rating": 4.8, "reviews": 6768, "price": "฿400-1,600", "dist": 227, "total": 87.4, "url": "https://www.google.com/maps/place/%E0%B8%AD%E0%B8%B0%E0%B9%81%E0%B8%9A%E0%B8%99%E0%B8%94%E0%B8%AD%E0%B8%99+%E0%B9%81%E0%B8%A1%E0%B8%99%E0%B8%8A%E0%B8%B1%E0%B8%99/data=!4m7!3m6!1s0x30e29f66016968f3:0xdc3e00a1dc1cf220!8m2!3d13.735257!4d100.5600491!16s%2Fg%2F11rvc08sqj!19sChIJ82hpAWaf4jARIPIc3KEAPtw?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 21.7, "group_suitability": 18.7, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 10}}, {"rank": 3, "name": "Amritsr Indian Restaurant", "cat": "อินเดีย", "rating": 4.8, "reviews": 11656, "price": "฿200-1,000", "dist": 733, "total": 86.2, "url": "https://www.google.com/maps/place/Amritsr+Indian+Restaurant/data=!4m7!3m6!1s0x30e29f02825c8b1d:0x832026f6f68e9c71!8m2!3d13.7328252!4d100.565086!16s%2Fg%2F11hbntg1x4!19sChIJHYtcggKf4jARcZyO9vYmIIM?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 22.2, "group_suitability": 20, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 10}}, {"rank": 4, "name": "Axis & Spin (Sky Lounge & Bar)", "cat": "บาร์", "rating": 4.8, "reviews": 1723, "price": "฿200-1,400", "dist": 242, "total": 84.1, "url": "https://www.google.com/maps/place/Axis+%26+Spin+%28Sky+Lounge+%26+Bar%29/data=!4m7!3m6!1s0x30e29ee3205c0915:0x29e12b9a7c9fb8c!8m2!3d13.7361149!4d100.5619832!16s%2Fg%2F11b8c3tfdl!19sChIJFQlcIOOe4jARjPvJp7kSngI?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 20.4, "group_suitability": 16.7, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 10}}, {"rank": 5, "name": "Elbasha Turkish & Lebanese Restaurant in Bangkok", "cat": "เลบานอน", "rating": 4.7, "reviews": 2356, "price": "฿200-600", "dist": 551, "total": 83.6, "url": "https://www.google.com/maps/place/Elbasha+Turkish+%26+Lebanese+Restaurant+in+Bangkok/data=!4m7!3m6!1s0x30e29f33d335e2d3:0x5c46912c3091c457!8m2!3d13.7324393!4d100.5610964!16s%2Fg%2F11l2kzk91v!19sChIJ0-I10zOf4jARV8SRMCyRRlw?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 19.7, "group_suitability": 16.9, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 10}}, {"rank": 6, "name": "เสวย เทอร์มินอล 21 อโศก", "cat": "อาหารทะเล", "rating": 4.6, "reviews": 3616, "price": "฿200-1,200", "dist": 81, "total": 83.5, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%AA%E0%B8%A7%E0%B8%A2+%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A1%E0%B8%B4%E0%B8%99%E0%B8%AD%E0%B8%A5+21+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29f88fad3a7d5:0xd4c98e6dab855fbe!8m2!3d13.7379635!4d100.5604058!16s%2Fg%2F11j1f9kyrp!19sChIJ1afT-oif4jARvl-Fq22OydQ?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 19.1, "group_suitability": 17.4, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 7, "name": "Breakfast Story Asok", "cat": "ร้านอาหาร", "rating": 4.7, "reviews": 2189, "price": "฿200-400", "dist": 502, "total": 83.0, "url": "https://www.google.com/maps/place/Breakfast+Story+Asok/data=!4m7!3m6!1s0x30e29fd866010d33:0x9cb6eef5eb436846!8m2!3d13.7344789!4d100.563729!16s%2Fg%2F11mtfj6rj0!19sChIJMw0BZtif4jARRmhD6_Xutpw?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 19.6, "group_suitability": 16.9, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 12.5, "uniqueness": 7}}, {"rank": 8, "name": "เคบีบีคิว สุขุมวิท", "cat": "บาร์บีคิว", "rating": 4.7, "reviews": 1665, "price": "฿400-600", "dist": 562, "total": 83.0, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%84%E0%B8%9A%E0%B8%B5%E0%B8%9A%E0%B8%B5%E0%B8%84%E0%B8%B4%E0%B8%A7+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97/data=!4m7!3m6!1s0x30e29ff44507296f:0x5374596e2a58629f!8m2!3d13.7420055!4d100.5581905!16s%2Fg%2F11gy453s3f!19sChIJbykHRfSf4jARn2JYKm5ZdFM?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 19.3, "group_suitability": 16.7, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 10}}, {"rank": 9, "name": "Gigi Eatery Asoke", "cat": "อิตาลี", "rating": 4.8, "reviews": 3330, "price": "฿400-1,400", "dist": 241, "total": 82.3, "url": "https://www.google.com/maps/place/Gigi+Eatery+Asoke/data=!4m7!3m6!1s0x30e29f8a268495c3:0x370b453b880f2e14!8m2!3d13.73947!4d100.5601766!16s%2Fg%2F11rq7sdzqs!19sChIJw5WEJoqf4jARFC4PiDtFCzc?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 21.0, "group_suitability": 17.3, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 10, "name": "Bangkok Heightz Rooftop (Restaurant & Bar 39th floor)", "cat": "ร้านอาหาร", "rating": 4.8, "reviews": 2889, "price": "฿1,000+", "dist": 250, "total": 82.1, "url": "https://www.google.com/maps/place/Bangkok+Heightz+Rooftop+%28Restaurant+%26+Bar+39th+floor%29/data=!4m7!3m6!1s0x30e29ee3200006fd:0xeee25794ba4b1bc4!8m2!3d13.736264!4d100.5621587!16s%2Fg%2F11c61txdkf!19sChIJ_QYAIOOe4jARxBtLupRX4u4?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 20.9, "group_suitability": 17.2, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 11, "name": "Indulge Restaurant & Cocktail Bar", "cat": "ไทย", "rating": 4.7, "reviews": 3689, "price": "฿400-1,400", "dist": 234, "total": 81.6, "url": "https://www.google.com/maps/place/Indulge+Restaurant+%26+Cocktail+Bar/data=!4m7!3m6!1s0x30e29ee31e36ccbd:0x5f4b13707be34836!8m2!3d13.736193!4d100.56194!16s%2Fg%2F11cn9jblfq!19sChIJvcw2HuOe4jARNkjje3ATS18?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 20.1, "group_suitability": 17.5, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 12, "name": "Firepork - Terminal21 Asok", "cat": "ร้านอาหาร", "rating": 4.8, "reviews": 168, "price": "฿200-400", "dist": 138, "total": 81.2, "url": "https://www.google.com/maps/place/Firepork+-+Terminal21+Asok/data=!4m7!3m6!1s0x30e29fe286ce145b:0x7fe60152cd423071!8m2!3d13.7383316!4d100.5608042!16s%2Fg%2F11x63c19__!19sChIJWxTOhuKf4jARcTBCzVIB5n8?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.1, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 13, "name": "Mexicano", "cat": "เม็กซิกัน", "rating": 4.7, "reviews": 2856, "price": "฿200-1,400", "dist": 642, "total": 80.5, "url": "https://www.google.com/maps/place/Mexicano/data=!4m7!3m6!1s0x30e29f1d494cd761:0x2dec2a41979f8eb6!8m2!3d13.732284!4d100.563035!16s%2Fg%2F1hf3y8s75!19sChIJYddMSR2f4jARto6fl0Eq7C0?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 19.9, "group_suitability": 17.1, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 12.5, "uniqueness": 10}}, {"rank": 14, "name": "นิคุโช", "cat": "ปิ้งย่างยากินิกุ", "rating": 4.8, "reviews": 8500, "price": "฿400-1,400", "dist": 756, "total": 79.8, "url": "https://www.google.com/maps/place/%E0%B8%99%E0%B8%B4%E0%B8%84%E0%B8%B8%E0%B9%82%E0%B8%8A/data=!4m7!3m6!1s0x30e29f72f4eea7e3:0xc7f18b36fed194ba!8m2!3d13.7345872!4d100.5665223!16s%2Fg%2F11h12ht3b0!19sChIJ46fu9HKf4jARupTR_jaL8cc?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 21.9, "group_suitability": 19.4, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 7.5, "uniqueness": 10}}, {"rank": 15, "name": "Chowpati Indian Street Food", "cat": "อินเดีย", "rating": 4.6, "reviews": 2379, "price": "฿200-400", "dist": 577, "total": 79.7, "url": "https://www.google.com/maps/place/Chowpati+Indian+Street+Food/data=!4m7!3m6!1s0x30e29f8fa2d80583:0x5367888745723c68!8m2!3d13.7419567!4d100.5577534!16s%2Fg%2F11flbfyp56!19sChIJgwXYoo-f4jARaDxyRYeIZ1M?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.7, "group_suitability": 17.0, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 16, "name": "ซันริคุซูชิ", "cat": "อิซาคายะ", "rating": 4.5, "reviews": 585, "price": "฿400-1,000", "dist": 226, "total": 79.5, "url": "https://www.google.com/maps/place/%E0%B8%8B%E0%B8%B1%E0%B8%99%E0%B8%A3%E0%B8%B4%E0%B8%84%E0%B8%B8%E0%B8%8B%E0%B8%B9%E0%B8%8A%E0%B8%B4/data=!4m7!3m6!1s0x30e29ee4793fb355:0x339f6c86f3451b92!8m2!3d13.739334!4d100.5600923!16s%2Fg%2F1yg93l9sn!19sChIJVbM_eeSe4jARkhtF84ZsnzM?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 16.3, "group_suitability": 16.2, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 17, "name": "นาราไทย คูซีน", "cat": "ไทย", "rating": 4.7, "reviews": 1134, "price": "฿400-1,400", "dist": 80, "total": 79.4, "url": "https://www.google.com/maps/place/%E0%B8%99%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B9%84%E0%B8%97%E0%B8%A2+%E0%B8%84%E0%B8%B9%E0%B8%8B%E0%B8%B5%E0%B8%99/data=!4m7!3m6!1s0x30e29feeca0f45e5:0x982174cb4c7629ce!8m2!3d13.7379219!4d100.5604662!16s%2Fg%2F11vz5jq2sp!19sChIJ5UUPyu6f4jARzil2TMt0IZg?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.9, "group_suitability": 16.5, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 18, "name": "ดูเร", "cat": "บาร์บีคิวเกาหลี", "rating": 4.6, "reviews": 1773, "price": "฿400-1,400", "dist": 258, "total": 79.1, "url": "https://www.google.com/maps/place/%E0%B8%94%E0%B8%B9%E0%B9%80%E0%B8%A3/data=!4m7!3m6!1s0x30e29ee393ade8b7:0x58ce49a06da0b9fb!8m2!3d13.738284!4d100.5579359!16s%2Fg%2F1tf6p77m!19sChIJt-itk-Oe4jAR-7mgbaBJzlg?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.4, "group_suitability": 16.7, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 19, "name": "Achyut Bhavan Bangkok", "cat": "อาหารอินเดียตอนใต้", "rating": 4.8, "reviews": 363, "price": "฿200-400", "dist": 625, "total": 78.9, "url": "https://www.google.com/maps/place/Achyut+Bhavan+Bangkok/data=!4m7!3m6!1s0x30e29f695b7c85d1:0xbc2e8d8740d327c!8m2!3d13.7427305!4d100.5615775!16s%2Fg%2F11yjs3gzgx!19sChIJ0YV8W2mf4jARfDINdNjowgs?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.8, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 10}}, {"rank": 20, "name": "BARTELS Asok - Sourdough Sandwiches, Coffee & Juicery", "cat": "อาหารมื้อสาย", "rating": 4.8, "reviews": 2419, "price": "฿200-400", "dist": 181, "total": 78.7, "url": "https://www.google.com/maps/place/BARTELS+Asok+-+Sourdough+Sandwiches,+Coffee+%26+Juicery/data=!4m7!3m6!1s0x30e29f41225bb46b:0xdb0a4e24ad71cfc5!8m2!3d13.7385733!4d100.5590604!16s%2Fg%2F11y66vnc6_!19sChIJa7RbIkGf4jARxc9xrSROCts?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 20.7, "group_suitability": 11.0, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 21, "name": "Moom Muum Park", "cat": "ร้านอาหาร", "rating": 4.6, "reviews": 1007, "price": "฿400-1,000", "dist": 42, "total": 78.2, "url": "https://www.google.com/maps/place/Moom+Muum+Park/data=!4m7!3m6!1s0x30e29ee3a05de9f5:0x925ddc86698b9644!8m2!3d13.737378!4d100.5604841!16s%2Fg%2F1hf2py9hq!19sChIJ9eldoOOe4jARRJaLaYbcXZI?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.8, "group_suitability": 16.4, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 22, "name": "Benares Bangkok", "cat": "ร้านอาหารอินเดียสมัยใหม่", "rating": 4.7, "reviews": 446, "price": "฿1,000+", "dist": 585, "total": 78.2, "url": "https://www.google.com/maps/place/Benares+Bangkok/data=!4m7!3m6!1s0x30e29f6423ac6817:0x6ab3be720ead955f!8m2!3d13.74209!4d100.5578549!16s%2Fg%2F11j029bcm6!19sChIJF2isI2Sf4jARX5WtDnK-s2o?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.0, "group_suitability": 16.2, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 10}}, {"rank": 23, "name": "แมดโมอา อโศก Mad moa asok", "cat": "อาหารอเมริกาทางตะวันตก", "rating": 4.8, "reviews": 159, "price": "฿400-600", "dist": 377, "total": 78.1, "url": "https://www.google.com/maps/place/%E0%B9%81%E0%B8%A1%E0%B8%94%E0%B9%82%E0%B8%A1%E0%B8%AD%E0%B8%B2+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81+Mad+moa+asok/data=!4m7!3m6!1s0x30e29f9a1e927f81:0x41b4950e4429c4d!8m2!3d13.7403864!4d100.5615505!16s%2Fg%2F11pdf6_lwx!19sChIJgX-SHpqf4jARTZxC5FBJGwQ?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.0, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 24, "name": "Madam Saranair Thai Food Restaurant", "cat": "ไทย", "rating": 4.5, "reviews": 2189, "price": "฿200-1,000", "dist": 365, "total": 78.0, "url": "https://www.google.com/maps/place/Madam+Saranair+Thai+Food+Restaurant/data=!4m7!3m6!1s0x30e29ee4947bb5d5:0xd5c8caa52002fc65!8m2!3d13.7402563!4d100.5615624!16s%2Fg%2F11btwrcbm6!19sChIJ1bV7lOSe4jARZfwCIKXKyNU?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.6, "group_suitability": 16.9, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 12.5, "uniqueness": 4}}, {"rank": 25, "name": "Dae Jang Gum", "cat": "เกาหลี", "rating": 4.6, "reviews": 703, "price": "฿200-1,000", "dist": 478, "total": 77.8, "url": "https://www.google.com/maps/place/Dae+Jang+Gum/data=!4m7!3m6!1s0x30e29ee4c84a0021:0x976f027d04afd297!8m2!3d13.7405615!4d100.5629827!16s%2Fg%2F119thpqds!19sChIJIQBKyOSe4jARl9KvBH0Cb5c?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.5, "group_suitability": 16.3, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 26, "name": "Kinnaree by Vanessa WU (Sukhumvit 8)", "cat": "ไทย", "rating": 4.7, "reviews": 2316, "price": "฿400-1,400", "dist": 407, "total": 77.6, "url": "https://www.google.com/maps/place/Kinnaree+by+Vanessa+WU+%28Sukhumvit+8%29/data=!4m7!3m6!1s0x30e29ee139290fc5:0xdbc8163c5ffe4628!8m2!3d13.7380768!4d100.5564138!16s%2Fg%2F1tdmgy0b!19sChIJxQ8pOeGe4jARKEb-XzwWyNs?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 19.7, "group_suitability": 16.9, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 27, "name": "Xoxo Stylish Korean Bar & Restaurant @ Asok", "cat": "ร้านอาหาร", "rating": 4.6, "reviews": 312, "price": "฿200-400", "dist": 232, "total": 76.8, "url": "https://www.google.com/maps/place/Xoxo+Stylish+Korean+Bar+%26+Restaurant+@+Asok/data=!4m7!3m6!1s0x30e29f03a57814f5:0x5cb769eaf65d58a6!8m2!3d13.7383501!4d100.5582434!16s%2Fg%2F11h0w9v9pt!19sChIJ9RR4pQOf4jARplhd9uppt1w?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 16.7, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 28, "name": "บิ๊ก มาม่า อาหารอิตาเลียน", "cat": "อิตาลี", "rating": 4.5, "reviews": 3392, "price": "฿200-1,000", "dist": 387, "total": 76.4, "url": "https://www.google.com/maps/place/%E0%B8%9A%E0%B8%B4%E0%B9%8A%E0%B8%81+%E0%B8%A1%E0%B8%B2%E0%B8%A1%E0%B9%88%E0%B8%B2+%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%AD%E0%B8%B4%E0%B8%95%E0%B8%B2%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B8%A2%E0%B8%99/data=!4m7!3m6!1s0x30e29ee49366ea8b:0xfccd79a165c43008!8m2!3d13.7404324!4d100.5616669!16s%2Fg%2F1vrhp3qy!19sChIJi-pmk-Se4jARCDDEZaF5zfw?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.0, "group_suitability": 17.4, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 29, "name": "ผัดไทยพลีส Pad Thai Please - Terminal 21 Asok", "cat": "เลขที่ 88 ห้องเลขที่ SH4017 ชั้น 4 Terminal 21 21 ซอย สุขุมวิท 19เปิดอยู่", "rating": 4.9, "reviews": 207, "price": "฿200-400", "dist": 47, "total": 76.4, "url": "https://www.google.com/maps/place/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B9%84%E0%B8%97%E0%B8%A2%E0%B8%9E%E0%B8%A5%E0%B8%B5%E0%B8%AA+Pad+Thai+Please+-+Terminal+21+Asok/data=!4m7!3m6!1s0x30e29f5164f6791f:0x314cbfa965efc2de!8m2!3d13.7373609!4d100.5605321!16s%2Fg%2F11yqvp05r_!19sChIJH3n2ZFGf4jAR3sLvZam_TDE?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 19.3, "group_suitability": 10.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 30, "name": "เคนชิน อิซากายะ สาขาอโศก", "cat": "อิซาคายะ", "rating": 4.3, "reviews": 1693, "price": "฿400-600", "dist": 404, "total": 76.0, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%84%E0%B8%99%E0%B8%8A%E0%B8%B4%E0%B8%99+%E0%B8%AD%E0%B8%B4%E0%B8%8B%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A2%E0%B8%B0+%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29ee4eb3db945:0x134d332cbb34a1fd!8m2!3d13.7405334!4d100.5618025!16s%2Fg%2F11dxrz78db!19sChIJRbk96-Se4jAR_aE0uywzTRM?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.3, "group_suitability": 16.7, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 31, "name": "สมยงตำซั่ว สุขุมวิท-อโศก", "cat": "ไทย", "rating": 4.7, "reviews": 750, "price": "฿1-400", "dist": 635, "total": 75.8, "url": "https://www.google.com/maps/place/%E0%B8%AA%E0%B8%A1%E0%B8%A2%E0%B8%87%E0%B8%95%E0%B8%B3%E0%B8%8B%E0%B8%B1%E0%B9%88%E0%B8%A7+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97-%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29fa65a0d21b7:0x6c5f7139dcca702!8m2!3d13.7425741!4d100.5623456!16s%2Fg%2F11s_v8y1zr!19sChIJtyENWqaf4jARAqfMnRP3xQY?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.5, "group_suitability": 16.3, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 32, "name": "ครัวคุณปุ๊ก", "cat": "ไทย", "rating": 4.4, "reviews": 3874, "price": "฿200-400", "dist": 482, "total": 75.7, "url": "https://www.google.com/maps/place/%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%A7%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B8%9B%E0%B8%B8%E0%B9%8A%E0%B8%81/data=!4m7!3m6!1s0x30e29f7acbd74e2f:0xa5e92b66b13296be!8m2!3d13.739982!4d100.5565886!16s%2Fg%2F11fjnbg8bj!19sChIJL07Xy3qf4jARvpYysWYr6aU?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.2, "group_suitability": 17.5, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 33, "name": "Dough Bros. Pizza & Doughnuts (Interchange 21 - Asok)", "cat": "พิซซ่า", "rating": 4.8, "reviews": 1743, "price": "฿200-600", "dist": 173, "total": 75.1, "url": "https://www.google.com/maps/place/Dough+Bros.+Pizza+%26+Doughnuts+%28Interchange+21+-+Asok%29/data=!4m7!3m6!1s0x30e29f006fc510d9:0xd0696a97e71eef50!8m2!3d13.7367616!4d100.5616063!16s%2Fg%2F11y8my_2cc!19sChIJ2RDFbwCf4jARUO8e55dqadA?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 20.4, "group_suitability": 7.7, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 34, "name": "BAKE BROS (เบค โบรส์) - Terminal 21 Asok", "cat": "ร้านอาหาร", "rating": 4.4, "reviews": 301, "price": "฿200-400", "dist": 61, "total": 74.7, "url": "https://www.google.com/maps/place/BAKE+BROS+%28%E0%B9%80%E0%B8%9A%E0%B8%84+%E0%B9%82%E0%B8%9A%E0%B8%A3%E0%B8%AA%E0%B9%8C%29+-+Terminal+21+Asok/data=!4m7!3m6!1s0x30e29ee39fa6f36f:0x436f7e7a1d5c028e!8m2!3d13.7376441!4d100.560541!16s%2Fg%2F11c73bbmvz!19sChIJb_Omn-Oe4jARjgJcHXp-b0M?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 14.6, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 35, "name": "El Gaucho", "cat": "สเต็ก", "rating": 4.4, "reviews": 3814, "price": "฿2,000+", "dist": 68, "total": 74.6, "url": "https://www.google.com/maps/place/El+Gaucho/data=!4m7!3m6!1s0x30e29ee39852036b:0xfa2b066c95617640!8m2!3d13.7378567!4d100.5598421!16s%2Fg%2F1hm69x953!19sChIJawNSmOOe4jARQHZhlWwGK_o?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.1, "group_suitability": 17.5, "price_suitability": 8, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 36, "name": "Shakariki 432 ASOKE", "cat": "อิซาคายะ", "rating": 4.5, "reviews": 1260, "price": "฿200-1,400", "dist": 495, "total": 74.6, "url": "https://www.google.com/maps/place/Shakariki+432+ASOKE/data=!4m7!3m6!1s0x30e29ee4dc1e3361:0xc7483b0cbc64640c!8m2!3d13.7412557!4d100.5621977!16s%2Fg%2F124t2h405!19sChIJYTMe3OSe4jARDGRkvAw7SMc?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.1, "group_suitability": 16.5, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 37, "name": "กริลล์ลิเชียส", "cat": "เลบานอน", "rating": 4, "reviews": 545, "price": "฿200-1,000", "dist": 84, "total": 74.4, "url": "https://www.google.com/maps/place/%E0%B8%81%E0%B8%A3%E0%B8%B4%E0%B8%A5%E0%B8%A5%E0%B9%8C%E0%B8%A5%E0%B8%B4%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%AA/data=!4m7!3m6!1s0x30e29f8eb94fab87:0xe5098a9eff84eb5b!8m2!3d13.7379508!4d100.5604896!16s%2Fg%2F11mr2w3gvy!19sChIJh6tPuY6f4jARW-uE_56KCeU?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 11.2, "group_suitability": 16.2, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 38, "name": "On The Table, Terminal 21 Asok", "cat": "อาหารอเมริกาทางตะวันตก", "rating": 4.4, "reviews": 204, "price": "฿200-400", "dist": 64, "total": 74.4, "url": "https://www.google.com/maps/place/On+The+Table,+Terminal+21+Asok/data=!4m7!3m6!1s0x30e29fcbcb7c395f:0x7a3b8c96778406fc!8m2!3d13.7378563!4d100.5602374!16s%2Fg%2F11ssczrz9j!19sChIJXzl8y8uf4jAR_AaEd5aMO3o?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 14.3, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 39, "name": "Have a Zeed - Terminal 21 Asoke", "cat": "ไทย", "rating": 4.1, "reviews": 1964, "price": "฿200-1,000", "dist": 67, "total": 74.3, "url": "https://www.google.com/maps/place/Have+a+Zeed+-+Terminal+21+Asoke/data=!4m7!3m6!1s0x30e29ee3a05de9f5:0x70f43f0952aa9830!8m2!3d13.7377055!4d100.5605626!16s%2Fg%2F11r8c3c5l!19sChIJ9eldoOOe4jARMJiqUgk_9HA?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 13.5, "group_suitability": 16.8, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 40, "name": "ป้อน Terminal 21 Asok", "cat": "ไทย", "rating": 4.2, "reviews": 713, "price": "฿200-400", "dist": 102, "total": 73.8, "url": "https://www.google.com/maps/place/%E0%B8%9B%E0%B9%89%E0%B8%AD%E0%B8%99+Terminal+21+Asok/data=!4m7!3m6!1s0x30e29ee5a84ea91b:0xcf6641fbb4d21e72!8m2!3d13.7381445!4d100.560469!16s%2Fg%2F11c7hd8zvx!19sChIJG6lOqOWe4jARch7StPtBZs8?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 13.5, "group_suitability": 16.3, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 41, "name": "ปิง หูฉลาม อโศก", "cat": "จีน", "rating": 4.6, "reviews": 1587, "price": "฿1,000+", "dist": 378, "total": 72.9, "url": "https://www.google.com/maps/place/%E0%B8%9B%E0%B8%B4%E0%B8%87+%E0%B8%AB%E0%B8%B9%E0%B8%89%E0%B8%A5%E0%B8%B2%E0%B8%A1+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29f019c10f49d:0xbe47d9f9373a4690!8m2!3d13.7403107!4d100.5617291!16s%2Fg%2F1tz73d_m!19sChIJnfQQnAGf4jARkEY6N_nZR74?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.3, "group_suitability": 16.6, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 42, "name": "Padthai Chapaa - Asoke", "cat": "ร้านอาหาร", "rating": 4.6, "reviews": 131, "price": "฿200-400", "dist": 450, "total": 72.9, "url": "https://www.google.com/maps/place/Padthai+Chapaa+-+Asoke/data=!4m7!3m6!1s0x30e29f17e1f636ab:0xd90d96e0f2ce8c33!8m2!3d13.7402253!4d100.5629776!16s%2Fg%2F11vspkhpvt!19sChIJqzb24Ref4jARM4zO8uCWDdk?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.8, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 43, "name": "Mr.Bao MALATANG @Asoke มิสเตอร์เป้า หมาล่าทั่ง 麻辣烫 麻辣香锅", "cat": "อาหารจานด่วน", "rating": 4.9, "reviews": 1323, "price": "฿200-400", "dist": 489, "total": 72.6, "url": "https://www.google.com/maps/place/Mr.Bao+MALATANG+@Asoke+%E0%B8%A1%E0%B8%B4%E0%B8%AA%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B9%80%E0%B8%9B%E0%B9%89%E0%B8%B2+%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%A5%E0%B9%88%E0%B8%B2%E0%B8%97%E0%B8%B1%E0%B9%88%E0%B8%87+%E9%BA%BB%E8%BE%A3%E7%83%AB+%E9%BA%BB%E8%BE%A3%E9%A6%99%E9%94%85/data=!4m7!3m6!1s0x30e29f9d25b98fe3:0x5d71ab05dedeaf62!8m2!3d13.741231!4d100.562129!16s%2Fg%2F11yls7bp67!19sChIJ44-5JZ2f4jARYq_e3gWrcV0?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 21.1, "group_suitability": 7.5, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 44, "name": "Tamaruya Honten Asoke", "cat": "ปิ้งย่างยากินิกุ", "rating": 4.5, "reviews": 269, "price": "฿400-1,600", "dist": 309, "total": 72.6, "url": "https://www.google.com/maps/place/Tamaruya+Honten+Asoke/data=!4m7!3m6!1s0x30e29fc2fdfc99d7:0x774bcc03b701b6de!8m2!3d13.7393681!4d100.5620097!16s%2Fg%2F11qqcgb0x7!19sChIJ15n8_cKf4jAR3rYBtwPMS3c?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.5, "group_suitability": 16.1, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 45, "name": "เดอะ โลคอล", "cat": "ไทย", "rating": 4.4, "reviews": 3279, "price": "฿600-1,800", "dist": 530, "total": 72.3, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0+%E0%B9%82%E0%B8%A5%E0%B8%84%E0%B8%AD%E0%B8%A5/data=!4m7!3m6!1s0x30e29efb3535cf73:0x913c6ad6b30887b0!8m2!3d13.7406407!4d100.5636026!16s%2Fg%2F11cfcdr5c!19sChIJc881Nfue4jARsIcIs9ZqPJE?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.0, "group_suitability": 17.3, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 46, "name": "เกาเหลาเลือดหมู สุขุมวิท 23", "cat": "ร้านอาหาร", "rating": 4.7, "reviews": 172, "price": "฿1-200", "dist": 342, "total": 72.2, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%81%E0%B8%B2%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B8%B2%E0%B9%80%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%94%E0%B8%AB%E0%B8%A1%E0%B8%B9+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+23/data=!4m7!3m6!1s0x30e29f04967f75ff:0xc85f0df247757b01!8m2!3d13.7384256!4d100.5630447!16s%2Fg%2F11fsrxt8dc!19sChIJ_3V_lgSf4jARAXt1R_INX8g?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.1, "group_suitability": 16.1, "price_suitability": 10, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 47, "name": "สุดาโภชนา", "cat": "ไทย", "rating": 3.8, "reviews": 3119, "price": "฿200-400", "dist": 63, "total": 72.1, "url": "https://www.google.com/maps/place/%E0%B8%AA%E0%B8%B8%E0%B8%94%E0%B8%B2%E0%B9%82%E0%B8%A0%E0%B8%8A%E0%B8%99%E0%B8%B2/data=!4m7!3m6!1s0x30e29ee3aef66a1d:0x20c2c8ffb5e82ab3!8m2!3d13.7367327!4d100.5600329!16s%2Fg%2F1tm_znyx!19sChIJHWr2ruOe4jARsyrotf_IwiA?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 10.9, "group_suitability": 17.2, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 48, "name": "นากิยะ อโศก", "cat": "อิซาคายะ", "rating": 4.4, "reviews": 393, "price": "฿400-600", "dist": 646, "total": 72.1, "url": "https://www.google.com/maps/place/%E0%B8%99%E0%B8%B2%E0%B8%81%E0%B8%B4%E0%B8%A2%E0%B8%B0+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29ee53cb56a75:0xbf484ed7f4d83bcf!8m2!3d13.7427166!4d100.56227!16s%2Fg%2F11c1s9869r!19sChIJdWq1POWe4jARzzvY9NdOSL8?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 14.9, "group_suitability": 16.2, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 49, "name": "Dutch Pancake Café - Asok", "cat": "แพนเค้ก", "rating": 4.7, "reviews": 357, "price": "฿200-400", "dist": 367, "total": 71.9, "url": "https://www.google.com/maps/place/Dutch+Pancake+Caf%C3%A9+-+Asok/data=!4m7!3m6!1s0x30e29f1de7935f9f:0x295fabf79a3fe7ce!8m2!3d13.7340036!4d100.560018!16s%2Fg%2F11scnq0c66!19sChIJn1-T5x2f4jARzuc_mverXyk?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.8, "group_suitability": 10.1, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 50, "name": "Hachicken Ramen (Terminal21 Asok)", "cat": "ราเม็ง", "rating": 4.7, "reviews": 1202, "price": "฿1-200", "dist": 134, "total": 71.5, "url": "https://www.google.com/maps/place/Hachicken+Ramen+%28Terminal21+Asok%29/data=!4m7!3m6!1s0x30e29f6e82b95c65:0x7d5bb292b000d264!8m2!3d13.7384815!4d100.5603451!16s%2Fg%2F11v0mygf8l!19sChIJZVy5gm6f4jARZNIAsJKyW30?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 19.0, "group_suitability": 10.5, "price_suitability": 10, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 51, "name": "โรซาโน อิตาเลียน คูซีน", "cat": "อิตาลี", "rating": 4.5, "reviews": 1137, "price": "฿1,000+", "dist": 571, "total": 71.4, "url": "https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%8B%E0%B8%B2%E0%B9%82%E0%B8%99+%E0%B8%AD%E0%B8%B4%E0%B8%95%E0%B8%B2%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B8%A2%E0%B8%99+%E0%B8%84%E0%B8%B9%E0%B8%8B%E0%B8%B5%E0%B8%99/data=!4m7!3m6!1s0x30e29ee36451ee81:0xb029af31de1966cd!8m2!3d13.7422328!4d100.5615625!16s%2Fg%2F1tf139x_!19sChIJge5RZOOe4jARzWYZ3jGvKbA?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 16.9, "group_suitability": 16.5, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 52, "name": "ฮินาตะ", "cat": "ร้านอาหาร Kushiage และ Kushikatsu", "rating": 4.6, "reviews": 459, "price": "฿200-1,000", "dist": 654, "total": 71.3, "url": "https://www.google.com/maps/place/%E0%B8%AE%E0%B8%B4%E0%B8%99%E0%B8%B2%E0%B8%95%E0%B8%B0/data=!4m7!3m6!1s0x30e29f851566ac19:0xbd9556d83781aeb9!8m2!3d13.742683!4d100.562544!16s%2Fg%2F11hz169gz4!19sChIJGaxmFYWf4jARua6BN9hWlb0?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.1, "group_suitability": 16.2, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 53, "name": "ปาล่า พิซซ่า โรมานา", "cat": "พิซซ่า", "rating": 4.5, "reviews": 4495, "price": "฿200-600", "dist": 96, "total": 71.1, "url": "https://www.google.com/maps/place/%E0%B8%9B%E0%B8%B2%E0%B8%A5%E0%B9%88%E0%B8%B2+%E0%B8%9E%E0%B8%B4%E0%B8%8B%E0%B8%8B%E0%B9%88%E0%B8%B2+%E0%B9%82%E0%B8%A3%E0%B8%A1%E0%B8%B2%E0%B8%99%E0%B8%B2/data=!4m7!3m6!1s0x30e29ee30600dd73:0x9271d945d544eebc!8m2!3d13.7369303!4d100.5608983!16s%2Fg%2F11_q_h2yj!19sChIJc90ABuOe4jARvO5E1UXZcZI?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.3, "group_suitability": 8.8, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 54, "name": "Habib's Kebab Biryani Curry (Halal)", "cat": "ฮาลาล", "rating": 4.6, "reviews": 328, "price": "฿200-400", "dist": 31, "total": 70.8, "url": "https://www.google.com/maps/place/Habib%27s+Kebab+Biryani+Curry+%28Halal%29/data=!4m7!3m6!1s0x30e29f78e16d75e7:0x467f3a7aab88b942!8m2!3d13.7375782!4d100.5601127!16s%2Fg%2F11sttwkpfm!19sChIJ53Vt4Xif4jARQrmIq3o6f0Y?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 16.7, "group_suitability": 10.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 55, "name": "เพียร์ 21", "cat": "ศูนย์อาหาร", "rating": 4.5, "reviews": 24138, "price": "฿1-200", "dist": 67, "total": 70.0, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%9E%E0%B8%B5%E0%B8%A2%E0%B8%A3%E0%B9%8C+21/data=!4m7!3m6!1s0x30e29ee39e563b0b:0x33ce8f75edc2c9c5!8m2!3d13.737625!4d100.5606201!16s%2Fg%2F11c3286pb5!19sChIJCztWnuOe4jARxcnC7XWPzjM?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 20.0, "group_suitability": 11, "price_suitability": 10, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 56, "name": "เก็ดถะหวา", "cat": "ไทย", "rating": 4.4, "reviews": 874, "price": "฿400-600", "dist": 860, "total": 70.0, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%94%E0%B8%96%E0%B8%B0%E0%B8%AB%E0%B8%A7%E0%B8%B2/data=!4m7!3m6!1s0x30e29efe6c54a6a7:0xb3d58be87456205d!8m2!3d13.7359419!4d100.5679397!16s%2Fg%2F1th54fr4!19sChIJp6ZUbP6e4jARXSBWdOiL1bM?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.7, "group_suitability": 16.3, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 57, "name": "บ้านขนิษฐา ไทย คิวซีน สุขุมวิท 23", "cat": "ไทย", "rating": 4.3, "reviews": 1482, "price": "฿1,000+", "dist": 339, "total": 69.8, "url": "https://www.google.com/maps/place/%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%82%E0%B8%99%E0%B8%B4%E0%B8%A9%E0%B8%90%E0%B8%B2+%E0%B9%84%E0%B8%97%E0%B8%A2+%E0%B8%84%E0%B8%B4%E0%B8%A7%E0%B8%8B%E0%B8%B5%E0%B8%99+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+23/data=!4m7!3m6!1s0x30e29ee4b81dcdab:0xd969b1cff9f824d7!8m2!3d13.7378586!4d100.5631839!16s%2Fg%2F1tkngxg_!19sChIJq80duOSe4jAR1yT4-c-xadk?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.2, "group_suitability": 16.6, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 58, "name": "ยากินิกุ ไลค์ เทอร์มินอล21 อโศก", "cat": "อาหารญี่ปุ่นแท้", "rating": 4.5, "reviews": 321, "price": "฿200-400", "dist": 80, "total": 69.8, "url": "https://www.google.com/maps/place/%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B4%E0%B8%99%E0%B8%B4%E0%B8%81%E0%B8%B8+%E0%B9%84%E0%B8%A5%E0%B8%84%E0%B9%8C+%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A1%E0%B8%B4%E0%B8%99%E0%B8%AD%E0%B8%A521+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29fb892bc76fd:0x4dadc79cb5958452!8m2!3d13.7379219!4d100.5604662!16s%2Fg%2F11v3wp4tg3!19sChIJ_Xa8krif4jARUoSVtZzHrU0?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.7, "group_suitability": 10.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 59, "name": "ศรีตราด", "cat": "ไทย", "rating": 4.5, "reviews": 2542, "price": "฿400-1,400", "dist": 865, "total": 69.7, "url": "https://www.google.com/maps/place/%E0%B8%A8%E0%B8%A3%E0%B8%B5%E0%B8%95%E0%B8%A3%E0%B8%B2%E0%B8%94/data=!4m7!3m6!1s0x30e29efc3bbbcfa1:0x1ae0f08f959b616b!8m2!3d13.7368037!4d100.5680964!16s%2Fg%2F11c2n_wlzx!19sChIJoc-7O_ye4jARa2GblY_w4Bo?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.7, "group_suitability": 17.0, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 60, "name": "เพ็พพิน่า", "cat": "อิตาลี", "rating": 4.5, "reviews": 2486, "price": "฿400-1,400", "dist": 795, "total": 69.7, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%9E%E0%B9%87%E0%B8%9E%E0%B8%9E%E0%B8%B4%E0%B8%99%E0%B9%88%E0%B8%B2/data=!4m7!3m6!1s0x30e29efc6c054743:0x1b723f3f18e9382a!8m2!3d13.7377195!4d100.5674442!16s%2Fg%2F1q6j7g_jz!19sChIJQ0cFbPye4jARKjjpGD8_chs?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.7, "group_suitability": 17.0, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 61, "name": "กับข้าว' กับปลา เทอร์มินัล 21 อโศก", "cat": "ไทย", "rating": 4.1, "reviews": 671, "price": "฿400-1,200", "dist": 54, "total": 69.7, "url": "https://www.google.com/maps/place/%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%27+%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%9B%E0%B8%A5%E0%B8%B2+%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A1%E0%B8%B4%E0%B8%99%E0%B8%B1%E0%B8%A5+21+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29fc213e8f3b3:0xcdf6bafe36ddde13!8m2!3d13.7373662!4d100.560595!16s%2Fg%2F11h5lhh79p!19sChIJs_PoE8Kf4jARE97dNv669s0?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 12.4, "group_suitability": 16.3, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 62, "name": "Barney’s Burger Joint Sukhumvit 23", "cat": "แฮมเบอร์เกอร์", "rating": 4.7, "reviews": 569, "price": "฿200-400", "dist": 324, "total": 69.5, "url": "https://www.google.com/maps/place/Barney%E2%80%99s+Burger+Joint+Sukhumvit+23/data=!4m7!3m6!1s0x30e29f000a3c161b:0xb6e1fd3911954c16!8m2!3d13.7379531!4d100.5630219!16s%2Fg%2F11vwxks1f4!19sChIJGxY8CgCf4jARFkyVETn94bY?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.3, "group_suitability": 7.2, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 63, "name": "Beer Garden Sukhumvit 19", "cat": "ร้านอาหาร", "rating": 4.1, "reviews": 568, "price": "฿200-400", "dist": 341, "total": 69.5, "url": "https://www.google.com/maps/place/Beer+Garden+Sukhumvit+19/data=!4m7!3m6!1s0x30e29ee4665bd17b:0xd1c6f80879e5e9a0!8m2!3d13.7403641!4d100.5599434!16s%2Fg%2F11h0b0zrw!19sChIJe9FbZuSe4jARoOnleQj4xtE?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 12.3, "group_suitability": 16.2, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 64, "name": "Market Café", "cat": "ไทย", "rating": 4.5, "reviews": 223, "price": "฿600-1,600", "dist": 445, "total": 69.4, "url": "https://www.google.com/maps/place/Market+Caf%C3%A9/data=!4m7!3m6!1s0x30e29f3c0a5f4749:0xc00f6d7b5e768cd5!8m2!3d13.7400075!4d100.557065!16s%2Fg%2F11fjzwmzsn!19sChIJSUdfCjyf4jAR1Yx2XnttD8A?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.3, "group_suitability": 16.1, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 65, "name": "UMA UMA 博多うま馬-Asoke", "cat": "ราเม็ง", "rating": 4.4, "reviews": 692, "price": "฿200-400", "dist": 456, "total": 69.3, "url": "https://www.google.com/maps/place/UMA+UMA+%E5%8D%9A%E5%A4%9A%E3%81%86%E3%81%BE%E9%A6%AC-Asoke/data=!4m7!3m6!1s0x30e29ee4b45861cb:0x466dc8987ce5b59b!8m2!3d13.7401225!4d100.5631642!16s%2Fg%2F11bxjg2455!19sChIJy2FYtOSe4jARm7XlfJjIbUY?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.5, "group_suitability": 10.3, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 12.5, "uniqueness": 4}}, {"rank": 66, "name": "ครัวปัณฑารีย์", "cat": "ไทย", "rating": 4.4, "reviews": 1572, "price": "฿1-200", "dist": 475, "total": 68.9, "url": "https://www.google.com/maps/place/%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%A7%E0%B8%9B%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B8%B2%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B9%8C/data=!4m7!3m6!1s0x30e29ee6ca79496d:0xcea735fe8ab6038d!8m2!3d13.7394776!4d100.5563134!16s%2Fg%2F1yg6c_mfq!19sChIJbUl5yuae4jARjQO2iv41p84?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 16.3, "group_suitability": 16.6, "price_suitability": 10, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 67, "name": "Antico Fornaio - Crafted Italian focaccia - Asoke", "cat": "แซนด์วิช", "rating": 4.9, "reviews": 49, "price": "฿200-400", "dist": 409, "total": 68.9, "url": "https://www.google.com/maps/place/Antico+Fornaio+-+Crafted+Italian+focaccia+-+Asoke/data=!4m7!3m6!1s0x30e29f734553d9c7:0xcd709c8af0ae00f4!8m2!3d13.7401926!4d100.5624412!16s%2Fg%2F11mrkcpcnb!19sChIJx9lTRXOf4jAR9ACu8IqccM0?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.9, "group_suitability": 7.0, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 68, "name": "SOKOZY - Cafe & Bowls Asoke Bangkok", "cat": "ร้านกาแฟ", "rating": 4.7, "reviews": 329, "price": "฿200-400", "dist": 466, "total": 68.8, "url": "https://www.google.com/maps/place/SOKOZY+-+Cafe+%26+Bowls+Asoke+Bangkok/data=!4m7!3m6!1s0x30e29f2e07ee59df:0xdbcb5b5e50282e6a!8m2!3d13.7342868!4d100.5630933!16s%2Fg%2F11kc2d5_dd!19sChIJ31nuBy6f4jARai4oUF5by9s?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.7, "group_suitability": 7.1, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 69, "name": "Rossini's", "cat": "อิตาลี", "rating": 4.5, "reviews": 281, "price": "฿2,000+", "dist": 110, "total": 68.7, "url": "https://www.google.com/maps/place/Rossini%27s/data=!4m7!3m6!1s0x30e29ee3b886aa89:0xbeaad131101343f!8m2!3d13.737277!4d100.5590826!16s%2Fg%2F1th194l4!19sChIJiaqGuOOe4jARPzQBEROt6gs?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.6, "group_suitability": 16.1, "price_suitability": 8, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 70, "name": "Blue Elephant Bangkok Sukhumvit Thai Heritage Cuisine", "cat": "ไทย", "rating": 4.8, "reviews": 260, "price": "฿2,000+", "dist": 871, "total": 68.6, "url": "https://www.google.com/maps/place/Blue+Elephant+Bangkok+Sukhumvit+Thai+Heritage+Cuisine/data=!4m7!3m6!1s0x30e29f97d0c03359:0xeb61db8d623b16d6!8m2!3d13.7448294!4d100.5578789!16s%2Fg%2F11vzf7nd5f!19sChIJWTPA0Jef4jAR1hY7Yo3bYes?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.5, "group_suitability": 16.1, "price_suitability": 8, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 71, "name": "ห้องอาหารญี่ปุ่น คิสโสะ", "cat": "ญี่ปุ่น", "rating": 4.6, "reviews": 570, "price": "฿1,000+", "dist": 128, "total": 68.5, "url": "https://www.google.com/maps/place/%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%8D%E0%B8%B5%E0%B9%88%E0%B8%9B%E0%B8%B8%E0%B9%88%E0%B8%99+%E0%B8%84%E0%B8%B4%E0%B8%AA%E0%B9%82%E0%B8%AA%E0%B8%B0/data=!4m7!3m6!1s0x30e29ee396e9f93f:0xe3859e79f55864f5!8m2!3d13.7382519!4d100.5594298!16s%2Fg%2F1pp2vgk4w!19sChIJP_npluOe4jAR9WRY9XmeheM?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.3, "group_suitability": 10.2, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 72, "name": "Ministry of Crab Bangkok", "cat": "อาหารทะเล", "rating": 4.6, "reviews": 1021, "price": "฿2,000+", "dist": 719, "total": 68.2, "url": "https://www.google.com/maps/place/Ministry+of+Crab+Bangkok/data=!4m7!3m6!1s0x30e29ff8f3a242bf:0x3265c55859437dbe!8m2!3d13.73597!4d100.5666154!16s%2Fg%2F11fn4n5f6k!19sChIJv0Ki8_if4jARvn1DWVjFZTI?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.8, "group_suitability": 16.4, "price_suitability": 8, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 73, "name": "Orchid Cafe", "cat": "บุฟเฟต์", "rating": 4.4, "reviews": 446, "price": "฿800-1,800", "dist": 110, "total": 68.2, "url": "https://www.google.com/maps/place/Orchid+Cafe/data=!4m7!3m6!1s0x30e29ee3b81a29b5:0x3d1b02b2746b74d3!8m2!3d13.7374102!4d100.5590841!16s%2Fg%2F1tfpx941!19sChIJtSkauOOe4jAR03RrdLICGz0?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.0, "group_suitability": 16.2, "price_suitability": 8, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 74, "name": "No Idea Cafe & Gastropub", "cat": "ร้านอาหาร", "rating": 4.6, "reviews": 707, "price": "฿800-2,000", "dist": 477, "total": 67.8, "url": "https://www.google.com/maps/place/No+Idea+Cafe+%26+Gastropub/data=!4m7!3m6!1s0x30e29f0299789b09:0xbaf6d432fc6fe3e3!8m2!3d13.7340044!4d100.562931!16s%2Fg%2F1pzpyfd16!19sChIJCZt4mQKf4jAR4-Nv_DLU9ro?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.5, "group_suitability": 16.3, "price_suitability": 8, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 75, "name": "Thai Thai Boat Noodles Terminal 21 Asok", "cat": "ร้านก๋วยเตี๋ยว", "rating": 4.5, "reviews": 625, "price": "฿200-400", "dist": 81, "total": 67.6, "url": "https://www.google.com/maps/place/Thai+Thai+Boat+Noodles+Terminal+21+Asok/data=!4m7!3m6!1s0x30e29f6643293ce3:0x267c5372ab441479!8m2!3d13.7379635!4d100.5604058!16s%2Fg%2F11nz3mmzsl!19sChIJ4zwpQ2af4jAReRREq3JTfCY?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 16.4, "group_suitability": 7.2, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 76, "name": "ไอ้หยาอร่อย", "cat": "ไทย", "rating": 4.4, "reviews": 518, "price": "฿1-200", "dist": 308, "total": 67.4, "url": "https://www.google.com/maps/place/%E0%B9%84%E0%B8%AD%E0%B9%89%E0%B8%AB%E0%B8%A2%E0%B8%B2%E0%B8%AD%E0%B8%A3%E0%B9%88%E0%B8%AD%E0%B8%A2/data=!4m7!3m6!1s0x30e29ee329181d59:0x62e0eaf90bba0599!8m2!3d13.7364109!4d100.5627959!16s%2Fg%2F1hf4tmrmj!19sChIJWR0YKeOe4jARmQW6C_nq4GI?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.2, "group_suitability": 16.2, "price_suitability": 10, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 77, "name": "Belga Rooftop Bar & Brasserie", "cat": "เบลเยียม", "rating": 4.6, "reviews": 1513, "price": "฿1,000+", "dist": 333, "total": 66.8, "url": "https://www.google.com/maps/place/Belga+Rooftop+Bar+%26+Brasserie/data=!4m7!3m6!1s0x30e29f9da3ab34eb:0xf58ee3d66b6556c7!8m2!3d13.739263!4d100.5577752!16s%2Fg%2F11fj3mpmcm!19sChIJ6zSro52f4jARx1Zla9bjjvU?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 18.2, "group_suitability": 10.6, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 78, "name": "Attico", "cat": "อิตาลี", "rating": 4.5, "reviews": 201, "price": "฿1,000+", "dist": 473, "total": 66.8, "url": "https://www.google.com/maps/place/Attico/data=!4m7!3m6!1s0x30e29efd37f46c03:0xf6c14dddf282b48!8m2!3d13.735281!4d100.5639496!16s%2Fg%2F11c3vtk0ng!19sChIJA2z0N_2e4jARSCso390UbA8?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.2, "group_suitability": 16.1, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 7.5, "uniqueness": 4}}, {"rank": 79, "name": "Hidden Square - Bistro & Rooftop Bar", "cat": "บิสโทร", "rating": 4.6, "reviews": 105, "price": "฿200-400", "dist": 642, "total": 66.6, "url": "https://www.google.com/maps/place/Hidden+Square+-+Bistro+%26+Rooftop+Bar/data=!4m7!3m6!1s0x30e29f9b1736c5d3:0x7c1a81e712a9617f!8m2!3d13.7425458!4d100.5625725!16s%2Fg%2F11gj1lkj3h!19sChIJ08U2F5uf4jARf2GpEueBGnw?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.6, "group_suitability": 10.0, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 80, "name": "Le Dalat", "cat": "เวียดนาม", "rating": 4.6, "reviews": 936, "price": "฿600-1,600", "dist": 708, "total": 65.7, "url": "https://www.google.com/maps/place/Le+Dalat/data=!4m7!3m6!1s0x30e29efab1c3fcfd:0x57438e88ad2022a7!8m2!3d13.7426959!4d100.5635836!16s%2Fg%2F1v62f2w1!19sChIJ_fzDsfqe4jARpyIgrYiOQ1c?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 17.8, "group_suitability": 10.4, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 12.5, "uniqueness": 4}}, {"rank": 81, "name": "เบลล่า นาโปลี", "cat": "อิตาลี", "rating": 4.4, "reviews": 1821, "price": "฿400-1,200", "dist": 749, "total": 65.6, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%9A%E0%B8%A5%E0%B8%A5%E0%B9%88%E0%B8%B2+%E0%B8%99%E0%B8%B2%E0%B9%82%E0%B8%9B%E0%B8%A5%E0%B8%B5/data=!4m7!3m6!1s0x30e29efd9e3f0c89:0xcf3c2a931df7552b!8m2!3d13.7341926!4d100.5662573!16s%2Fg%2F1td4rqy2!19sChIJiQw_nv2e4jARK1X3HZMqPM8?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 16.4, "group_suitability": 16.7, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 7.5, "uniqueness": 4}}, {"rank": 82, "name": "Wah Lok, Cantonese Restaurant", "cat": "อาหารจีนกวางตุ้ง", "rating": 4.4, "reviews": 455, "price": "฿800-2,000", "dist": 558, "total": 65.2, "url": "https://www.google.com/maps/place/Wah+Lok,+Cantonese+Restaurant/data=!4m7!3m6!1s0x30e29ff721e1a577:0xf2b0851006d558cf!8m2!3d13.7346657!4d100.5644982!16s%2Fg%2F11j1fcrctk!19sChIJd6XhIfef4jARz1jVBhCFsPI?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 15.0, "group_suitability": 16.2, "price_suitability": 8, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 83, "name": "Tenjo Sushi & Yakiniku BBQ Premium Buffet (Terminal 21 Asok)", "cat": "ญี่ปุ่น", "rating": 4, "reviews": 343, "price": "฿400-600", "dist": 58, "total": 64.9, "url": "https://www.google.com/maps/place/Tenjo+Sushi+%26+Yakiniku+BBQ+Premium+Buffet+%28Terminal+21+Asok%29/data=!4m7!3m6!1s0x30e29fbd88ac198f:0x502ee49f0bb3275d!8m2!3d13.737402!4d100.5606297!16s%2Fg%2F11llbkz727!19sChIJjxmsiL2f4jARXSezC5_kLlA?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 10.8, "group_suitability": 10.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 84, "name": "Madcow burger by Toni Santos asok", "cat": "แฮมเบอร์เกอร์", "rating": 4.5, "reviews": 419, "price": "฿200-400", "dist": 450, "total": 64.2, "url": "https://www.google.com/maps/place/Madcow+burger+by+Toni+Santos+asok/data=!4m7!3m6!1s0x30e29ee4b5b64b4b:0x6005da85d9f1ea45!8m2!3d13.740241!4d100.5629629!16s%2Fg%2F11f3wrstmx!19sChIJS0u2teSe4jARRerx2YXaBWA?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 16.0, "group_suitability": 7.2, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 85, "name": "Gen Japanese Charcoal Grill & Bar", "cat": "ญี่ปุ่น", "rating": 4.6, "reviews": 170, "price": "฿1,000+", "dist": 384, "total": 64.2, "url": "https://www.google.com/maps/place/Gen+Japanese+Charcoal+Grill+%26+Bar/data=!4m7!3m6!1s0x30e29fc230f61603:0x32e1cead97610ad8!8m2!3d13.7360295!4d100.5634054!16s%2Fg%2F11y3rbqyy_!19sChIJAxb2MMKf4jAR2Aphl63O4TI?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 16.1, "group_suitability": 10.1, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 86, "name": "Nanase Ramen Asok", "cat": "ราเม็ง", "rating": 4.3, "reviews": 362, "price": "฿1-200", "dist": 163, "total": 62.9, "url": "https://www.google.com/maps/place/Nanase+Ramen+Asok/data=!4m7!3m6!1s0x30e29ee36e5974c7:0x8d021d634501aced!8m2!3d13.7380624!4d100.5613926!16s%2Fg%2F11f1rr3tc5!19sChIJx3RZbuOe4jAR7awBRWMdAo0?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 13.8, "group_suitability": 10.1, "price_suitability": 10, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 87, "name": "ASOK PETHOUSE CAT CAFE", "cat": "คาเฟ่แมว", "rating": 4.7, "reviews": 1533, "price": "฿฿", "dist": 463, "total": 62.8, "url": "https://www.google.com/maps/place/ASOK+PETHOUSE+CAT+CAFE/data=!4m7!3m6!1s0x30e29ff001d8e70f:0x8e02da8f4a9ff335!8m2!3d13.7409593!4d100.5621454!16s%2Fg%2F11trhx2zk3!19sChIJD-fYAfCf4jARNfOfSo_aAo4?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 19.2, "group_suitability": 7.6, "price_suitability": 7, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7}}, {"rank": 88, "name": "กากั้น", "cat": "ภัตตาคารหรู", "rating": 4.5, "reviews": 524, "price": "฿2,000+", "dist": 897, "total": 60.9, "url": "https://www.google.com/maps/place/%E0%B8%81%E0%B8%B2%E0%B8%81%E0%B8%B1%E0%B9%89%E0%B8%99/data=!4m7!3m6!1s0x30e29fff71c7f98b:0x82c0f47139958e00!8m2!3d13.7407839!4d100.5675867!16s%2Fg%2F11hdvt6x30!19sChIJi_nHcf-f4jARAI6VOXH0wII?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 16.2, "group_suitability": 16.2, "price_suitability": 8, "travel_convenience": 9, "data_completeness": 7.5, "uniqueness": 4}}, {"rank": 89, "name": "Shwe Htee Restaurant", "cat": "พม่า", "rating": 4.6, "reviews": 229, "price": "฿1-200", "dist": 642, "total": 59.5, "url": "https://www.google.com/maps/place/Shwe+Htee+Restaurant/data=!4m7!3m6!1s0x30e29fc230b8de57:0xb2f38b66ccd779de!8m2!3d13.7428343!4d100.561795!16s%2Fg%2F11jzs330fc!19sChIJV964MMKf4jAR3nnXzGaL87I?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 16.4, "group_suitability": 10.1, "price_suitability": 10, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 4}}, {"rank": 90, "name": "Bully's Bangkok", "cat": "อเมริกัน", "rating": 4.1, "reviews": 1407, "price": "฿200-1,200", "dist": 978, "total": 58.8, "url": "https://www.google.com/maps/place/Bully%27s+Bangkok/data=!4m7!3m6!1s0x30e29ee779289209:0x7afbeb7693b4b539!8m2!3d13.7420224!4d100.552458!16s%2Fg%2F1tf4bgtd!19sChIJCZIoeeee4jARObW0k3br-3o?authuser=0&hl=th&rclk=1", "scores": {"rating_review": 13.2, "group_suitability": 10.6, "price_suitability": 15, "travel_convenience": 6, "data_completeness": 10.0, "uniqueness": 4}}];
-function esc(s){return (s==null?'':''+s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-const key=document.getElementById('aikey'),q2=document.getElementById('aiq'),ans=document.getElementById('aians'),btn=document.getElementById('aibtn');
-try{const k=localStorage.getItem('anthropic_key');if(k)key.value=k;}catch(e){}
-['ร้านไหนเหมาะกลุ่ม 10 คน งบ 500 คุยงานได้','อยากได้ร้านอาหารไทยใกล้ BTS เรตติ้งดี','ร้านบรรยากาศดีเปิดดึก สังสรรค์ทีม','งบ 300 ต่อคน มีร้านไหนแนะนำ'].forEach(s=>{const c=document.createElement('span');c.className='qchip';c.textContent=s;c.onclick=()=>{q2.value=s;};document.getElementById('qchips').appendChild(c);});
-async function ask(){const k=key.value.trim(),question=q2.value.trim();
- if(!k){ans.textContent='⚠ ใส่ Anthropic API key ก่อน';return;}if(!question){ans.textContent='⚠ พิมพ์คำถามก่อน';return;}
- try{localStorage.setItem('anthropic_key',k);}catch(e){}btn.disabled=true;ans.textContent='⏳ กำลังถาม Claude...';
- const sys='คุณเป็นผู้ช่วยแนะนำร้านอาหารมื้อทีม 8-12 คน ย่านอโศก. ตอบสั้นกระชับภาษาไทย แนะนำจากข้อมูลที่ให้เท่านั้น พร้อมเหตุผล+ตัวเลข. ข้อมูล: '+JSON.stringify(DATA);
- try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1024,system:sys,messages:[{role:'user',content:question}]})});
-  const j=await res.json();ans.textContent=(j.content&&j.content[0])?j.content[0].text:'⚠ '+(j.error?j.error.message:'ไม่มีคำตอบ');
- }catch(e){ans.textContent='⚠ error: '+e.message;}btn.disabled=false;}
-btn.onclick=ask;
-const COLS=[['rank','#'],['name','ร้าน'],['cat','ประเภท'],['rating','เรตติ้ง'],['reviews','รีวิว'],['price','ราคา'],['dist','ระยะ(m)'],['total','คะแนน'],['url','']];
-let sortK='rank',sortD=1,page=1,PS=15;
-const $=id=>document.getElementById(id);
-[...new Set(DATA.map(x=>x.cat))].sort().forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;$('fcat').appendChild(o);});
-COLS.forEach(([k,l])=>{const th=document.createElement('th');if(k!=='url'){th.className='sortable';th.dataset.k=k;th.innerHTML=l+' <span class="ar">↕</span>';th.onclick=()=>{if(sortK===k)sortD*=-1;else{sortK=k;sortD=1;}page=1;render();};}else th.textContent=l;$('shead').appendChild(th);});
-function filtered(){const s=$('q').value.toLowerCase(),fc=$('fcat').value,fp=$('fprice').value,fd=$('fdist').value;
- return DATA.filter(x=>{if(s&&!(x.name+' '+x.cat).toLowerCase().includes(s))return false;if(fc&&x.cat!==fc)return false;
-  if(fd&&!(x.dist!=null&&x.dist<=+fd))return false;
-  if(fp){const mn=parseInt((x.price||'').replace(/[^\d]/g,''))||0;if(fp==='lo'&&mn>400)return false;if(fp==='mid'&&(mn<400||mn>1000))return false;if(fp==='hi'&&mn<1000)return false;}
-  return true;});}
-function render(){let r=filtered();
- r.sort((a,b)=>{let x=a[sortK],y=b[sortK];if(typeof x==='string'){x=x||'';y=y||'';}else{x=x==null?-1:x;y=y==null?-1:y;}return (x>y?1:x<y?-1:0)*sortD;});
- const pages=Math.max(1,Math.ceil(r.length/PS));if(page>pages)page=pages;
- const sl=r.slice((page-1)*PS,page*PS);
- $('sbody').innerHTML=sl.map(x=>`<tr><td class="rank">#${x.rank}</td><td>${esc(x.name)}</td><td><span class="muted">${esc(x.cat)}</span></td><td class="star">⭐${x.rating}</td><td>${(x.reviews||0).toLocaleString()}</td><td>${esc(x.price)}</td><td>${x.dist==null?'-':x.dist}</td><td><b>${x.total}</b></td><td>${x.url?`<a class="ev" href="${esc(x.url)}" target="_blank">Maps ↗</a>`:''}</td></tr>`).join('');
- document.querySelectorAll('th.sortable').forEach(t=>{t.classList.toggle('on',t.dataset.k===sortK);const a=t.querySelector('.ar');if(a)a.textContent=t.dataset.k===sortK?(sortD>0?'▲':'▼'):'↕';});
- $('scount').textContent='แสดง '+sl.length+' จาก '+r.length+' (ทั้งหมด '+DATA.length+')';
- $('spage').textContent='หน้า '+page+' / '+pages;$('sprev').disabled=page<=1;$('snext').disabled=page>=pages;}
-['q','fcat','fprice','fdist'].forEach(id=>$(id).addEventListener('input',()=>{page=1;render();}));
-$('sreset').onclick=()=>{$('q').value='';$('fcat').value='';$('fprice').value='';$('fdist').value='';page=1;render();};
-$('sprev').onclick=()=>{if(page>1){page--;render();}};$('snext').onclick=()=>{page++;render();};
-/* ---- re-scrape สด (ผ่าน server.mjs) ---- */
-function renderTop10(arr){const SK=['rating_review','group_suitability','price_suitability','travel_convenience','data_completeness','uniqueness'];
- $('top10body').innerHTML=arr.slice(0,10).map(r=>{const subs=SK.map(k=>`<td>${r.scores?r.scores[k]:'-'}</td>`).join('');
-  return `<tr><td class="rank">#${r.rank}</td><td>${esc(r.name)}<br><span class="muted">${esc(r.cat)}</span></td><td class="star">⭐${r.rating}<br><span class="muted">${(r.reviews||0).toLocaleString()}</span></td><td>${esc(r.price)}</td><td>${r.dist}m</td>${subs}<td><b>${r.total}</b></td><td>${r.url?`<a class="ev" href="${esc(r.url)}" target="_blank">Maps ↗</a>`:''}</td></tr>`;}).join('');}
-const rsb=$('rescrape'),rsm=$('rsmsg');
-rsb.onclick=async()=>{rsb.disabled=true;rsm.textContent='⏳ กำลัง scrape Google Maps สด (~30 วิ)...';
- try{const r=await fetch('/api/scrape');const j=await r.json();
-  if(j.ok){DATA=j.data;[...new Set(DATA.map(x=>x.cat))];renderTop10(j.data);page=1;render();rsm.textContent='✓ อัปเดต '+j.count+' ร้านสด ('+new Date().toLocaleTimeString('th-TH')+')';}
-  else rsm.textContent='⚠ '+j.error;
- }catch(e){rsm.textContent='⚠ ต้องเปิดผ่าน server: node q3/output/src/server.mjs (file:// เรียก /api/scrape ไม่ได้)';}
- rsb.disabled=false;};
-render();</script></body></html>
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Food Assistant — อโศก (Asok / Sukhumvit)</title>
+  <style>
+    :root {
+      --bg: #eef1f6;
+      --surface: #fff;
+      --surface2: #f7f9fc;
+      --text: #1f2733;
+      --muted: #6b7685;
+      --border: #e1e7ef;
+      --head: #15324e;
+      --head2: #1f6f78;
+      --accent: #1f6f78;
+      --track: #e8edf4;
+      --shadow: rgba(20, 30, 60, .08);
+      --gold: #f5a623;
+      --chip: #eef3f4
+    }
+
+    [data-theme=dark] {
+      --bg: #0c1420;
+      --surface: #15202e;
+      --surface2: #1b2838;
+      --text: #e6ecf5;
+      --muted: #93a3b8;
+      --border: #26354a;
+      --head: #0a1a2c;
+      --head2: #2c9aa5;
+      --accent: #2c9aa5;
+      --track: #202d40;
+      --shadow: rgba(0, 0, 0, .45);
+      --gold: #ffbf47;
+      --chip: #22303f
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: "Sarabun", "Noto Sans Thai", "Segoe UI", Tahoma, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: .2s
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 18px;
+      box-shadow: 0 2px 10px var(--shadow);
+      overflow-x: auto
+    }
+
+    .topbar .nav {
+      display: flex;
+      gap: 4px
+    }
+
+    .topbar a {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 5px 9px;
+      border-radius: 7px;
+      white-space: nowrap
+    }
+
+    .topbar a:hover {
+      background: var(--track);
+      color: var(--text)
+    }
+
+    .ic {
+      flex: 0 0 auto;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border);
+      background: var(--track);
+      color: var(--text);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px
+    }
+
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: var(--surface);
+      box-shadow: 0 0 30px var(--shadow)
+    }
+
+    header.hero {
+      background: linear-gradient(135deg, var(--head), var(--head2));
+      color: #fff;
+      padding: 34px 40px
+    }
+
+    header.hero h1 {
+      font-size: 27px;
+      margin-bottom: 8px
+    }
+
+    header.hero .meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      opacity: .9;
+      margin-top: 12px
+    }
+
+    section {
+      padding: 24px 40px;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 52px
+    }
+
+    h2 {
+      font-size: 19px;
+      color: var(--head2);
+      margin-bottom: 12px;
+      display: flex;
+      gap: 9px;
+      align-items: center
+    }
+
+    h2 .n {
+      background: var(--head2);
+      color: #fff;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex: 0 0 26px
+    }
+
+    p.lead {
+      font-size: 14px
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    code {
+      background: var(--chip);
+      padding: 1px 6px;
+      border-radius: 5px;
+      font-size: 12px
+    }
+
+    .wf {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 6px 0
+    }
+
+    .wf .s {
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 13px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--head2)
+    }
+
+    .wf .a {
+      color: var(--muted);
+      font-weight: 700
+    }
+
+    .tools {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px
+    }
+
+    .tool {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px
+    }
+
+    .tool b {
+      color: var(--head2);
+      font-size: 13.5px
+    }
+
+    .tool span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 6px
+    }
+
+    th {
+      background: var(--head);
+      color: #fff;
+      padding: 8px 9px;
+      text-align: left;
+      font-weight: 600
+    }
+
+    td {
+      padding: 8px 9px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle
+    }
+
+    tr:nth-child(even) td {
+      background: var(--surface2)
+    }
+
+    .rank {
+      font-weight: 800;
+      color: var(--head2)
+    }
+
+    .star {
+      color: var(--gold);
+      font-weight: 700;
+      white-space: nowrap
+    }
+
+    .bar {
+      height: 7px;
+      background: var(--track);
+      border-radius: 4px;
+      overflow: hidden;
+      min-width: 60px
+    }
+
+    .bar>i {
+      display: block;
+      height: 100%;
+      background: var(--head2);
+      border-radius: 4px
+    }
+
+    .cards3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px
+    }
+
+    .rcard {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--surface2);
+      display: flex;
+      flex-direction: column
+    }
+
+    .rcard .top {
+      background: linear-gradient(135deg, var(--head), var(--head2));
+      color: #fff;
+      padding: 14px
+    }
+
+    .rcard .medal {
+      font-size: 22px
+    }
+
+    .rcard h3 {
+      font-size: 16px;
+      margin: 4px 0
+    }
+
+    .rcard .body {
+      padding: 14px;
+      font-size: 13px;
+      flex: 1
+    }
+
+    .rcard .facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px
+    }
+
+    .fact {
+      background: var(--chip);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11.5px;
+      color: var(--muted)
+    }
+
+    .rcard ul {
+      margin: 0 0 0 16px
+    }
+
+    .rcard li {
+      margin: 3px 0
+    }
+
+    .watch {
+      background: var(--surface);
+      border-left: 3px solid var(--gold);
+      padding: 7px 11px;
+      border-radius: 0 7px 7px 0;
+      font-size: 12.5px;
+      margin-top: 10px
+    }
+
+    .crit {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 13px
+    }
+
+    .crit .w {
+      flex: 0 0 46px;
+      font-weight: 800;
+      color: var(--head2);
+      text-align: right
+    }
+
+    .crit .lab {
+      flex: 0 0 210px;
+      font-weight: 600
+    }
+
+    a.ev {
+      color: var(--accent);
+      font-size: 12px;
+      text-decoration: none
+    }
+
+    a.ev:hover {
+      text-decoration: underline
+    }
+
+    footer {
+      padding: 18px 40px;
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--surface2)
+    }
+
+    .ai-wrap {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px
+    }
+
+    .ai-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px
+    }
+
+    .ai-wrap input,
+    .ai-wrap textarea {
+      padding: 9px 11px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-family: inherit;
+      background: var(--surface);
+      color: var(--text);
+      width: 100%
+    }
+
+    .ai-wrap textarea {
+      min-height: 46px;
+      resize: vertical
+    }
+
+    .ai-key {
+      flex: 1;
+      min-width: 200px
+    }
+
+    .ai-btn {
+      padding: 9px 18px;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      white-space: nowrap
+    }
+
+    .ai-btn:disabled {
+      opacity: .5;
+      cursor: not-allowed
+    }
+
+    .chips {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin: 8px 0
+    }
+
+    .qchip {
+      background: var(--chip);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 11px;
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--head2)
+    }
+
+    .qchip:hover {
+      background: var(--track)
+    }
+
+    .ai-ans {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 13px;
+      font-size: 13.5px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+      min-height: 20px
+    }
+
+    .ai-hint {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 6px
+    }
+
+    .sc {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 10px
+    }
+
+    .sc input,
+    .sc select {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: inherit;
+      background: var(--surface);
+      color: var(--text)
+    }
+
+    #q {
+      flex: 1;
+      min-width: 170px
+    }
+
+    #scount {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-left: auto
+    }
+
+    th.sortable {
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap
+    }
+
+    th.sortable:hover {
+      background: var(--head2)
+    }
+
+    th .ar {
+      opacity: .45;
+      font-size: 10px
+    }
+
+    th.on .ar {
+      opacity: 1
+    }
+
+    .pager {
+      display: flex;
+      gap: 9px;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      flex-wrap: wrap
+    }
+
+    .pager .muted {
+      font-size: 13px
+    }
+
+    .sbtn {
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      background: var(--track);
+      color: var(--text);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px
+    }
+
+    .sbtn:disabled {
+      opacity: .5;
+      cursor: not-allowed
+    }
+
+    @media(max-width:760px) {
+      header.hero {
+        padding: 24px 18px
+      }
+
+      section {
+        padding: 18px
+      }
+
+      .cards3 {
+        grid-template-columns: 1fr
+      }
+
+      .crit .lab {
+        flex-basis: 130px
+      }
+
+      #scount {
+        margin-left: 0;
+        width: 100%
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div class="nav"><a href="#s1">เป้าหมาย</a><a href="#s2">Workflow</a><a href="#s3">Tools</a><a
+          href="#s4">แหล่งข้อมูล</a><a href="#s5">เกณฑ์</a><a href="#s6">Top 3</a><a href="#sai">🤖 ถาม AI</a><a
+          href="#s7">Top 10</a><a href="#ssearch">🔍 ค้นหา</a><a href="#s8">เปรียบเทียบ</a></div><button class="ic"
+        id="theme" title="สลับธีม">🌙</button>
+    </div>
+    <header class="hero">
+      <h1>🍽️ AI Food Assistant — หาร้านมื้อทีมย่านอโศก (Asok / Sukhumvit)</h1>
+      <div class="muted" style="color:#dfeaf0">ทีม 8–12 คน · ข้อมูลจริง + AI scoring · ค้นหา / ถาม AI / re-scrape สดได้
+      </div>
+      <div class="meta"><span>📍 อโศก (Asok / Sukhumvit)</span><span>📅 2026-06-01</span><span>👤 DEV :
+          PEEM</span><span>🤖 Claude</span></div>
+    </header>
+    <section id="s1">
+      <h2><span class="n">1</span>เป้าหมาย (Objective)</h2>
+      <p class="lead">ทีม 8–12 คนต้องเลือกร้านมื้อเย็นย่านอโศก โดยตัดสินจาก<b>ข้อมูลจริง</b>.<br><b>คำถาม:</b> จาก 90
+        ร้าน ร้านไหน <b>Top 3</b> เหมาะที่สุด เพราะอะไร (+ ค้นหา/ถาม AI/ดึงข้อมูลสดเองได้)</p>
+    </section>
+    <section id="s2">
+      <h2><span class="n">2</span>Workflow</h2>
+      <div class="wf"><span class="s">Scrape Google Maps</span><span class="a">→</span><span class="s">Fetch
+          OSM</span><span class="a">→</span><span class="s">Clean</span><span class="a">→</span><span class="s">Scoring
+          100</span><span class="a">→</span><span class="s">AI Insight + Q&A</span><span class="a">→</span><span
+          class="s">HTML + re-scrape API</span></div>
+    </section>
+    <section id="s3">
+      <h2><span class="n">3</span>Tools</h2>
+      <div class="tools">
+        <div class="tool"><b>Playwright</b><span>scrape Maps + OSM (CLI + backend API)</span></div>
+        <div class="tool"><b>OSM Overpass</b><span>cuisine/พิกัด (แหล่งที่ 2)</span></div>
+        <div class="tool"><b>Claude</b><span>scoring + insight + Q&A สด</span></div>
+        <div class="tool"><b>Python</b><span>clean + score 100</span></div>
+        <div class="tool"><b>Node server.mjs</b><span>API /api/scrape (re-scrape สด)</span></div>
+      </div>
+    </section>
+    <section id="s4">
+      <h2><span class="n">4</span>แหล่งข้อมูล</h2>
+      <p class="lead">จริง <b>2 แหล่ง</b> รวม <b>90 ร้าน</b>:</p>
+      <ul style="margin:8px 0 0 20px;font-size:13.5px">
+        <li><b>Google Maps</b> · <a class="ev" href="https://www.google.com/maps/search/restaurants+near+Asok+Bangkok"
+            target="_blank">↗</a></li>
+        <li><b>OSM Overpass</b> · <a class="ev" href="https://overpass-api.de/" target="_blank">↗</a></li>
+      </ul>
+    </section>
+    <section id="s5">
+      <h2><span class="n">5</span>เกณฑ์ให้คะแนน (100)</h2>
+      <div class="crit"><span class="w">25</span><span class="lab">Rating &amp; Review Quality</span></div>
+      <div class="crit"><span class="w">20</span><span class="lab">Group Suitability</span></div>
+      <div class="crit"><span class="w">15</span><span class="lab">Price Suitability</span></div>
+      <div class="crit"><span class="w">15</span><span class="lab">Travel Convenience</span></div>
+      <div class="crit"><span class="w">15</span><span class="lab">Data Completeness</span></div>
+      <div class="crit"><span class="w">10</span><span class="lab">Uniqueness / Experience</span></div>
+      <p class="muted" style="margin-top:8px">สูตรโปร่งใส (src/score.py)</p>
+    </section>
+    <section id="s6">
+      <h2><span class="n">6</span>🏆 แนะนำ Top 3</h2>
+      <div class="cards3">
+        <div class="rcard">
+          <div class="top">
+            <div class="medal">🥇</div>
+            <h3>Sunrise Tacos MEXICAN GRILL</h3>
+            <div style="font-size:12px;opacity:.9">88 ซอย สุขุมวิท 19</div>
+          </div>
+          <div class="body">
+            <div class="facts"><span class="fact">เม็กซิกัน</span><span class="fact">⭐ 4.7 (4,999)</span><span
+                class="fact">฿200-400</span><span class="fact">📍 80m</span><span class="fact">คะแนน 93.4</span></div>
+            <ul>
+              <li>ใกล้สถานีที่สุดใน Top 10 (~80m เดิน 1–2 นาที) ทุกคนมาเจอง่าย</li>
+              <li>งบเป็นมิตร ฿200–400/คน เหมาะทีมหลายระดับ</li>
+              <li>เมนูเม็กซิกัน (tacos/nachos/quesadilla) สั่งแชร์กลางโต๊ะได้ดี</li>
+              <li>รีวิวเกือบ 5,000 · 4.7★ = นิยมและรองรับลูกค้าจำนวนมาก</li>
+            </ul>
+            <div class="watch">⚠ อยู่โซนการค้า โต๊ะกลุ่มใหญ่ควรจองล่วงหน้า และรสเม็กซิกันอาจไม่ถูกปากทุกคน</div>
+          </div>
+        </div>
+        <div class="rcard">
+          <div class="top">
+            <div class="medal">🥈</div>
+            <h3>อะแบนดอน แมนชัน</h3>
+            <div style="font-size:12px;opacity:.9">41 Soi Sukhumvit 14</div>
+          </div>
+          <div class="body">
+            <div class="facts"><span class="fact">บาร์ดนตรีสด</span><span class="fact">⭐ 4.8 (6,768)</span><span
+                class="fact">฿400-1,600</span><span class="fact">📍 227m</span><span class="fact">คะแนน 87.4</span>
+            </div>
+            <ul>
+              <li>บาร์ + ดนตรีสด เหมาะสังสรรค์ทีมหลังเลิกงาน</li>
+              <li>เปิดถึงตี 2 นั่งยาวได้ไม่ต้องรีบ</li>
+              <li>4.8★ รีวิวกว่า 6,700 การันตีความนิยม</li>
+              <li>งบ ฿400–1,600 ยืดหยุ่นตามการสั่ง</li>
+            </ul>
+            <div class="watch">⚠ เน้นเครื่องดื่ม/บรรยากาศ เสียงดนตรีอาจดังเกินไปถ้าต้องคุยงานจริงจัง</div>
+          </div>
+        </div>
+        <div class="rcard">
+          <div class="top">
+            <div class="medal">🥉</div>
+            <h3>Amritsr Indian Restaurant</h3>
+            <div style="font-size:12px;opacity:.9">ซ. สุขุมวิท 22</div>
+          </div>
+          <div class="body">
+            <div class="facts"><span class="fact">อินเดีย</span><span class="fact">⭐ 4.8 (11,656)</span><span
+                class="fact">฿200-1,000</span><span class="fact">📍 733m</span><span class="fact">คะแนน 86.2</span>
+            </div>
+            <ul>
+              <li>รีวิวเยอะสุดใน Top 10 (กว่า 11,600) · 4.8★ = น่าเชื่อถือสูงสุด</li>
+              <li>อาหารอินเดีย (curry/naan/biryani) เป็นสำรับแชร์กลุ่มได้ดีมาก</li>
+              <li>เปิดถึงตี 4 รองรับมื้อค่ำยาว ๆ</li>
+              <li>งบ ฿200–1,000 ครอบหลายระดับ</li>
+            </ul>
+            <div class="watch">⚠ ไกลสุดใน Top 3 (~730m เดิน ~9 นาที) และอาหารอินเดีย/เผ็ดอาจไม่ถูกปากบางคน</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="sai">
+      <h2><span class="n">7</span>🤖 ถาม AI (Interactive)</h2>
+      <p class="muted" style="margin-bottom:10px">ถาม AI ให้แนะนำร้านจาก data จริง 90 ร้าน</p>
+      <div class="ai-wrap">
+        <div class="ai-row"><input class="ai-key" id="aikey" type="password"
+            placeholder="วาง Anthropic API key (sk-ant-...) — เก็บใน browser นี้เท่านั้น"></div>
+        <div class="ai-row"><textarea id="aiq" placeholder="เช่น: ร้านไหนเหมาะกลุ่ม 10 คน งบ 500 คุยงานได้"></textarea>
+        </div>
+        <div class="chips" id="qchips"></div><button class="ai-btn" id="aibtn">ถาม AI 🚀</button>
+        <div class="ai-ans" id="aians">— คำตอบจะแสดงที่นี่ —</div>
+        <div class="ai-hint">Claude Haiku 4.5 · key อยู่ใน localStorage เครื่องนี้</div>
+      </div>
+    </section>
+    <section id="s7">
+      <h2><span class="n">8</span>📊 Top 10 Ranking</h2>
+      <div style="margin-bottom:10px"><button class="ai-btn" id="rescrape">🔄 re-scrape สด (Google Maps)</button> <span
+          id="rsmsg" class="muted"></span></div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>อันดับ</th>
+              <th>ร้าน</th>
+              <th>เรตติ้ง</th>
+              <th>ราคา</th>
+              <th>ระยะ</th>
+              <th>R&R</th>
+              <th>Group</th>
+              <th>Price</th>
+              <th>Travel</th>
+              <th>Data</th>
+              <th>Uniq</th>
+              <th>รวม/100</th>
+              <th>หลักฐาน</th>
+            </tr>
+          </thead>
+          <tbody id="top10body">
+            <tr>
+              <td class="rank">#1</td>
+              <td>Sunrise Tacos MEXICAN GRILL<br><span class="muted">เม็กซิกัน · 88 ซอย สุขุมวิท 19</span></td>
+              <td class="star">⭐4.7<br><span class="muted">4,999</span></td>
+              <td>฿200-400</td>
+              <td>80m</td>
+              <td>20.4</td>
+              <td>18.0</td>
+              <td>15</td>
+              <td>15</td>
+              <td>15.0</td>
+              <td>10</td>
+              <td><b>93.4</b><br>
+                <div class="bar"><i style="width:93%"></i></div>
+              </td>
+              <td><a class="ev"
+                  href="https://www.google.com/maps/place/Sunrise+Tacos+MEXICAN+GRILL/data=!4m7!3m6!1s0x30e29ee3a1b5aac5:0xe40b4f7a8a87fc3a!8m2!3d13.737971!4d100.5603725!16s%2Fg%2F1pw3yr2gj!19sChIJxaq1oeOe4jAROvyHinpPC-Q?authuser=0&amp;hl=th&amp;rclk=1"
+                  target="_blank">Maps ↗</a></td>
+            </tr>
+            <tr>
+              <td class="rank">#2</td>
+              <td>อะแบนดอน แมนชัน<br><span class="muted">บาร์ดนตรีสด · 41 Soi Sukhumvit 14</span></td>
+              <td class="star">⭐4.8<br><span class="muted">6,768</span></td>
+              <td>฿400-1,600</td>
+              <td>227m</td>
+              <td>21.7</td>
+              <td>18.7</td>
+              <td>12</td>
+              <td>15</td>
+              <td>10.0</td>
+              <td>10</td>
+              <td><b>87.4</b><br>
+                <div class="bar"><i style="width:87%"></i></div>
+              </td>
+              <td><a class="ev"
+                  href="https://www.google.com/maps/place/%E0%B8%AD%E0%B8%B0%E0%B9%81%E0%B8%9A%E0%B8%99%E0%B8%94%E0%B8%AD%E0%B8%99+%E0%B9%81%E0%B8%A1%E0%B8%99%E0%B8%8A%E0%B8%B1%E0%B8%99/data=!4m7!3m6!1s0x30e29f66016968f3:0xdc3e00a1dc1cf220!8m2!3d13.735257!4d100.5600491!16s%2Fg%2F11rvc08sqj!19sChIJ82hpAWaf4jARIPIc3KEAPtw?authuser=0&amp;hl=th&amp;rclk=1"
+                  target="_blank">Maps ↗</a></td>
+            </tr>
+            <tr>
+              <td class="rank">#3</td>
+              <td>Amritsr Indian Restaurant<br><span class="muted">อินเดีย · ซ. สุขุมวิท 22</span></td>
+              <td class="star">⭐4.8<br><span class="muted">11,656</span></td>
+              <td>฿200-1,000</td>
+              <td>733m</td>
+              <td>22.2</td>
+              <td>20</td>
+              <td>15</td>
+              <td>9</td>
+              <td>10.0</td>
+              <td>10</td>
+              <td><b>86.2</b><br>
+                <div class="bar"><i style="width:86%"></i></div>
+              </td>
+              <td><a class="ev"
+                  href="https://www.google.com/maps/place/Amritsr+Indian+Restaurant/data=!4m7!3m6!1s0x30e29f02825c8b1d:0x832026f6f68e9c71!8m2!3d13.7328252!4d100.565086!16s%2Fg%2F11hbntg1x4!19sChIJHYtcggKf4jARcZyO9vYmIIM?authuser=0&amp;hl=th&amp;rclk=1"
+                  target="_blank">Maps ↗</a></td>
+            </tr>
+            <tr>
+              <td class="rank">#4</td>
+              <td>Axis &amp; Spin (Sky Lounge &amp; Bar)<br><span class="muted">บาร์ · 38th Floor 413 ถ. สุขุมวิท</span>
+              </td>
+              <td class="star">⭐4.8<br><span class="muted">1,723</span></td>
+              <td>฿200-1,400</td>
+              <td>242m</td>
+              <td>20.4</td>
+              <td>16.7</td>
+              <td>12</td>
+              <td>15</td>
+              <td>10.0</td>
+              <td>10</td>
+              <td><b>84.1</b><br>
+                <div class="bar"><i style="width:84%"></i></div>
+              </td>
+              <td><a class="ev"
+                  href="https://www.google.com/maps/place/Axis+%26+Spin+%28Sky+Lounge+%26+Bar%29/data=!4m7!3m6!1s0x30e29ee3205c0915:0x29e12b9a7c9fb8c!8m2!3d13.7361149!4d100.5619832!16s%2Fg%2F11b8c3tfdl!19sChIJFQlcIOOe4jARjPvJp7kSngI?authuser=0&amp;hl=th&amp;rclk=1"
+                  target="_blank">Maps ↗</a></td>
+            </tr>
+            <tr>
+              <td class="rank">#5</td>
+              <td>Elbasha Turkish &amp; Lebanese Restaurant in Bangkok<br><span class="muted">เลบานอน · 25, 4 ซ.
+                  สุขุมวิท 16</span></td>
+              <td class="star">⭐4.7<br><span class="muted">2,356</span></td>
+              <td>฿200-600</td>
+              <td>551m</td>
+              <td>19.7</td>
+              <td>16.9</td>
+              <td>15</td>
+              <td>12</td>
+              <td>10.0</td>
+              <td>10</td>
+              <td><b>83.6</b><br>
+                <div class="bar"><i style="width:84%"></i></div>
+              </td>
+              <td><a class="ev"
+                  href="https://www.google.com/maps/place/Elbasha+Turkish+%26+Lebanese+Restaurant+in+Bangkok/data=!4m7!3m6!1s0x30e29f33d335e2d3:0x5c46912c3091c457!8m2!3d13.7324393!4d100.5610964!16s%2Fg%2F11l2kzk91v!19sChIJ0-I10zOf4jARV8SRMCyRRlw?authuser=0&amp;hl=th&amp;rclk=1"
+                  target="_blank">Maps ↗</a></td>
+            </tr>
+            <tr>
+              <td class="rank">#6</td>
+              <td>เสวย เทอร์มินอล 21 อโศก<br><span class="muted">อาหารทะเล · ห้องเลขที่ SH-5 ศูนย์การค้าเทอร์มิ</span>
+              </td>
+              <td class="star">⭐4.6<br><span class="muted">3,616</span></td>
+              <td>฿200-1,200</td>
+              <td>81m</td>
+              <td>19.1</td>
+              <td>17.4</td>
+              <td>15</td>
+              <td>15</td>
+              <td>10.0</td>
+              <td>7</td>
+              <td><b>83.5</b><br>
+                <div class="bar"><i style="width:84%"></i></div>
+              </td>
+              <td><a class="ev"
+                  href="https://www.google.com/maps/place/%E0%B9%80%E0%B8%AA%E0%B8%A7%E0%B8%A2+%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A1%E0%B8%B4%E0%B8%99%E0%B8%AD%E0%B8%A5+21+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29f88fad3a7d5:0xd4c98e6dab855fbe!8m2!3d13.7379635!4d100.5604058!16s%2Fg%2F11j1f9kyrp!19sChIJ1afT-oif4jARvl-Fq22OydQ?authuser=0&amp;hl=th&amp;rclk=1"
+                  target="_blank">Maps ↗</a></td>
+            </tr>
+            <tr>
+              <td class="rank">#7</td>
+              <td>Breakfast Story Asok<br><span class="muted">ร้านอาหาร · 392 9 ถ. สุขุมวิท</span></td>
+              <td class="star">⭐4.7<br><span class="muted">2,189</span></td>
+              <td>฿200-400</td>
+              <td>502m</td>
+              <td>19.6</td>
+              <td>16.9</td>
+              <td>15</td>
+              <td>12</td>
+              <td>12.5</td>
+              <td>7</td>
+              <td><b>83.0</b><br>
+                <div class="bar"><i style="width:83%"></i></div>
+              </td>
+              <td><a class="ev"
+                  href="https://www.google.com/maps/place/Breakfast+Story+Asok/data=!4m7!3m6!1s0x30e29fd866010d33:0x9cb6eef5eb436846!8m2!3d13.7344789!4d100.563729!16s%2Fg%2F11mtfj6rj0!19sChIJMw0BZtif4jARRmhD6_Xutpw?authuser=0&amp;hl=th&amp;rclk=1"
+                  target="_blank">Maps ↗</a></td>
+            </tr>
+            <tr>
+              <td class="rank">#8</td>
+              <td>เคบีบีคิว สุขุมวิท<br><span class="muted">บาร์บีคิว · เรสซิเดนเซส ชั้น 2 ถ. 12/497 อาคาร</span></td>
+              <td class="star">⭐4.7<br><span class="muted">1,665</span></td>
+              <td>฿400-600</td>
+              <td>562m</td>
+              <td>19.3</td>
+              <td>16.7</td>
+              <td>15</td>
+              <td>12</td>
+              <td>10.0</td>
+              <td>10</td>
+              <td><b>83.0</b><br>
+                <div class="bar"><i style="width:83%"></i></div>
+              </td>
+              <td><a class="ev"
+                  href="https://www.google.com/maps/place/%E0%B9%80%E0%B8%84%E0%B8%9A%E0%B8%B5%E0%B8%9A%E0%B8%B5%E0%B8%84%E0%B8%B4%E0%B8%A7+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97/data=!4m7!3m6!1s0x30e29ff44507296f:0x5374596e2a58629f!8m2!3d13.7420055!4d100.5581905!16s%2Fg%2F11gy453s3f!19sChIJbykHRfSf4jARn2JYKm5ZdFM?authuser=0&amp;hl=th&amp;rclk=1"
+                  target="_blank">Maps ↗</a></td>
+            </tr>
+            <tr>
+              <td class="rank">#9</td>
+              <td>Gigi Eatery Asoke<br><span class="muted">อิตาลี · 28 ซอย สุขุมวิท 19</span></td>
+              <td class="star">⭐4.8<br><span class="muted">3,330</span></td>
+              <td>฿400-1,400</td>
+              <td>241m</td>
+              <td>21.0</td>
+              <td>17.3</td>
+              <td>12</td>
+              <td>15</td>
+              <td>10.0</td>
+              <td>7</td>
+              <td><b>82.3</b><br>
+                <div class="bar"><i style="width:82%"></i></div>
+              </td>
+              <td><a class="ev"
+                  href="https://www.google.com/maps/place/Gigi+Eatery+Asoke/data=!4m7!3m6!1s0x30e29f8a268495c3:0x370b453b880f2e14!8m2!3d13.73947!4d100.5601766!16s%2Fg%2F11rq7sdzqs!19sChIJw5WEJoqf4jARFC4PiDtFCzc?authuser=0&amp;hl=th&amp;rclk=1"
+                  target="_blank">Maps ↗</a></td>
+            </tr>
+            <tr>
+              <td class="rank">#10</td>
+              <td>Bangkok Heightz Rooftop (Restaurant &amp; Bar 39th floor)<br><span class="muted">ร้านอาหาร · 413 ชั้น
+                  39 โรงแรม เดอะ คอนทิเนนท์</span></td>
+              <td class="star">⭐4.8<br><span class="muted">2,889</span></td>
+              <td>฿1,000+</td>
+              <td>250m</td>
+              <td>20.9</td>
+              <td>17.2</td>
+              <td>12</td>
+              <td>15</td>
+              <td>10.0</td>
+              <td>7</td>
+              <td><b>82.1</b><br>
+                <div class="bar"><i style="width:82%"></i></div>
+              </td>
+              <td><a class="ev"
+                  href="https://www.google.com/maps/place/Bangkok+Heightz+Rooftop+%28Restaurant+%26+Bar+39th+floor%29/data=!4m7!3m6!1s0x30e29ee3200006fd:0xeee25794ba4b1bc4!8m2!3d13.736264!4d100.5621587!16s%2Fg%2F11c61txdkf!19sChIJ_QYAIOOe4jARxBtLupRX4u4?authuser=0&amp;hl=th&amp;rclk=1"
+                  target="_blank">Maps ↗</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:8px">R&R(25)·Group(20)·Price(15)·Travel(15)·Data(15)·Uniq(10) · ปุ่ม re-scrape
+        ใช้ได้เมื่อเปิดผ่าน <code>node q3/output/src/server.mjs</code></p>
+    </section>
+    <section id="ssearch">
+      <h2><span class="n">9</span>🔍 ค้นหาร้าน (ทั้ง 90 ร้าน)</h2>
+      <p class="muted" style="margin-bottom:10px">หาร้านที่สนใจเอง — พิมพ์ชื่อ/ประเภท หรือกรอง แล้วคลิกหัวคอลัมน์เพื่อ
+        sort</p>
+      <div class="sc"><input id="q" placeholder="🔎 ค้นหาชื่อร้าน / ประเภท"><select id="fcat">
+          <option value="">ทุกประเภท</option>
+        </select><select id="fprice">
+          <option value="">ทุกราคา</option>
+          <option value="lo">≤ ฿400</option>
+          <option value="mid">฿400–1,000</option>
+          <option value="hi">฿1,000+</option>
+        </select><select id="fdist">
+          <option value="">ทุกระยะ</option>
+          <option value="300">≤ 300m</option>
+          <option value="600">≤ 600m</option>
+          <option value="1000">≤ 1km</option>
+        </select><button class="sbtn" id="sreset">ล้าง</button><span id="scount"></span></div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr id="shead"></tr>
+          </thead>
+          <tbody id="sbody"></tbody>
+        </table>
+      </div>
+      <div class="pager"><button class="sbtn" id="sprev">‹ ก่อนหน้า</button><span class="muted"
+          id="spage"></span><button class="sbtn" id="snext">ถัดไป ›</button></div>
+    </section>
+    <section id="s8">
+      <h2><span class="n">10</span>เปรียบเทียบ &amp; Insight</h2>
+      <p class="lead">ย่านอโศกมีร้านอาหารหนาแน่นมาก (เก็บได้ 90 ร้านในรัศมี ~800m จาก BTS) เรตติ้งสูงเกือบทั้งหมด (4.5★
+        ขึ้นไป) และหลากหลาย — ไทย / อินเดีย / ญี่ปุ่น / เม็กซิกัน / rooftop bar. สำหรับมื้อเย็นทีม 8–12 คน
+        จุดตัดสินอยู่ที่ (1) ร้านรับกลุ่มใหญ่ได้จริง ดูจากจำนวนรีวิวที่มาก (2) เมนูแชร์กลางโต๊ะได้ (3)
+        เดินจากสถานีไม่ไกล. Top 3 จึงเน้นร้านรีวิวหลักพัน–หมื่น เดินจากอโศกไม่เกิน ~10 นาที และเมนูเหมาะแชร์กลุ่ม</p>
+      <table style="margin-top:12px">
+        <tr>
+          <th>ร้าน</th>
+          <th>จุดเด่น</th>
+          <th>ข้อควรระวัง</th>
+        </tr>
+        <tr>
+          <td><b>🥇 Sunrise Tacos MEXICAN GRILL</b></td>
+          <td>ใกล้สถานีที่สุดใน Top 10 (~80m เดิน 1–2 นาที) ทุกคนมาเจอง่าย</td>
+          <td>อยู่โซนการค้า โต๊ะกลุ่มใหญ่ควรจองล่วงหน้า และรสเม็กซิกันอาจไม่ถูกปากทุกคน</td>
+        </tr>
+        <tr>
+          <td><b>🥈 อะแบนดอน แมนชัน</b></td>
+          <td>บาร์ + ดนตรีสด เหมาะสังสรรค์ทีมหลังเลิกงาน</td>
+          <td>เน้นเครื่องดื่ม/บรรยากาศ เสียงดนตรีอาจดังเกินไปถ้าต้องคุยงานจริงจัง</td>
+        </tr>
+        <tr>
+          <td><b>🥉 Amritsr Indian Restaurant</b></td>
+          <td>รีวิวเยอะสุดใน Top 10 (กว่า 11,600) · 4.8★ = น่าเชื่อถือสูงสุด</td>
+          <td>ไกลสุดใน Top 3 (~730m เดิน ~9 นาที) และอาหารอินเดีย/เผ็ดอาจไม่ถูกปากบางคน</td>
+        </tr>
+      </table>
+    </section>
+    <footer>AI Food Assistant · ย่านอโศก (Asok / Sukhumvit) · 90 ร้าน (Google Maps + OSM) · Claude · 2026-06-01 · DEV :
+      PEEM</footer>
+  </div>
+  <script>const root = document.documentElement, tb = document.getElementById('theme');
+    function setT(t) { root.dataset.theme = t; tb.textContent = t === 'dark' ? '☀️' : '🌙'; try { localStorage.setItem('q3theme', t) } catch (e) { } }
+    tb.onclick = () => setT(root.dataset.theme === 'dark' ? 'light' : 'dark');
+    (function () { let t; try { t = localStorage.getItem('q3theme') } catch (e) { } if (!t) t = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'; setT(t); })();
+    let DATA = [{ "rank": 1, "name": "Sunrise Tacos MEXICAN GRILL", "cat": "เม็กซิกัน", "rating": 4.7, "reviews": 4999, "price": "฿200-400", "dist": 80, "total": 93.4, "url": "https://www.google.com/maps/place/Sunrise+Tacos+MEXICAN+GRILL/data=!4m7!3m6!1s0x30e29ee3a1b5aac5:0xe40b4f7a8a87fc3a!8m2!3d13.737971!4d100.5603725!16s%2Fg%2F1pw3yr2gj!19sChIJxaq1oeOe4jAROvyHinpPC-Q?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 20.4, "group_suitability": 18.0, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 15.0, "uniqueness": 10 } }, { "rank": 2, "name": "อะแบนดอน แมนชัน", "cat": "บาร์ดนตรีสด", "rating": 4.8, "reviews": 6768, "price": "฿400-1,600", "dist": 227, "total": 87.4, "url": "https://www.google.com/maps/place/%E0%B8%AD%E0%B8%B0%E0%B9%81%E0%B8%9A%E0%B8%99%E0%B8%94%E0%B8%AD%E0%B8%99+%E0%B9%81%E0%B8%A1%E0%B8%99%E0%B8%8A%E0%B8%B1%E0%B8%99/data=!4m7!3m6!1s0x30e29f66016968f3:0xdc3e00a1dc1cf220!8m2!3d13.735257!4d100.5600491!16s%2Fg%2F11rvc08sqj!19sChIJ82hpAWaf4jARIPIc3KEAPtw?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 21.7, "group_suitability": 18.7, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 10 } }, { "rank": 3, "name": "Amritsr Indian Restaurant", "cat": "อินเดีย", "rating": 4.8, "reviews": 11656, "price": "฿200-1,000", "dist": 733, "total": 86.2, "url": "https://www.google.com/maps/place/Amritsr+Indian+Restaurant/data=!4m7!3m6!1s0x30e29f02825c8b1d:0x832026f6f68e9c71!8m2!3d13.7328252!4d100.565086!16s%2Fg%2F11hbntg1x4!19sChIJHYtcggKf4jARcZyO9vYmIIM?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 22.2, "group_suitability": 20, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 10 } }, { "rank": 4, "name": "Axis & Spin (Sky Lounge & Bar)", "cat": "บาร์", "rating": 4.8, "reviews": 1723, "price": "฿200-1,400", "dist": 242, "total": 84.1, "url": "https://www.google.com/maps/place/Axis+%26+Spin+%28Sky+Lounge+%26+Bar%29/data=!4m7!3m6!1s0x30e29ee3205c0915:0x29e12b9a7c9fb8c!8m2!3d13.7361149!4d100.5619832!16s%2Fg%2F11b8c3tfdl!19sChIJFQlcIOOe4jARjPvJp7kSngI?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 20.4, "group_suitability": 16.7, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 10 } }, { "rank": 5, "name": "Elbasha Turkish & Lebanese Restaurant in Bangkok", "cat": "เลบานอน", "rating": 4.7, "reviews": 2356, "price": "฿200-600", "dist": 551, "total": 83.6, "url": "https://www.google.com/maps/place/Elbasha+Turkish+%26+Lebanese+Restaurant+in+Bangkok/data=!4m7!3m6!1s0x30e29f33d335e2d3:0x5c46912c3091c457!8m2!3d13.7324393!4d100.5610964!16s%2Fg%2F11l2kzk91v!19sChIJ0-I10zOf4jARV8SRMCyRRlw?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 19.7, "group_suitability": 16.9, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 10 } }, { "rank": 6, "name": "เสวย เทอร์มินอล 21 อโศก", "cat": "อาหารทะเล", "rating": 4.6, "reviews": 3616, "price": "฿200-1,200", "dist": 81, "total": 83.5, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%AA%E0%B8%A7%E0%B8%A2+%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A1%E0%B8%B4%E0%B8%99%E0%B8%AD%E0%B8%A5+21+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29f88fad3a7d5:0xd4c98e6dab855fbe!8m2!3d13.7379635!4d100.5604058!16s%2Fg%2F11j1f9kyrp!19sChIJ1afT-oif4jARvl-Fq22OydQ?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 19.1, "group_suitability": 17.4, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 7, "name": "Breakfast Story Asok", "cat": "ร้านอาหาร", "rating": 4.7, "reviews": 2189, "price": "฿200-400", "dist": 502, "total": 83.0, "url": "https://www.google.com/maps/place/Breakfast+Story+Asok/data=!4m7!3m6!1s0x30e29fd866010d33:0x9cb6eef5eb436846!8m2!3d13.7344789!4d100.563729!16s%2Fg%2F11mtfj6rj0!19sChIJMw0BZtif4jARRmhD6_Xutpw?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 19.6, "group_suitability": 16.9, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 12.5, "uniqueness": 7 } }, { "rank": 8, "name": "เคบีบีคิว สุขุมวิท", "cat": "บาร์บีคิว", "rating": 4.7, "reviews": 1665, "price": "฿400-600", "dist": 562, "total": 83.0, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%84%E0%B8%9A%E0%B8%B5%E0%B8%9A%E0%B8%B5%E0%B8%84%E0%B8%B4%E0%B8%A7+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97/data=!4m7!3m6!1s0x30e29ff44507296f:0x5374596e2a58629f!8m2!3d13.7420055!4d100.5581905!16s%2Fg%2F11gy453s3f!19sChIJbykHRfSf4jARn2JYKm5ZdFM?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 19.3, "group_suitability": 16.7, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 10 } }, { "rank": 9, "name": "Gigi Eatery Asoke", "cat": "อิตาลี", "rating": 4.8, "reviews": 3330, "price": "฿400-1,400", "dist": 241, "total": 82.3, "url": "https://www.google.com/maps/place/Gigi+Eatery+Asoke/data=!4m7!3m6!1s0x30e29f8a268495c3:0x370b453b880f2e14!8m2!3d13.73947!4d100.5601766!16s%2Fg%2F11rq7sdzqs!19sChIJw5WEJoqf4jARFC4PiDtFCzc?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 21.0, "group_suitability": 17.3, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 10, "name": "Bangkok Heightz Rooftop (Restaurant & Bar 39th floor)", "cat": "ร้านอาหาร", "rating": 4.8, "reviews": 2889, "price": "฿1,000+", "dist": 250, "total": 82.1, "url": "https://www.google.com/maps/place/Bangkok+Heightz+Rooftop+%28Restaurant+%26+Bar+39th+floor%29/data=!4m7!3m6!1s0x30e29ee3200006fd:0xeee25794ba4b1bc4!8m2!3d13.736264!4d100.5621587!16s%2Fg%2F11c61txdkf!19sChIJ_QYAIOOe4jARxBtLupRX4u4?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 20.9, "group_suitability": 17.2, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 11, "name": "Indulge Restaurant & Cocktail Bar", "cat": "ไทย", "rating": 4.7, "reviews": 3689, "price": "฿400-1,400", "dist": 234, "total": 81.6, "url": "https://www.google.com/maps/place/Indulge+Restaurant+%26+Cocktail+Bar/data=!4m7!3m6!1s0x30e29ee31e36ccbd:0x5f4b13707be34836!8m2!3d13.736193!4d100.56194!16s%2Fg%2F11cn9jblfq!19sChIJvcw2HuOe4jARNkjje3ATS18?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 20.1, "group_suitability": 17.5, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 12, "name": "Firepork - Terminal21 Asok", "cat": "ร้านอาหาร", "rating": 4.8, "reviews": 168, "price": "฿200-400", "dist": 138, "total": 81.2, "url": "https://www.google.com/maps/place/Firepork+-+Terminal21+Asok/data=!4m7!3m6!1s0x30e29fe286ce145b:0x7fe60152cd423071!8m2!3d13.7383316!4d100.5608042!16s%2Fg%2F11x63c19__!19sChIJWxTOhuKf4jARcTBCzVIB5n8?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.1, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 13, "name": "Mexicano", "cat": "เม็กซิกัน", "rating": 4.7, "reviews": 2856, "price": "฿200-1,400", "dist": 642, "total": 80.5, "url": "https://www.google.com/maps/place/Mexicano/data=!4m7!3m6!1s0x30e29f1d494cd761:0x2dec2a41979f8eb6!8m2!3d13.732284!4d100.563035!16s%2Fg%2F1hf3y8s75!19sChIJYddMSR2f4jARto6fl0Eq7C0?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 19.9, "group_suitability": 17.1, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 12.5, "uniqueness": 10 } }, { "rank": 14, "name": "นิคุโช", "cat": "ปิ้งย่างยากินิกุ", "rating": 4.8, "reviews": 8500, "price": "฿400-1,400", "dist": 756, "total": 79.8, "url": "https://www.google.com/maps/place/%E0%B8%99%E0%B8%B4%E0%B8%84%E0%B8%B8%E0%B9%82%E0%B8%8A/data=!4m7!3m6!1s0x30e29f72f4eea7e3:0xc7f18b36fed194ba!8m2!3d13.7345872!4d100.5665223!16s%2Fg%2F11h12ht3b0!19sChIJ46fu9HKf4jARupTR_jaL8cc?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 21.9, "group_suitability": 19.4, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 7.5, "uniqueness": 10 } }, { "rank": 15, "name": "Chowpati Indian Street Food", "cat": "อินเดีย", "rating": 4.6, "reviews": 2379, "price": "฿200-400", "dist": 577, "total": 79.7, "url": "https://www.google.com/maps/place/Chowpati+Indian+Street+Food/data=!4m7!3m6!1s0x30e29f8fa2d80583:0x5367888745723c68!8m2!3d13.7419567!4d100.5577534!16s%2Fg%2F11flbfyp56!19sChIJgwXYoo-f4jARaDxyRYeIZ1M?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.7, "group_suitability": 17.0, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 16, "name": "ซันริคุซูชิ", "cat": "อิซาคายะ", "rating": 4.5, "reviews": 585, "price": "฿400-1,000", "dist": 226, "total": 79.5, "url": "https://www.google.com/maps/place/%E0%B8%8B%E0%B8%B1%E0%B8%99%E0%B8%A3%E0%B8%B4%E0%B8%84%E0%B8%B8%E0%B8%8B%E0%B8%B9%E0%B8%8A%E0%B8%B4/data=!4m7!3m6!1s0x30e29ee4793fb355:0x339f6c86f3451b92!8m2!3d13.739334!4d100.5600923!16s%2Fg%2F1yg93l9sn!19sChIJVbM_eeSe4jARkhtF84ZsnzM?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 16.3, "group_suitability": 16.2, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 17, "name": "นาราไทย คูซีน", "cat": "ไทย", "rating": 4.7, "reviews": 1134, "price": "฿400-1,400", "dist": 80, "total": 79.4, "url": "https://www.google.com/maps/place/%E0%B8%99%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B9%84%E0%B8%97%E0%B8%A2+%E0%B8%84%E0%B8%B9%E0%B8%8B%E0%B8%B5%E0%B8%99/data=!4m7!3m6!1s0x30e29feeca0f45e5:0x982174cb4c7629ce!8m2!3d13.7379219!4d100.5604662!16s%2Fg%2F11vz5jq2sp!19sChIJ5UUPyu6f4jARzil2TMt0IZg?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.9, "group_suitability": 16.5, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 18, "name": "ดูเร", "cat": "บาร์บีคิวเกาหลี", "rating": 4.6, "reviews": 1773, "price": "฿400-1,400", "dist": 258, "total": 79.1, "url": "https://www.google.com/maps/place/%E0%B8%94%E0%B8%B9%E0%B9%80%E0%B8%A3/data=!4m7!3m6!1s0x30e29ee393ade8b7:0x58ce49a06da0b9fb!8m2!3d13.738284!4d100.5579359!16s%2Fg%2F1tf6p77m!19sChIJt-itk-Oe4jAR-7mgbaBJzlg?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.4, "group_suitability": 16.7, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 19, "name": "Achyut Bhavan Bangkok", "cat": "อาหารอินเดียตอนใต้", "rating": 4.8, "reviews": 363, "price": "฿200-400", "dist": 625, "total": 78.9, "url": "https://www.google.com/maps/place/Achyut+Bhavan+Bangkok/data=!4m7!3m6!1s0x30e29f695b7c85d1:0xbc2e8d8740d327c!8m2!3d13.7427305!4d100.5615775!16s%2Fg%2F11yjs3gzgx!19sChIJ0YV8W2mf4jARfDINdNjowgs?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.8, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 10 } }, { "rank": 20, "name": "BARTELS Asok - Sourdough Sandwiches, Coffee & Juicery", "cat": "อาหารมื้อสาย", "rating": 4.8, "reviews": 2419, "price": "฿200-400", "dist": 181, "total": 78.7, "url": "https://www.google.com/maps/place/BARTELS+Asok+-+Sourdough+Sandwiches,+Coffee+%26+Juicery/data=!4m7!3m6!1s0x30e29f41225bb46b:0xdb0a4e24ad71cfc5!8m2!3d13.7385733!4d100.5590604!16s%2Fg%2F11y66vnc6_!19sChIJa7RbIkGf4jARxc9xrSROCts?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 20.7, "group_suitability": 11.0, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 21, "name": "Moom Muum Park", "cat": "ร้านอาหาร", "rating": 4.6, "reviews": 1007, "price": "฿400-1,000", "dist": 42, "total": 78.2, "url": "https://www.google.com/maps/place/Moom+Muum+Park/data=!4m7!3m6!1s0x30e29ee3a05de9f5:0x925ddc86698b9644!8m2!3d13.737378!4d100.5604841!16s%2Fg%2F1hf2py9hq!19sChIJ9eldoOOe4jARRJaLaYbcXZI?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.8, "group_suitability": 16.4, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 22, "name": "Benares Bangkok", "cat": "ร้านอาหารอินเดียสมัยใหม่", "rating": 4.7, "reviews": 446, "price": "฿1,000+", "dist": 585, "total": 78.2, "url": "https://www.google.com/maps/place/Benares+Bangkok/data=!4m7!3m6!1s0x30e29f6423ac6817:0x6ab3be720ead955f!8m2!3d13.74209!4d100.5578549!16s%2Fg%2F11j029bcm6!19sChIJF2isI2Sf4jARX5WtDnK-s2o?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.0, "group_suitability": 16.2, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 10 } }, { "rank": 23, "name": "แมดโมอา อโศก Mad moa asok", "cat": "อาหารอเมริกาทางตะวันตก", "rating": 4.8, "reviews": 159, "price": "฿400-600", "dist": 377, "total": 78.1, "url": "https://www.google.com/maps/place/%E0%B9%81%E0%B8%A1%E0%B8%94%E0%B9%82%E0%B8%A1%E0%B8%AD%E0%B8%B2+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81+Mad+moa+asok/data=!4m7!3m6!1s0x30e29f9a1e927f81:0x41b4950e4429c4d!8m2!3d13.7403864!4d100.5615505!16s%2Fg%2F11pdf6_lwx!19sChIJgX-SHpqf4jARTZxC5FBJGwQ?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.0, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 24, "name": "Madam Saranair Thai Food Restaurant", "cat": "ไทย", "rating": 4.5, "reviews": 2189, "price": "฿200-1,000", "dist": 365, "total": 78.0, "url": "https://www.google.com/maps/place/Madam+Saranair+Thai+Food+Restaurant/data=!4m7!3m6!1s0x30e29ee4947bb5d5:0xd5c8caa52002fc65!8m2!3d13.7402563!4d100.5615624!16s%2Fg%2F11btwrcbm6!19sChIJ1bV7lOSe4jARZfwCIKXKyNU?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.6, "group_suitability": 16.9, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 12.5, "uniqueness": 4 } }, { "rank": 25, "name": "Dae Jang Gum", "cat": "เกาหลี", "rating": 4.6, "reviews": 703, "price": "฿200-1,000", "dist": 478, "total": 77.8, "url": "https://www.google.com/maps/place/Dae+Jang+Gum/data=!4m7!3m6!1s0x30e29ee4c84a0021:0x976f027d04afd297!8m2!3d13.7405615!4d100.5629827!16s%2Fg%2F119thpqds!19sChIJIQBKyOSe4jARl9KvBH0Cb5c?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.5, "group_suitability": 16.3, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 26, "name": "Kinnaree by Vanessa WU (Sukhumvit 8)", "cat": "ไทย", "rating": 4.7, "reviews": 2316, "price": "฿400-1,400", "dist": 407, "total": 77.6, "url": "https://www.google.com/maps/place/Kinnaree+by+Vanessa+WU+%28Sukhumvit+8%29/data=!4m7!3m6!1s0x30e29ee139290fc5:0xdbc8163c5ffe4628!8m2!3d13.7380768!4d100.5564138!16s%2Fg%2F1tdmgy0b!19sChIJxQ8pOeGe4jARKEb-XzwWyNs?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 19.7, "group_suitability": 16.9, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 27, "name": "Xoxo Stylish Korean Bar & Restaurant @ Asok", "cat": "ร้านอาหาร", "rating": 4.6, "reviews": 312, "price": "฿200-400", "dist": 232, "total": 76.8, "url": "https://www.google.com/maps/place/Xoxo+Stylish+Korean+Bar+%26+Restaurant+@+Asok/data=!4m7!3m6!1s0x30e29f03a57814f5:0x5cb769eaf65d58a6!8m2!3d13.7383501!4d100.5582434!16s%2Fg%2F11h0w9v9pt!19sChIJ9RR4pQOf4jARplhd9uppt1w?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 16.7, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 28, "name": "บิ๊ก มาม่า อาหารอิตาเลียน", "cat": "อิตาลี", "rating": 4.5, "reviews": 3392, "price": "฿200-1,000", "dist": 387, "total": 76.4, "url": "https://www.google.com/maps/place/%E0%B8%9A%E0%B8%B4%E0%B9%8A%E0%B8%81+%E0%B8%A1%E0%B8%B2%E0%B8%A1%E0%B9%88%E0%B8%B2+%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%AD%E0%B8%B4%E0%B8%95%E0%B8%B2%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B8%A2%E0%B8%99/data=!4m7!3m6!1s0x30e29ee49366ea8b:0xfccd79a165c43008!8m2!3d13.7404324!4d100.5616669!16s%2Fg%2F1vrhp3qy!19sChIJi-pmk-Se4jARCDDEZaF5zfw?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.0, "group_suitability": 17.4, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 29, "name": "ผัดไทยพลีส Pad Thai Please - Terminal 21 Asok", "cat": "เลขที่ 88 ห้องเลขที่ SH4017 ชั้น 4 Terminal 21 21 ซอย สุขุมวิท 19เปิดอยู่", "rating": 4.9, "reviews": 207, "price": "฿200-400", "dist": 47, "total": 76.4, "url": "https://www.google.com/maps/place/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B9%84%E0%B8%97%E0%B8%A2%E0%B8%9E%E0%B8%A5%E0%B8%B5%E0%B8%AA+Pad+Thai+Please+-+Terminal+21+Asok/data=!4m7!3m6!1s0x30e29f5164f6791f:0x314cbfa965efc2de!8m2!3d13.7373609!4d100.5605321!16s%2Fg%2F11yqvp05r_!19sChIJH3n2ZFGf4jAR3sLvZam_TDE?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 19.3, "group_suitability": 10.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 30, "name": "เคนชิน อิซากายะ สาขาอโศก", "cat": "อิซาคายะ", "rating": 4.3, "reviews": 1693, "price": "฿400-600", "dist": 404, "total": 76.0, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%84%E0%B8%99%E0%B8%8A%E0%B8%B4%E0%B8%99+%E0%B8%AD%E0%B8%B4%E0%B8%8B%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A2%E0%B8%B0+%E0%B8%AA%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29ee4eb3db945:0x134d332cbb34a1fd!8m2!3d13.7405334!4d100.5618025!16s%2Fg%2F11dxrz78db!19sChIJRbk96-Se4jAR_aE0uywzTRM?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.3, "group_suitability": 16.7, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 31, "name": "สมยงตำซั่ว สุขุมวิท-อโศก", "cat": "ไทย", "rating": 4.7, "reviews": 750, "price": "฿1-400", "dist": 635, "total": 75.8, "url": "https://www.google.com/maps/place/%E0%B8%AA%E0%B8%A1%E0%B8%A2%E0%B8%87%E0%B8%95%E0%B8%B3%E0%B8%8B%E0%B8%B1%E0%B9%88%E0%B8%A7+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97-%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29fa65a0d21b7:0x6c5f7139dcca702!8m2!3d13.7425741!4d100.5623456!16s%2Fg%2F11s_v8y1zr!19sChIJtyENWqaf4jARAqfMnRP3xQY?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.5, "group_suitability": 16.3, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 32, "name": "ครัวคุณปุ๊ก", "cat": "ไทย", "rating": 4.4, "reviews": 3874, "price": "฿200-400", "dist": 482, "total": 75.7, "url": "https://www.google.com/maps/place/%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%A7%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B8%9B%E0%B8%B8%E0%B9%8A%E0%B8%81/data=!4m7!3m6!1s0x30e29f7acbd74e2f:0xa5e92b66b13296be!8m2!3d13.739982!4d100.5565886!16s%2Fg%2F11fjnbg8bj!19sChIJL07Xy3qf4jARvpYysWYr6aU?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.2, "group_suitability": 17.5, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 33, "name": "Dough Bros. Pizza & Doughnuts (Interchange 21 - Asok)", "cat": "พิซซ่า", "rating": 4.8, "reviews": 1743, "price": "฿200-600", "dist": 173, "total": 75.1, "url": "https://www.google.com/maps/place/Dough+Bros.+Pizza+%26+Doughnuts+%28Interchange+21+-+Asok%29/data=!4m7!3m6!1s0x30e29f006fc510d9:0xd0696a97e71eef50!8m2!3d13.7367616!4d100.5616063!16s%2Fg%2F11y8my_2cc!19sChIJ2RDFbwCf4jARUO8e55dqadA?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 20.4, "group_suitability": 7.7, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 34, "name": "BAKE BROS (เบค โบรส์) - Terminal 21 Asok", "cat": "ร้านอาหาร", "rating": 4.4, "reviews": 301, "price": "฿200-400", "dist": 61, "total": 74.7, "url": "https://www.google.com/maps/place/BAKE+BROS+%28%E0%B9%80%E0%B8%9A%E0%B8%84+%E0%B9%82%E0%B8%9A%E0%B8%A3%E0%B8%AA%E0%B9%8C%29+-+Terminal+21+Asok/data=!4m7!3m6!1s0x30e29ee39fa6f36f:0x436f7e7a1d5c028e!8m2!3d13.7376441!4d100.560541!16s%2Fg%2F11c73bbmvz!19sChIJb_Omn-Oe4jARjgJcHXp-b0M?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 14.6, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 35, "name": "El Gaucho", "cat": "สเต็ก", "rating": 4.4, "reviews": 3814, "price": "฿2,000+", "dist": 68, "total": 74.6, "url": "https://www.google.com/maps/place/El+Gaucho/data=!4m7!3m6!1s0x30e29ee39852036b:0xfa2b066c95617640!8m2!3d13.7378567!4d100.5598421!16s%2Fg%2F1hm69x953!19sChIJawNSmOOe4jARQHZhlWwGK_o?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.1, "group_suitability": 17.5, "price_suitability": 8, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 36, "name": "Shakariki 432 ASOKE", "cat": "อิซาคายะ", "rating": 4.5, "reviews": 1260, "price": "฿200-1,400", "dist": 495, "total": 74.6, "url": "https://www.google.com/maps/place/Shakariki+432+ASOKE/data=!4m7!3m6!1s0x30e29ee4dc1e3361:0xc7483b0cbc64640c!8m2!3d13.7412557!4d100.5621977!16s%2Fg%2F124t2h405!19sChIJYTMe3OSe4jARDGRkvAw7SMc?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.1, "group_suitability": 16.5, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 37, "name": "กริลล์ลิเชียส", "cat": "เลบานอน", "rating": 4, "reviews": 545, "price": "฿200-1,000", "dist": 84, "total": 74.4, "url": "https://www.google.com/maps/place/%E0%B8%81%E0%B8%A3%E0%B8%B4%E0%B8%A5%E0%B8%A5%E0%B9%8C%E0%B8%A5%E0%B8%B4%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%AA/data=!4m7!3m6!1s0x30e29f8eb94fab87:0xe5098a9eff84eb5b!8m2!3d13.7379508!4d100.5604896!16s%2Fg%2F11mr2w3gvy!19sChIJh6tPuY6f4jARW-uE_56KCeU?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 11.2, "group_suitability": 16.2, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 38, "name": "On The Table, Terminal 21 Asok", "cat": "อาหารอเมริกาทางตะวันตก", "rating": 4.4, "reviews": 204, "price": "฿200-400", "dist": 64, "total": 74.4, "url": "https://www.google.com/maps/place/On+The+Table,+Terminal+21+Asok/data=!4m7!3m6!1s0x30e29fcbcb7c395f:0x7a3b8c96778406fc!8m2!3d13.7378563!4d100.5602374!16s%2Fg%2F11ssczrz9j!19sChIJXzl8y8uf4jAR_AaEd5aMO3o?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 14.3, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 39, "name": "Have a Zeed - Terminal 21 Asoke", "cat": "ไทย", "rating": 4.1, "reviews": 1964, "price": "฿200-1,000", "dist": 67, "total": 74.3, "url": "https://www.google.com/maps/place/Have+a+Zeed+-+Terminal+21+Asoke/data=!4m7!3m6!1s0x30e29ee3a05de9f5:0x70f43f0952aa9830!8m2!3d13.7377055!4d100.5605626!16s%2Fg%2F11r8c3c5l!19sChIJ9eldoOOe4jARMJiqUgk_9HA?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 13.5, "group_suitability": 16.8, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 40, "name": "ป้อน Terminal 21 Asok", "cat": "ไทย", "rating": 4.2, "reviews": 713, "price": "฿200-400", "dist": 102, "total": 73.8, "url": "https://www.google.com/maps/place/%E0%B8%9B%E0%B9%89%E0%B8%AD%E0%B8%99+Terminal+21+Asok/data=!4m7!3m6!1s0x30e29ee5a84ea91b:0xcf6641fbb4d21e72!8m2!3d13.7381445!4d100.560469!16s%2Fg%2F11c7hd8zvx!19sChIJG6lOqOWe4jARch7StPtBZs8?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 13.5, "group_suitability": 16.3, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 41, "name": "ปิง หูฉลาม อโศก", "cat": "จีน", "rating": 4.6, "reviews": 1587, "price": "฿1,000+", "dist": 378, "total": 72.9, "url": "https://www.google.com/maps/place/%E0%B8%9B%E0%B8%B4%E0%B8%87+%E0%B8%AB%E0%B8%B9%E0%B8%89%E0%B8%A5%E0%B8%B2%E0%B8%A1+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29f019c10f49d:0xbe47d9f9373a4690!8m2!3d13.7403107!4d100.5617291!16s%2Fg%2F1tz73d_m!19sChIJnfQQnAGf4jARkEY6N_nZR74?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.3, "group_suitability": 16.6, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 42, "name": "Padthai Chapaa - Asoke", "cat": "ร้านอาหาร", "rating": 4.6, "reviews": 131, "price": "฿200-400", "dist": 450, "total": 72.9, "url": "https://www.google.com/maps/place/Padthai+Chapaa+-+Asoke/data=!4m7!3m6!1s0x30e29f17e1f636ab:0xd90d96e0f2ce8c33!8m2!3d13.7402253!4d100.5629776!16s%2Fg%2F11vspkhpvt!19sChIJqzb24Ref4jARM4zO8uCWDdk?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.8, "group_suitability": 16.1, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 43, "name": "Mr.Bao MALATANG @Asoke มิสเตอร์เป้า หมาล่าทั่ง 麻辣烫 麻辣香锅", "cat": "อาหารจานด่วน", "rating": 4.9, "reviews": 1323, "price": "฿200-400", "dist": 489, "total": 72.6, "url": "https://www.google.com/maps/place/Mr.Bao+MALATANG+@Asoke+%E0%B8%A1%E0%B8%B4%E0%B8%AA%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B9%80%E0%B8%9B%E0%B9%89%E0%B8%B2+%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%A5%E0%B9%88%E0%B8%B2%E0%B8%97%E0%B8%B1%E0%B9%88%E0%B8%87+%E9%BA%BB%E8%BE%A3%E7%83%AB+%E9%BA%BB%E8%BE%A3%E9%A6%99%E9%94%85/data=!4m7!3m6!1s0x30e29f9d25b98fe3:0x5d71ab05dedeaf62!8m2!3d13.741231!4d100.562129!16s%2Fg%2F11yls7bp67!19sChIJ44-5JZ2f4jARYq_e3gWrcV0?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 21.1, "group_suitability": 7.5, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 44, "name": "Tamaruya Honten Asoke", "cat": "ปิ้งย่างยากินิกุ", "rating": 4.5, "reviews": 269, "price": "฿400-1,600", "dist": 309, "total": 72.6, "url": "https://www.google.com/maps/place/Tamaruya+Honten+Asoke/data=!4m7!3m6!1s0x30e29fc2fdfc99d7:0x774bcc03b701b6de!8m2!3d13.7393681!4d100.5620097!16s%2Fg%2F11qqcgb0x7!19sChIJ15n8_cKf4jAR3rYBtwPMS3c?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.5, "group_suitability": 16.1, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 45, "name": "เดอะ โลคอล", "cat": "ไทย", "rating": 4.4, "reviews": 3279, "price": "฿600-1,800", "dist": 530, "total": 72.3, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0+%E0%B9%82%E0%B8%A5%E0%B8%84%E0%B8%AD%E0%B8%A5/data=!4m7!3m6!1s0x30e29efb3535cf73:0x913c6ad6b30887b0!8m2!3d13.7406407!4d100.5636026!16s%2Fg%2F11cfcdr5c!19sChIJc881Nfue4jARsIcIs9ZqPJE?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.0, "group_suitability": 17.3, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 46, "name": "เกาเหลาเลือดหมู สุขุมวิท 23", "cat": "ร้านอาหาร", "rating": 4.7, "reviews": 172, "price": "฿1-200", "dist": 342, "total": 72.2, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%81%E0%B8%B2%E0%B9%80%E0%B8%AB%E0%B8%A5%E0%B8%B2%E0%B9%80%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%94%E0%B8%AB%E0%B8%A1%E0%B8%B9+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+23/data=!4m7!3m6!1s0x30e29f04967f75ff:0xc85f0df247757b01!8m2!3d13.7384256!4d100.5630447!16s%2Fg%2F11fsrxt8dc!19sChIJ_3V_lgSf4jARAXt1R_INX8g?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.1, "group_suitability": 16.1, "price_suitability": 10, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 47, "name": "สุดาโภชนา", "cat": "ไทย", "rating": 3.8, "reviews": 3119, "price": "฿200-400", "dist": 63, "total": 72.1, "url": "https://www.google.com/maps/place/%E0%B8%AA%E0%B8%B8%E0%B8%94%E0%B8%B2%E0%B9%82%E0%B8%A0%E0%B8%8A%E0%B8%99%E0%B8%B2/data=!4m7!3m6!1s0x30e29ee3aef66a1d:0x20c2c8ffb5e82ab3!8m2!3d13.7367327!4d100.5600329!16s%2Fg%2F1tm_znyx!19sChIJHWr2ruOe4jARsyrotf_IwiA?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 10.9, "group_suitability": 17.2, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 48, "name": "นากิยะ อโศก", "cat": "อิซาคายะ", "rating": 4.4, "reviews": 393, "price": "฿400-600", "dist": 646, "total": 72.1, "url": "https://www.google.com/maps/place/%E0%B8%99%E0%B8%B2%E0%B8%81%E0%B8%B4%E0%B8%A2%E0%B8%B0+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29ee53cb56a75:0xbf484ed7f4d83bcf!8m2!3d13.7427166!4d100.56227!16s%2Fg%2F11c1s9869r!19sChIJdWq1POWe4jARzzvY9NdOSL8?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 14.9, "group_suitability": 16.2, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 49, "name": "Dutch Pancake Café - Asok", "cat": "แพนเค้ก", "rating": 4.7, "reviews": 357, "price": "฿200-400", "dist": 367, "total": 71.9, "url": "https://www.google.com/maps/place/Dutch+Pancake+Caf%C3%A9+-+Asok/data=!4m7!3m6!1s0x30e29f1de7935f9f:0x295fabf79a3fe7ce!8m2!3d13.7340036!4d100.560018!16s%2Fg%2F11scnq0c66!19sChIJn1-T5x2f4jARzuc_mverXyk?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.8, "group_suitability": 10.1, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 50, "name": "Hachicken Ramen (Terminal21 Asok)", "cat": "ราเม็ง", "rating": 4.7, "reviews": 1202, "price": "฿1-200", "dist": 134, "total": 71.5, "url": "https://www.google.com/maps/place/Hachicken+Ramen+%28Terminal21+Asok%29/data=!4m7!3m6!1s0x30e29f6e82b95c65:0x7d5bb292b000d264!8m2!3d13.7384815!4d100.5603451!16s%2Fg%2F11v0mygf8l!19sChIJZVy5gm6f4jARZNIAsJKyW30?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 19.0, "group_suitability": 10.5, "price_suitability": 10, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 51, "name": "โรซาโน อิตาเลียน คูซีน", "cat": "อิตาลี", "rating": 4.5, "reviews": 1137, "price": "฿1,000+", "dist": 571, "total": 71.4, "url": "https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%8B%E0%B8%B2%E0%B9%82%E0%B8%99+%E0%B8%AD%E0%B8%B4%E0%B8%95%E0%B8%B2%E0%B9%80%E0%B8%A5%E0%B8%B5%E0%B8%A2%E0%B8%99+%E0%B8%84%E0%B8%B9%E0%B8%8B%E0%B8%B5%E0%B8%99/data=!4m7!3m6!1s0x30e29ee36451ee81:0xb029af31de1966cd!8m2!3d13.7422328!4d100.5615625!16s%2Fg%2F1tf139x_!19sChIJge5RZOOe4jARzWYZ3jGvKbA?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 16.9, "group_suitability": 16.5, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 52, "name": "ฮินาตะ", "cat": "ร้านอาหาร Kushiage และ Kushikatsu", "rating": 4.6, "reviews": 459, "price": "฿200-1,000", "dist": 654, "total": 71.3, "url": "https://www.google.com/maps/place/%E0%B8%AE%E0%B8%B4%E0%B8%99%E0%B8%B2%E0%B8%95%E0%B8%B0/data=!4m7!3m6!1s0x30e29f851566ac19:0xbd9556d83781aeb9!8m2!3d13.742683!4d100.562544!16s%2Fg%2F11hz169gz4!19sChIJGaxmFYWf4jARua6BN9hWlb0?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.1, "group_suitability": 16.2, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 53, "name": "ปาล่า พิซซ่า โรมานา", "cat": "พิซซ่า", "rating": 4.5, "reviews": 4495, "price": "฿200-600", "dist": 96, "total": 71.1, "url": "https://www.google.com/maps/place/%E0%B8%9B%E0%B8%B2%E0%B8%A5%E0%B9%88%E0%B8%B2+%E0%B8%9E%E0%B8%B4%E0%B8%8B%E0%B8%8B%E0%B9%88%E0%B8%B2+%E0%B9%82%E0%B8%A3%E0%B8%A1%E0%B8%B2%E0%B8%99%E0%B8%B2/data=!4m7!3m6!1s0x30e29ee30600dd73:0x9271d945d544eebc!8m2!3d13.7369303!4d100.5608983!16s%2Fg%2F11_q_h2yj!19sChIJc90ABuOe4jARvO5E1UXZcZI?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.3, "group_suitability": 8.8, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 54, "name": "Habib's Kebab Biryani Curry (Halal)", "cat": "ฮาลาล", "rating": 4.6, "reviews": 328, "price": "฿200-400", "dist": 31, "total": 70.8, "url": "https://www.google.com/maps/place/Habib%27s+Kebab+Biryani+Curry+%28Halal%29/data=!4m7!3m6!1s0x30e29f78e16d75e7:0x467f3a7aab88b942!8m2!3d13.7375782!4d100.5601127!16s%2Fg%2F11sttwkpfm!19sChIJ53Vt4Xif4jARQrmIq3o6f0Y?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 16.7, "group_suitability": 10.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 55, "name": "เพียร์ 21", "cat": "ศูนย์อาหาร", "rating": 4.5, "reviews": 24138, "price": "฿1-200", "dist": 67, "total": 70.0, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%9E%E0%B8%B5%E0%B8%A2%E0%B8%A3%E0%B9%8C+21/data=!4m7!3m6!1s0x30e29ee39e563b0b:0x33ce8f75edc2c9c5!8m2!3d13.737625!4d100.5606201!16s%2Fg%2F11c3286pb5!19sChIJCztWnuOe4jARxcnC7XWPzjM?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 20.0, "group_suitability": 11, "price_suitability": 10, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 56, "name": "เก็ดถะหวา", "cat": "ไทย", "rating": 4.4, "reviews": 874, "price": "฿400-600", "dist": 860, "total": 70.0, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%94%E0%B8%96%E0%B8%B0%E0%B8%AB%E0%B8%A7%E0%B8%B2/data=!4m7!3m6!1s0x30e29efe6c54a6a7:0xb3d58be87456205d!8m2!3d13.7359419!4d100.5679397!16s%2Fg%2F1th54fr4!19sChIJp6ZUbP6e4jARXSBWdOiL1bM?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.7, "group_suitability": 16.3, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 57, "name": "บ้านขนิษฐา ไทย คิวซีน สุขุมวิท 23", "cat": "ไทย", "rating": 4.3, "reviews": 1482, "price": "฿1,000+", "dist": 339, "total": 69.8, "url": "https://www.google.com/maps/place/%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%82%E0%B8%99%E0%B8%B4%E0%B8%A9%E0%B8%90%E0%B8%B2+%E0%B9%84%E0%B8%97%E0%B8%A2+%E0%B8%84%E0%B8%B4%E0%B8%A7%E0%B8%8B%E0%B8%B5%E0%B8%99+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+23/data=!4m7!3m6!1s0x30e29ee4b81dcdab:0xd969b1cff9f824d7!8m2!3d13.7378586!4d100.5631839!16s%2Fg%2F1tkngxg_!19sChIJq80duOSe4jAR1yT4-c-xadk?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.2, "group_suitability": 16.6, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 58, "name": "ยากินิกุ ไลค์ เทอร์มินอล21 อโศก", "cat": "อาหารญี่ปุ่นแท้", "rating": 4.5, "reviews": 321, "price": "฿200-400", "dist": 80, "total": 69.8, "url": "https://www.google.com/maps/place/%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B4%E0%B8%99%E0%B8%B4%E0%B8%81%E0%B8%B8+%E0%B9%84%E0%B8%A5%E0%B8%84%E0%B9%8C+%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A1%E0%B8%B4%E0%B8%99%E0%B8%AD%E0%B8%A521+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29fb892bc76fd:0x4dadc79cb5958452!8m2!3d13.7379219!4d100.5604662!16s%2Fg%2F11v3wp4tg3!19sChIJ_Xa8krif4jARUoSVtZzHrU0?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.7, "group_suitability": 10.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 59, "name": "ศรีตราด", "cat": "ไทย", "rating": 4.5, "reviews": 2542, "price": "฿400-1,400", "dist": 865, "total": 69.7, "url": "https://www.google.com/maps/place/%E0%B8%A8%E0%B8%A3%E0%B8%B5%E0%B8%95%E0%B8%A3%E0%B8%B2%E0%B8%94/data=!4m7!3m6!1s0x30e29efc3bbbcfa1:0x1ae0f08f959b616b!8m2!3d13.7368037!4d100.5680964!16s%2Fg%2F11c2n_wlzx!19sChIJoc-7O_ye4jARa2GblY_w4Bo?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.7, "group_suitability": 17.0, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 60, "name": "เพ็พพิน่า", "cat": "อิตาลี", "rating": 4.5, "reviews": 2486, "price": "฿400-1,400", "dist": 795, "total": 69.7, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%9E%E0%B9%87%E0%B8%9E%E0%B8%9E%E0%B8%B4%E0%B8%99%E0%B9%88%E0%B8%B2/data=!4m7!3m6!1s0x30e29efc6c054743:0x1b723f3f18e9382a!8m2!3d13.7377195!4d100.5674442!16s%2Fg%2F1q6j7g_jz!19sChIJQ0cFbPye4jARKjjpGD8_chs?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.7, "group_suitability": 17.0, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 61, "name": "กับข้าว' กับปลา เทอร์มินัล 21 อโศก", "cat": "ไทย", "rating": 4.1, "reviews": 671, "price": "฿400-1,200", "dist": 54, "total": 69.7, "url": "https://www.google.com/maps/place/%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%27+%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%9B%E0%B8%A5%E0%B8%B2+%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A1%E0%B8%B4%E0%B8%99%E0%B8%B1%E0%B8%A5+21+%E0%B8%AD%E0%B9%82%E0%B8%A8%E0%B8%81/data=!4m7!3m6!1s0x30e29fc213e8f3b3:0xcdf6bafe36ddde13!8m2!3d13.7373662!4d100.560595!16s%2Fg%2F11h5lhh79p!19sChIJs_PoE8Kf4jARE97dNv669s0?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 12.4, "group_suitability": 16.3, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 62, "name": "Barney’s Burger Joint Sukhumvit 23", "cat": "แฮมเบอร์เกอร์", "rating": 4.7, "reviews": 569, "price": "฿200-400", "dist": 324, "total": 69.5, "url": "https://www.google.com/maps/place/Barney%E2%80%99s+Burger+Joint+Sukhumvit+23/data=!4m7!3m6!1s0x30e29f000a3c161b:0xb6e1fd3911954c16!8m2!3d13.7379531!4d100.5630219!16s%2Fg%2F11vwxks1f4!19sChIJGxY8CgCf4jARFkyVETn94bY?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.3, "group_suitability": 7.2, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 63, "name": "Beer Garden Sukhumvit 19", "cat": "ร้านอาหาร", "rating": 4.1, "reviews": 568, "price": "฿200-400", "dist": 341, "total": 69.5, "url": "https://www.google.com/maps/place/Beer+Garden+Sukhumvit+19/data=!4m7!3m6!1s0x30e29ee4665bd17b:0xd1c6f80879e5e9a0!8m2!3d13.7403641!4d100.5599434!16s%2Fg%2F11h0b0zrw!19sChIJe9FbZuSe4jARoOnleQj4xtE?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 12.3, "group_suitability": 16.2, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 64, "name": "Market Café", "cat": "ไทย", "rating": 4.5, "reviews": 223, "price": "฿600-1,600", "dist": 445, "total": 69.4, "url": "https://www.google.com/maps/place/Market+Caf%C3%A9/data=!4m7!3m6!1s0x30e29f3c0a5f4749:0xc00f6d7b5e768cd5!8m2!3d13.7400075!4d100.557065!16s%2Fg%2F11fjzwmzsn!19sChIJSUdfCjyf4jAR1Yx2XnttD8A?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.3, "group_suitability": 16.1, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 65, "name": "UMA UMA 博多うま馬-Asoke", "cat": "ราเม็ง", "rating": 4.4, "reviews": 692, "price": "฿200-400", "dist": 456, "total": 69.3, "url": "https://www.google.com/maps/place/UMA+UMA+%E5%8D%9A%E5%A4%9A%E3%81%86%E3%81%BE%E9%A6%AC-Asoke/data=!4m7!3m6!1s0x30e29ee4b45861cb:0x466dc8987ce5b59b!8m2!3d13.7401225!4d100.5631642!16s%2Fg%2F11bxjg2455!19sChIJy2FYtOSe4jARm7XlfJjIbUY?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.5, "group_suitability": 10.3, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 12.5, "uniqueness": 4 } }, { "rank": 66, "name": "ครัวปัณฑารีย์", "cat": "ไทย", "rating": 4.4, "reviews": 1572, "price": "฿1-200", "dist": 475, "total": 68.9, "url": "https://www.google.com/maps/place/%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%A7%E0%B8%9B%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B8%B2%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B9%8C/data=!4m7!3m6!1s0x30e29ee6ca79496d:0xcea735fe8ab6038d!8m2!3d13.7394776!4d100.5563134!16s%2Fg%2F1yg6c_mfq!19sChIJbUl5yuae4jARjQO2iv41p84?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 16.3, "group_suitability": 16.6, "price_suitability": 10, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 67, "name": "Antico Fornaio - Crafted Italian focaccia - Asoke", "cat": "แซนด์วิช", "rating": 4.9, "reviews": 49, "price": "฿200-400", "dist": 409, "total": 68.9, "url": "https://www.google.com/maps/place/Antico+Fornaio+-+Crafted+Italian+focaccia+-+Asoke/data=!4m7!3m6!1s0x30e29f734553d9c7:0xcd709c8af0ae00f4!8m2!3d13.7401926!4d100.5624412!16s%2Fg%2F11mrkcpcnb!19sChIJx9lTRXOf4jAR9ACu8IqccM0?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.9, "group_suitability": 7.0, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 68, "name": "SOKOZY - Cafe & Bowls Asoke Bangkok", "cat": "ร้านกาแฟ", "rating": 4.7, "reviews": 329, "price": "฿200-400", "dist": 466, "total": 68.8, "url": "https://www.google.com/maps/place/SOKOZY+-+Cafe+%26+Bowls+Asoke+Bangkok/data=!4m7!3m6!1s0x30e29f2e07ee59df:0xdbcb5b5e50282e6a!8m2!3d13.7342868!4d100.5630933!16s%2Fg%2F11kc2d5_dd!19sChIJ31nuBy6f4jARai4oUF5by9s?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.7, "group_suitability": 7.1, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 69, "name": "Rossini's", "cat": "อิตาลี", "rating": 4.5, "reviews": 281, "price": "฿2,000+", "dist": 110, "total": 68.7, "url": "https://www.google.com/maps/place/Rossini%27s/data=!4m7!3m6!1s0x30e29ee3b886aa89:0xbeaad131101343f!8m2!3d13.737277!4d100.5590826!16s%2Fg%2F1th194l4!19sChIJiaqGuOOe4jARPzQBEROt6gs?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.6, "group_suitability": 16.1, "price_suitability": 8, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 70, "name": "Blue Elephant Bangkok Sukhumvit Thai Heritage Cuisine", "cat": "ไทย", "rating": 4.8, "reviews": 260, "price": "฿2,000+", "dist": 871, "total": 68.6, "url": "https://www.google.com/maps/place/Blue+Elephant+Bangkok+Sukhumvit+Thai+Heritage+Cuisine/data=!4m7!3m6!1s0x30e29f97d0c03359:0xeb61db8d623b16d6!8m2!3d13.7448294!4d100.5578789!16s%2Fg%2F11vzf7nd5f!19sChIJWTPA0Jef4jAR1hY7Yo3bYes?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.5, "group_suitability": 16.1, "price_suitability": 8, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 71, "name": "ห้องอาหารญี่ปุ่น คิสโสะ", "cat": "ญี่ปุ่น", "rating": 4.6, "reviews": 570, "price": "฿1,000+", "dist": 128, "total": 68.5, "url": "https://www.google.com/maps/place/%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%8D%E0%B8%B5%E0%B9%88%E0%B8%9B%E0%B8%B8%E0%B9%88%E0%B8%99+%E0%B8%84%E0%B8%B4%E0%B8%AA%E0%B9%82%E0%B8%AA%E0%B8%B0/data=!4m7!3m6!1s0x30e29ee396e9f93f:0xe3859e79f55864f5!8m2!3d13.7382519!4d100.5594298!16s%2Fg%2F1pp2vgk4w!19sChIJP_npluOe4jAR9WRY9XmeheM?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.3, "group_suitability": 10.2, "price_suitability": 12, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 72, "name": "Ministry of Crab Bangkok", "cat": "อาหารทะเล", "rating": 4.6, "reviews": 1021, "price": "฿2,000+", "dist": 719, "total": 68.2, "url": "https://www.google.com/maps/place/Ministry+of+Crab+Bangkok/data=!4m7!3m6!1s0x30e29ff8f3a242bf:0x3265c55859437dbe!8m2!3d13.73597!4d100.5666154!16s%2Fg%2F11fn4n5f6k!19sChIJv0Ki8_if4jARvn1DWVjFZTI?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.8, "group_suitability": 16.4, "price_suitability": 8, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 73, "name": "Orchid Cafe", "cat": "บุฟเฟต์", "rating": 4.4, "reviews": 446, "price": "฿800-1,800", "dist": 110, "total": 68.2, "url": "https://www.google.com/maps/place/Orchid+Cafe/data=!4m7!3m6!1s0x30e29ee3b81a29b5:0x3d1b02b2746b74d3!8m2!3d13.7374102!4d100.5590841!16s%2Fg%2F1tfpx941!19sChIJtSkauOOe4jAR03RrdLICGz0?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.0, "group_suitability": 16.2, "price_suitability": 8, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 74, "name": "No Idea Cafe & Gastropub", "cat": "ร้านอาหาร", "rating": 4.6, "reviews": 707, "price": "฿800-2,000", "dist": 477, "total": 67.8, "url": "https://www.google.com/maps/place/No+Idea+Cafe+%26+Gastropub/data=!4m7!3m6!1s0x30e29f0299789b09:0xbaf6d432fc6fe3e3!8m2!3d13.7340044!4d100.562931!16s%2Fg%2F1pzpyfd16!19sChIJCZt4mQKf4jAR4-Nv_DLU9ro?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.5, "group_suitability": 16.3, "price_suitability": 8, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 75, "name": "Thai Thai Boat Noodles Terminal 21 Asok", "cat": "ร้านก๋วยเตี๋ยว", "rating": 4.5, "reviews": 625, "price": "฿200-400", "dist": 81, "total": 67.6, "url": "https://www.google.com/maps/place/Thai+Thai+Boat+Noodles+Terminal+21+Asok/data=!4m7!3m6!1s0x30e29f6643293ce3:0x267c5372ab441479!8m2!3d13.7379635!4d100.5604058!16s%2Fg%2F11nz3mmzsl!19sChIJ4zwpQ2af4jAReRREq3JTfCY?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 16.4, "group_suitability": 7.2, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 76, "name": "ไอ้หยาอร่อย", "cat": "ไทย", "rating": 4.4, "reviews": 518, "price": "฿1-200", "dist": 308, "total": 67.4, "url": "https://www.google.com/maps/place/%E0%B9%84%E0%B8%AD%E0%B9%89%E0%B8%AB%E0%B8%A2%E0%B8%B2%E0%B8%AD%E0%B8%A3%E0%B9%88%E0%B8%AD%E0%B8%A2/data=!4m7!3m6!1s0x30e29ee329181d59:0x62e0eaf90bba0599!8m2!3d13.7364109!4d100.5627959!16s%2Fg%2F1hf4tmrmj!19sChIJWR0YKeOe4jARmQW6C_nq4GI?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.2, "group_suitability": 16.2, "price_suitability": 10, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 77, "name": "Belga Rooftop Bar & Brasserie", "cat": "เบลเยียม", "rating": 4.6, "reviews": 1513, "price": "฿1,000+", "dist": 333, "total": 66.8, "url": "https://www.google.com/maps/place/Belga+Rooftop+Bar+%26+Brasserie/data=!4m7!3m6!1s0x30e29f9da3ab34eb:0xf58ee3d66b6556c7!8m2!3d13.739263!4d100.5577752!16s%2Fg%2F11fj3mpmcm!19sChIJ6zSro52f4jARx1Zla9bjjvU?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 18.2, "group_suitability": 10.6, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 78, "name": "Attico", "cat": "อิตาลี", "rating": 4.5, "reviews": 201, "price": "฿1,000+", "dist": 473, "total": 66.8, "url": "https://www.google.com/maps/place/Attico/data=!4m7!3m6!1s0x30e29efd37f46c03:0xf6c14dddf282b48!8m2!3d13.735281!4d100.5639496!16s%2Fg%2F11c3vtk0ng!19sChIJA2z0N_2e4jARSCso390UbA8?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.2, "group_suitability": 16.1, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 7.5, "uniqueness": 4 } }, { "rank": 79, "name": "Hidden Square - Bistro & Rooftop Bar", "cat": "บิสโทร", "rating": 4.6, "reviews": 105, "price": "฿200-400", "dist": 642, "total": 66.6, "url": "https://www.google.com/maps/place/Hidden+Square+-+Bistro+%26+Rooftop+Bar/data=!4m7!3m6!1s0x30e29f9b1736c5d3:0x7c1a81e712a9617f!8m2!3d13.7425458!4d100.5625725!16s%2Fg%2F11gj1lkj3h!19sChIJ08U2F5uf4jARf2GpEueBGnw?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.6, "group_suitability": 10.0, "price_suitability": 15, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 80, "name": "Le Dalat", "cat": "เวียดนาม", "rating": 4.6, "reviews": 936, "price": "฿600-1,600", "dist": 708, "total": 65.7, "url": "https://www.google.com/maps/place/Le+Dalat/data=!4m7!3m6!1s0x30e29efab1c3fcfd:0x57438e88ad2022a7!8m2!3d13.7426959!4d100.5635836!16s%2Fg%2F1v62f2w1!19sChIJ_fzDsfqe4jARpyIgrYiOQ1c?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 17.8, "group_suitability": 10.4, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 12.5, "uniqueness": 4 } }, { "rank": 81, "name": "เบลล่า นาโปลี", "cat": "อิตาลี", "rating": 4.4, "reviews": 1821, "price": "฿400-1,200", "dist": 749, "total": 65.6, "url": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%9A%E0%B8%A5%E0%B8%A5%E0%B9%88%E0%B8%B2+%E0%B8%99%E0%B8%B2%E0%B9%82%E0%B8%9B%E0%B8%A5%E0%B8%B5/data=!4m7!3m6!1s0x30e29efd9e3f0c89:0xcf3c2a931df7552b!8m2!3d13.7341926!4d100.5662573!16s%2Fg%2F1td4rqy2!19sChIJiQw_nv2e4jARK1X3HZMqPM8?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 16.4, "group_suitability": 16.7, "price_suitability": 12, "travel_convenience": 9, "data_completeness": 7.5, "uniqueness": 4 } }, { "rank": 82, "name": "Wah Lok, Cantonese Restaurant", "cat": "อาหารจีนกวางตุ้ง", "rating": 4.4, "reviews": 455, "price": "฿800-2,000", "dist": 558, "total": 65.2, "url": "https://www.google.com/maps/place/Wah+Lok,+Cantonese+Restaurant/data=!4m7!3m6!1s0x30e29ff721e1a577:0xf2b0851006d558cf!8m2!3d13.7346657!4d100.5644982!16s%2Fg%2F11j1fcrctk!19sChIJd6XhIfef4jARz1jVBhCFsPI?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 15.0, "group_suitability": 16.2, "price_suitability": 8, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 83, "name": "Tenjo Sushi & Yakiniku BBQ Premium Buffet (Terminal 21 Asok)", "cat": "ญี่ปุ่น", "rating": 4, "reviews": 343, "price": "฿400-600", "dist": 58, "total": 64.9, "url": "https://www.google.com/maps/place/Tenjo+Sushi+%26+Yakiniku+BBQ+Premium+Buffet+%28Terminal+21+Asok%29/data=!4m7!3m6!1s0x30e29fbd88ac198f:0x502ee49f0bb3275d!8m2!3d13.737402!4d100.5606297!16s%2Fg%2F11llbkz727!19sChIJjxmsiL2f4jARXSezC5_kLlA?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 10.8, "group_suitability": 10.1, "price_suitability": 15, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 84, "name": "Madcow burger by Toni Santos asok", "cat": "แฮมเบอร์เกอร์", "rating": 4.5, "reviews": 419, "price": "฿200-400", "dist": 450, "total": 64.2, "url": "https://www.google.com/maps/place/Madcow+burger+by+Toni+Santos+asok/data=!4m7!3m6!1s0x30e29ee4b5b64b4b:0x6005da85d9f1ea45!8m2!3d13.740241!4d100.5629629!16s%2Fg%2F11f3wrstmx!19sChIJS0u2teSe4jARRerx2YXaBWA?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 16.0, "group_suitability": 7.2, "price_suitability": 15, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 85, "name": "Gen Japanese Charcoal Grill & Bar", "cat": "ญี่ปุ่น", "rating": 4.6, "reviews": 170, "price": "฿1,000+", "dist": 384, "total": 64.2, "url": "https://www.google.com/maps/place/Gen+Japanese+Charcoal+Grill+%26+Bar/data=!4m7!3m6!1s0x30e29fc230f61603:0x32e1cead97610ad8!8m2!3d13.7360295!4d100.5634054!16s%2Fg%2F11y3rbqyy_!19sChIJAxb2MMKf4jAR2Aphl63O4TI?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 16.1, "group_suitability": 10.1, "price_suitability": 12, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 86, "name": "Nanase Ramen Asok", "cat": "ราเม็ง", "rating": 4.3, "reviews": 362, "price": "฿1-200", "dist": 163, "total": 62.9, "url": "https://www.google.com/maps/place/Nanase+Ramen+Asok/data=!4m7!3m6!1s0x30e29ee36e5974c7:0x8d021d634501aced!8m2!3d13.7380624!4d100.5613926!16s%2Fg%2F11f1rr3tc5!19sChIJx3RZbuOe4jAR7awBRWMdAo0?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 13.8, "group_suitability": 10.1, "price_suitability": 10, "travel_convenience": 15, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 87, "name": "ASOK PETHOUSE CAT CAFE", "cat": "คาเฟ่แมว", "rating": 4.7, "reviews": 1533, "price": "฿฿", "dist": 463, "total": 62.8, "url": "https://www.google.com/maps/place/ASOK+PETHOUSE+CAT+CAFE/data=!4m7!3m6!1s0x30e29ff001d8e70f:0x8e02da8f4a9ff335!8m2!3d13.7409593!4d100.5621454!16s%2Fg%2F11trhx2zk3!19sChIJD-fYAfCf4jARNfOfSo_aAo4?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 19.2, "group_suitability": 7.6, "price_suitability": 7, "travel_convenience": 12, "data_completeness": 10.0, "uniqueness": 7 } }, { "rank": 88, "name": "กากั้น", "cat": "ภัตตาคารหรู", "rating": 4.5, "reviews": 524, "price": "฿2,000+", "dist": 897, "total": 60.9, "url": "https://www.google.com/maps/place/%E0%B8%81%E0%B8%B2%E0%B8%81%E0%B8%B1%E0%B9%89%E0%B8%99/data=!4m7!3m6!1s0x30e29fff71c7f98b:0x82c0f47139958e00!8m2!3d13.7407839!4d100.5675867!16s%2Fg%2F11hdvt6x30!19sChIJi_nHcf-f4jARAI6VOXH0wII?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 16.2, "group_suitability": 16.2, "price_suitability": 8, "travel_convenience": 9, "data_completeness": 7.5, "uniqueness": 4 } }, { "rank": 89, "name": "Shwe Htee Restaurant", "cat": "พม่า", "rating": 4.6, "reviews": 229, "price": "฿1-200", "dist": 642, "total": 59.5, "url": "https://www.google.com/maps/place/Shwe+Htee+Restaurant/data=!4m7!3m6!1s0x30e29fc230b8de57:0xb2f38b66ccd779de!8m2!3d13.7428343!4d100.561795!16s%2Fg%2F11jzs330fc!19sChIJV964MMKf4jAR3nnXzGaL87I?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 16.4, "group_suitability": 10.1, "price_suitability": 10, "travel_convenience": 9, "data_completeness": 10.0, "uniqueness": 4 } }, { "rank": 90, "name": "Bully's Bangkok", "cat": "อเมริกัน", "rating": 4.1, "reviews": 1407, "price": "฿200-1,200", "dist": 978, "total": 58.8, "url": "https://www.google.com/maps/place/Bully%27s+Bangkok/data=!4m7!3m6!1s0x30e29ee779289209:0x7afbeb7693b4b539!8m2!3d13.7420224!4d100.552458!16s%2Fg%2F1tf4bgtd!19sChIJCZIoeeee4jARObW0k3br-3o?authuser=0&hl=th&rclk=1", "scores": { "rating_review": 13.2, "group_suitability": 10.6, "price_suitability": 15, "travel_convenience": 6, "data_completeness": 10.0, "uniqueness": 4 } }];
+    function esc(s) { return (s == null ? '' : '' + s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    const key = document.getElementById('aikey'), q2 = document.getElementById('aiq'), ans = document.getElementById('aians'), btn = document.getElementById('aibtn');
+    try { const k = localStorage.getItem('anthropic_key'); if (k) key.value = k; } catch (e) { }
+    ['ร้านไหนเหมาะกลุ่ม 10 คน งบ 500 คุยงานได้', 'อยากได้ร้านอาหารไทยใกล้ BTS เรตติ้งดี', 'ร้านบรรยากาศดีเปิดดึก สังสรรค์ทีม', 'งบ 300 ต่อคน มีร้านไหนแนะนำ'].forEach(s => { const c = document.createElement('span'); c.className = 'qchip'; c.textContent = s; c.onclick = () => { q2.value = s; }; document.getElementById('qchips').appendChild(c); });
+    async function ask() {
+      const k = key.value.trim(), question = q2.value.trim();
+      if (!k) { ans.textContent = '⚠ ใส่ Anthropic API key ก่อน'; return; } if (!question) { ans.textContent = '⚠ พิมพ์คำถามก่อน'; return; }
+      try { localStorage.setItem('anthropic_key', k); } catch (e) { } btn.disabled = true; ans.textContent = '⏳ กำลังถาม Claude...';
+      const sys = 'คุณเป็นผู้ช่วยแนะนำร้านอาหารมื้อทีม 8-12 คน ย่านอโศก. ตอบสั้นกระชับภาษาไทย แนะนำจากข้อมูลที่ให้เท่านั้น พร้อมเหตุผล+ตัวเลข. ข้อมูล: ' + JSON.stringify(DATA);
+      try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': k, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1024, system: sys, messages: [{ role: 'user', content: question }] }) });
+        const j = await res.json(); ans.textContent = (j.content && j.content[0]) ? j.content[0].text : '⚠ ' + (j.error ? j.error.message : 'ไม่มีคำตอบ');
+      } catch (e) { ans.textContent = '⚠ error: ' + e.message; } btn.disabled = false;
+    }
+    btn.onclick = ask;
+    const COLS = [['rank', '#'], ['name', 'ร้าน'], ['cat', 'ประเภท'], ['rating', 'เรตติ้ง'], ['reviews', 'รีวิว'], ['price', 'ราคา'], ['dist', 'ระยะ(m)'], ['total', 'คะแนน'], ['url', '']];
+    let sortK = 'rank', sortD = 1, page = 1, PS = 15;
+    const $ = id => document.getElementById(id);
+    [...new Set(DATA.map(x => x.cat))].sort().forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; $('fcat').appendChild(o); });
+    COLS.forEach(([k, l]) => { const th = document.createElement('th'); if (k !== 'url') { th.className = 'sortable'; th.dataset.k = k; th.innerHTML = l + ' <span class="ar">↕</span>'; th.onclick = () => { if (sortK === k) sortD *= -1; else { sortK = k; sortD = 1; } page = 1; render(); }; } else th.textContent = l; $('shead').appendChild(th); });
+    function filtered() {
+      const s = $('q').value.toLowerCase(), fc = $('fcat').value, fp = $('fprice').value, fd = $('fdist').value;
+      return DATA.filter(x => {
+        if (s && !(x.name + ' ' + x.cat).toLowerCase().includes(s)) return false; if (fc && x.cat !== fc) return false;
+        if (fd && !(x.dist != null && x.dist <= +fd)) return false;
+        if (fp) { const mn = parseInt((x.price || '').replace(/[^\d]/g, '')) || 0; if (fp === 'lo' && mn > 400) return false; if (fp === 'mid' && (mn < 400 || mn > 1000)) return false; if (fp === 'hi' && mn < 1000) return false; }
+        return true;
+      });
+    }
+    function render() {
+      let r = filtered();
+      r.sort((a, b) => { let x = a[sortK], y = b[sortK]; if (typeof x === 'string') { x = x || ''; y = y || ''; } else { x = x == null ? -1 : x; y = y == null ? -1 : y; } return (x > y ? 1 : x < y ? -1 : 0) * sortD; });
+      const pages = Math.max(1, Math.ceil(r.length / PS)); if (page > pages) page = pages;
+      const sl = r.slice((page - 1) * PS, page * PS);
+      $('sbody').innerHTML = sl.map(x => `<tr><td class="rank">#${x.rank}</td><td>${esc(x.name)}</td><td><span class="muted">${esc(x.cat)}</span></td><td class="star">⭐${x.rating}</td><td>${(x.reviews || 0).toLocaleString()}</td><td>${esc(x.price)}</td><td>${x.dist == null ? '-' : x.dist}</td><td><b>${x.total}</b></td><td>${x.url ? `<a class="ev" href="${esc(x.url)}" target="_blank">Maps ↗</a>` : ''}</td></tr>`).join('');
+      document.querySelectorAll('th.sortable').forEach(t => { t.classList.toggle('on', t.dataset.k === sortK); const a = t.querySelector('.ar'); if (a) a.textContent = t.dataset.k === sortK ? (sortD > 0 ? '▲' : '▼') : '↕'; });
+      $('scount').textContent = 'แสดง ' + sl.length + ' จาก ' + r.length + ' (ทั้งหมด ' + DATA.length + ')';
+      $('spage').textContent = 'หน้า ' + page + ' / ' + pages; $('sprev').disabled = page <= 1; $('snext').disabled = page >= pages;
+    }
+    ['q', 'fcat', 'fprice', 'fdist'].forEach(id => $(id).addEventListener('input', () => { page = 1; render(); }));
+    $('sreset').onclick = () => { $('q').value = ''; $('fcat').value = ''; $('fprice').value = ''; $('fdist').value = ''; page = 1; render(); };
+    $('sprev').onclick = () => { if (page > 1) { page--; render(); } }; $('snext').onclick = () => { page++; render(); };
+    /* ---- re-scrape สด (ผ่าน server.mjs) ---- */
+    function renderTop10(arr) {
+      const SK = ['rating_review', 'group_suitability', 'price_suitability', 'travel_convenience', 'data_completeness', 'uniqueness'];
+      $('top10body').innerHTML = arr.slice(0, 10).map(r => {
+        const subs = SK.map(k => `<td>${r.scores ? r.scores[k] : '-'}</td>`).join('');
+        return `<tr><td class="rank">#${r.rank}</td><td>${esc(r.name)}<br><span class="muted">${esc(r.cat)}</span></td><td class="star">⭐${r.rating}<br><span class="muted">${(r.reviews || 0).toLocaleString()}</span></td><td>${esc(r.price)}</td><td>${r.dist}m</td>${subs}<td><b>${r.total}</b></td><td>${r.url ? `<a class="ev" href="${esc(r.url)}" target="_blank">Maps ↗</a>` : ''}</td></tr>`;
+      }).join('');
+    }
+    const rsb = $('rescrape'), rsm = $('rsmsg');
+    rsb.onclick = async () => {
+      rsb.disabled = true; rsm.textContent = '⏳ กำลัง scrape Google Maps สด (~30 วิ)...';
+      try {
+        const r = await fetch('/api/scrape'); const j = await r.json();
+        if (j.ok) { DATA = j.data;[...new Set(DATA.map(x => x.cat))]; renderTop10(j.data); page = 1; render(); rsm.textContent = '✓ อัปเดต ' + j.count + ' ร้านสด (' + new Date().toLocaleTimeString('th-TH') + ')'; }
+        else rsm.textContent = '⚠ ' + j.error;
+      } catch (e) { rsm.textContent = '⚠ ต้องเปิดผ่าน server: node q3/output/src/server.mjs (file:// เรียก /api/scrape ไม่ได้)'; }
+      rsb.disabled = false;
+    };
+    render();</script>
+</body>
+
+</html>

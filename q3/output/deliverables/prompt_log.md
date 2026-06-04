@@ -60,4 +60,4 @@ responsive + dark mode, self-contained
 ```
 
 ---
-**หมายเหตุ:** ทำผ่าน Claude Code (สั่งภาษาไทย) — แนบ chat log เต็มเป็น prompt history
+**หมายเหตุ:** ทำผ่าน Claude Code (สั่งภาษาไทย) + pordee lite — แนบ chat log เต็มเป็น prompt history

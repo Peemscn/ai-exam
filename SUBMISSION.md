@@ -4,11 +4,11 @@
 
 ---
 
-## 🌐 Live Demo (ยกระดับเป็น Fullstack — เกินโจทย์)
+## 🌐 Live Demo (Fullstack)
 
 รวมทั้ง 3 โจทย์เป็น **Next.js app เดียว + Turso DB + deploy Vercel**:
 
-### → https://web-six-theta-78.vercel.app
+### Web Link → https://web-six-theta-78.vercel.app
 
 | Route | โจทย์ |
 |---|---|
@@ -43,6 +43,6 @@
 
 ## วิธีดู
 
-- **เร็วสุด:** เปิด live demo (link ด้านบน) — ครบทุกโจทย์ + interactive
-- **ไฟล์ static:** เปิด `*.html` ใน browser ได้เลย (self-contained) · `*.xlsx` เปิด Excel/Sheets
+- **Live Web Demo:** เปิด live demo (link ด้านบน) — ครบทุกโจทย์ + interactive
+- **Static Files:** เปิด `*.html` ใน browser ได้เลย (self-contained) · `*.xlsx` เปิด Excel/Sheets
 - **Prompt Log:** `prompt_log.md` แต่ละโฟลเดอร์ (กระบวนการคิด + prompt ที่ใช้กับ AI)
