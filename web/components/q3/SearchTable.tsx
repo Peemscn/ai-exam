@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Restaurant } from "@/lib/types";
 import { fmtDist, fmtReviews, totalClass, rankClass } from "@/lib/format";
+import { downloadCSV } from "@/lib/csv";
 
 const LIMIT = 12;
 const COLS = 9;
@@ -41,6 +42,16 @@ export default function SearchTable() {
     }
   }, [page, q, area, sort]);
 
+  async function exportCSV() {
+    const r = await fetch("/api/restaurants?limit=200");
+    const j = await r.json();
+    const data = (j.data || []) as Record<string, string | number | null>[];
+    downloadCSV("q3_restaurants_scored.csv", [
+      ["rank", "name", "area", "category", "rating", "reviews", "price", "distance_m", "total"],
+      ...data.map((r2) => [r2.rank, r2.name, r2.area, r2.category, r2.rating, r2.reviews, r2.price_text, r2.distance_m, r2.total]),
+    ]);
+  }
+
   useEffect(() => {
     const t = setTimeout(load, 300);
     return () => clearTimeout(t);
@@ -62,6 +73,7 @@ export default function SearchTable() {
         </select>
         <span className="count">{loading ? "…" : `${total} ร้าน`}</span>
         {src && <span className={`srcbadge ${src}`}>{src}</span>}
+        <button className="btn ghost" style={{ padding: "6px 14px", fontSize: ".82rem", marginLeft: "auto" }} onClick={exportCSV}>⬇ Export CSV</button>
       </div>
 
       <div className="tablewrap">

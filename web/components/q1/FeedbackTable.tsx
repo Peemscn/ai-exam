@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { Feedback } from "@/lib/types";
+import { downloadCSV } from "@/lib/csv";
 
 const sentClass = (s: string) => (s === "Negative" ? "neg" : s === "Neutral" ? "neu" : "pos");
 const prioClass = (p: string) => (p === "High" ? "high" : p === "Medium" ? "med" : "low");
@@ -52,6 +53,16 @@ export default function FeedbackTable() {
     }
   }, [page, q, cat, sent, prio]);
 
+  async function exportCSV() {
+    const r = await fetch("/api/feedback?limit=300");
+    const j = await r.json();
+    const data = (j.data || []) as Feedback[];
+    downloadCSV("q1_feedback_classified.csv", [
+      ["feedback_id", "sentiment", "category", "priority", "suggested_owner", "confidence", "matched_theme", "ai_summary"],
+      ...data.map((d) => [d.feedback_id, d.sentiment, d.category, d.priority, d.suggested_owner, d.confidence, d.matched_theme, d.ai_summary]),
+    ]);
+  }
+
   useEffect(() => {
     const t = setTimeout(load, 300);
     return () => clearTimeout(t);
@@ -75,6 +86,7 @@ export default function FeedbackTable() {
         </select>
         <span className="count">{loading ? "…" : `${total} รายการ`}</span>
         {src && <span className={`srcbadge ${src}`}>{src}</span>}
+        <button className="btn ghost" style={{ padding: "6px 14px", fontSize: ".82rem", marginLeft: "auto" }} onClick={exportCSV}>⬇ Export CSV</button>
       </div>
 
       <div className="tablewrap">

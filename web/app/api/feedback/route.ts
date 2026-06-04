@@ -37,7 +37,7 @@ export async function GET(req: Request) {
   }
 
   const page = Math.max(1, parseInt(sp.get("page") || "1", 10));
-  const limit = Math.min(100, Math.max(1, parseInt(sp.get("limit") || "15", 10)));
+  const limit = Math.min(500, Math.max(1, parseInt(sp.get("limit") || "15", 10)));
   const q = (sp.get("q") || "").trim();
   const category = sp.get("category") || "";
   const sentiment = sp.get("sentiment") || "";

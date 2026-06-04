@@ -5,6 +5,7 @@ import {
   RAR, type Rarity, type Item, type Rates, type PityCtx,
   rateTotal, pickRarity, computeRolls, missingPools,
 } from "@/lib/gacha";
+import { downloadCSV } from "@/lib/csv";
 
 const RCOL: Record<Rarity, string> = { SSR: "#ffbf47", SR: "#bd93f8", R: "#6ba6ff", N: "#8390a3" };
 const SAMPLE: Item[] = [
@@ -16,11 +17,6 @@ const SAMPLE: Item[] = [
 const mini = { width: 68, background: "var(--bg2)", border: "1px solid var(--border)", color: "var(--text)", padding: "7px 9px", borderRadius: 8, fontFamily: "inherit" } as const;
 const fmt = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits: 2 });
 
-function downloadCSV(name: string, rows: (string | number)[][]) {
-  const csv = rows.map((r) => r.map((c) => { const s = c == null ? "" : "" + c; return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(",")).join("\n");
-  const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
-  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; a.click(); URL.revokeObjectURL(a.href);
-}
 
 type SimResult = { n: number; cnt: Record<Rarity, number>; cost: number };
 type MCResult = { paid: number; free: number; total: number; chance1: number; avg: number; best: number; worst: number; dist: Record<string, number>; sims: number; budget: number; price: number };
