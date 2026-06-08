@@ -54,7 +54,7 @@ export default function AIChat() {
         className="keyinput"
         type="password"
         aria-label="Anthropic API key"
-        placeholder="🔑 ใส่ Anthropic API key ของคุณ (sk-ant-...) — เก็บในเบราว์เซอร์เท่านั้น"
+        placeholder="🔑 ไม่ใส่ก็ได้ (มี demo key) · หรือใส่ key เอง: Claude / OpenAI / Gemini"
         value={key}
         onChange={(e) => saveKey(e.target.value)}
         autoComplete="off"
@@ -89,7 +89,7 @@ export default function AIChat() {
           {loading ? "กำลังคิด…" : "ถาม AI"}
         </button>
         <span className="msg" style={{ marginLeft: 12 }}>
-          Ctrl/⌘+Enter ส่ง · key เก็บในเครื่องคุณ ส่งตรง Claude ผ่าน server (ไม่บันทึก)
+          Ctrl/⌘+Enter ส่ง · <b>ไม่ใส่ key = demo key ตอบเลย</b> · ใส่เอง: Claude (sk-ant-) / OpenAI (sk-) / Gemini (AIza) · เก็บในเครื่อง ไม่บันทึก
         </span>
       </div>
       {err && <div className="msg err">⚠ {err}</div>}
