@@ -694,7 +694,7 @@
       <p class="muted" style="margin-bottom:10px">ถาม AI ให้แนะนำร้านจาก data จริง 90 ร้าน</p>
       <div class="ai-wrap">
         <div class="ai-row"><input class="ai-key" id="aikey" type="password"
-            placeholder="วาง Anthropic API key (sk-ant-...) — เก็บใน browser นี้เท่านั้น"></div>
+            placeholder="วาง API key (Claude / OpenAI / Gemini) (sk-ant-...) — เก็บใน browser นี้เท่านั้น"></div>
         <div class="ai-row"><textarea id="aiq" placeholder="เช่น: ร้านไหนเหมาะกลุ่ม 10 คน งบ 500 คุยงานได้"></textarea>
         </div>
         <div class="chips" id="qchips"></div><button class="ai-btn" id="aibtn">ถาม AI 🚀</button>
@@ -997,12 +997,22 @@
     ['ร้านไหนเหมาะกลุ่ม 10 คน งบ 500 คุยงานได้', 'อยากได้ร้านอาหารไทยใกล้ BTS เรตติ้งดี', 'ร้านบรรยากาศดีเปิดดึก สังสรรค์ทีม', 'งบ 300 ต่อคน มีร้านไหนแนะนำ'].forEach(s => { const c = document.createElement('span'); c.className = 'qchip'; c.textContent = s; c.onclick = () => { q2.value = s; }; document.getElementById('qchips').appendChild(c); });
     async function ask() {
       const k = key.value.trim(), question = q2.value.trim();
-      if (!k) { ans.textContent = '⚠ ใส่ Anthropic API key ก่อน'; return; } if (!question) { ans.textContent = '⚠ พิมพ์คำถามก่อน'; return; }
-      try { localStorage.setItem('anthropic_key', k); } catch (e) { } btn.disabled = true; ans.textContent = '⏳ กำลังถาม Claude...';
+      if (!k) { ans.textContent = '⚠ ใส่ API key ก่อน (Claude sk-ant- / OpenAI sk- / Gemini AIza)'; return; } if (!question) { ans.textContent = '⚠ พิมพ์คำถามก่อน'; return; }
+      try { localStorage.setItem('anthropic_key', k); } catch (e) { } btn.disabled = true; ans.textContent = '⏳ กำลังถาม AI...';
       const sys = 'คุณเป็นผู้ช่วยแนะนำร้านอาหารมื้อทีม 8-12 คน ย่านอโศก. ตอบสั้นกระชับภาษาไทย แนะนำจากข้อมูลที่ให้เท่านั้น พร้อมเหตุผล+ตัวเลข. ข้อมูล: ' + JSON.stringify(DATA);
       try {
-        const res = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': k, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1024, system: sys, messages: [{ role: 'user', content: question }] }) });
-        const j = await res.json(); ans.textContent = (j.content && j.content[0]) ? j.content[0].text : '⚠ ' + (j.error ? j.error.message : 'ไม่มีคำตอบ');
+        let out;
+        if (k.startsWith('sk-ant-')) { // Claude
+          const res = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': k, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1024, system: sys, messages: [{ role: 'user', content: question }] }) });
+          const j = await res.json(); out = (j.content && j.content[0]) ? j.content[0].text : ('⚠ ' + (j.error ? j.error.message : 'ไม่มีคำตอบ'));
+        } else if (k.startsWith('AIza')) { // Gemini
+          const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(k), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ systemInstruction: { parts: [{ text: sys }] }, contents: [{ parts: [{ text: question }] }] }) });
+          const j = await res.json(); out = (j.candidates && j.candidates[0] && j.candidates[0].content.parts[0].text) ? j.candidates[0].content.parts[0].text : ('⚠ ' + (j.error ? j.error.message : 'ไม่มีคำตอบ'));
+        } else if (k.startsWith('sk-')) { // OpenAI
+          const res = await fetch('https://api.openai.com/v1/chat/completions', { method: 'POST', headers: { 'content-type': 'application/json', 'authorization': 'Bearer ' + k }, body: JSON.stringify({ model: 'gpt-5-mini', messages: [{ role: 'system', content: sys }, { role: 'user', content: question }] }) });
+          const j = await res.json(); out = (j.choices && j.choices[0]) ? j.choices[0].message.content : ('⚠ ' + (j.error ? j.error.message : 'ไม่มีคำตอบ'));
+        } else { out = '⚠ key ไม่รู้จัก (รองรับ Claude sk-ant- / OpenAI sk- / Gemini AIza)'; }
+        ans.textContent = out;
       } catch (e) { ans.textContent = '⚠ error: ' + e.message; } btn.disabled = false;
     }
     btn.onclick = ask;
